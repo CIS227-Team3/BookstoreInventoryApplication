@@ -17,7 +17,24 @@
 // #include "User.cpp"
 
 using namespace std;
+    cout << "You can enter 0 to end the program at any time." << endl;
+    cout << "Please create a password." << endl;
 
+    cin >> //string something >> endl;
+    //Add code for transfering password to new csv file
+
+    cout << "Thank you for creating a password!" << endl;
+    cout << "Please type the name of the book you desire." << endl;
+
+    cin >> //string book >> endl;  
+    //find the book in the csv file
+
+    //if book is found print:
+    cout << "Successfully found" << //book name endl;
+    cout << //Name of book, author, publish, year, description endl;
+
+    //if not
+    cout << "Search not successful" << endl;
 int main() {
 
 	return 0;
