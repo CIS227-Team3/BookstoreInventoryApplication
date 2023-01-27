@@ -17,7 +17,8 @@
 // #include "User.cpp"
 
 using namespace std;
-    cout << "You can enter 0 to end the program at any time." << endl;
+
+int main() {
     cout << "Please create a password." << endl;
 
     cin >> //string something >> endl;
@@ -35,8 +36,6 @@ using namespace std;
 
     //if not
     cout << "Search not successful" << endl;
-int main() {
-
 	return 0;
 }
 
