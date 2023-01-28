@@ -13,29 +13,37 @@
 // #include "Book.cpp"
 #include "readFile.h"
 // #include "readFile.cpp"
-#include "User.h"
+// #include "User.h"
 // #include "User.cpp"
 
 using namespace std;
 
 int main() {
-    cout << "Please create a password." << endl;
 
-    cin >> //string something >> endl;
+	string nameOfFile;
+    // cout << "Please create a password." << endl;
+
+    // cin >> //string something >> endl;
     //Add code for transfering password to new csv file
 
-    cout << "Thank you for creating a password!" << endl;
-    cout << "Please type the name of the book you desire." << endl;
+    // cout << "Thank you for creating a password!" << endl;
+    // cout << "Please type the name of the book you desire." << endl;
 
-    cin >> //string book >> endl;  
-    //find the book in the csv file
+    // cin >> //string book >> endl;  
+    // find the book in the csv file
 
     //if book is found print:
-    cout << "Successfully found" << //book name endl;
-    cout << //Name of book, author, publish, year, description endl;
+    // cout << "Successfully found" << //book name endl;
+    // cout << //Name of book, author, publish, year, description endl;
 
     //if not
-    cout << "Search not successful" << endl;
+    // cout << "Search not successful" << endl;
+    
+    cout << "Please enter a file to view: " << endl;
+	cin >> nameOfFile;
+
+	readFile(nameOfFile);
+	printBooks(); // temporary function for testing readFile function
 	return 0;
 }
 
