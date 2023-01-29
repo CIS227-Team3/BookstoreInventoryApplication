@@ -6,8 +6,8 @@ BookstoreInventory::BookstoreInventory() {
 
 void BookstoreInventory::listInventory() {
     cout  << "ISBN | Book-Title | Book-Author | Year Published | Publisher " << endl;
-    for (auto & i : Inventory) {
-        cout << i.ISBN << " | " << i.title << " | " << i.author << " | " << i.year <<  " | " << i.publisher << endl;
+    for (auto & book : this->Inventory) {
+        cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year <<  " | " << book.publisher << endl;
     }
 }
 
@@ -18,5 +18,5 @@ void BookstoreInventory::addInitialInventory() {
 
     cin >> filePath;
 
-    readBooksFile(filePath, Inventory);
+    readBooksFile(filePath, this->Inventory);
 }

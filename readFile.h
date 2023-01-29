@@ -14,11 +14,13 @@
 #include <iostream>
 #include <fstream>
 #include "Book.h"
+#include "User.h"
 #include "BookstoreInventory.h"
 
 using namespace std;
 
 void readBooksFile(string filePath, vector<Book> &Inventory);
+void readUsersFile(vector<User> &Users);
 
 
 #endif /* READFILE_H_ */

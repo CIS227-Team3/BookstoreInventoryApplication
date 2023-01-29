@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <string>
 
+#include "UserDatabase.h"
+//#include "UserDatabase.cpp"
 #include "BookstoreInventory.h"
 //#includes "BookstoreInventory.cpp"
 #include "Book.h"
@@ -41,9 +43,12 @@ int main() {
 
     // Create initial inventory object which will prompt user
     // for file path of CSV
-    BookstoreInventory inventory;
+    //BookstoreInventory inventory;
 
-    inventory.listInventory();
+    UserDatabase users;
+
+    // for testing
+    //inventory.listInventory();
 
 	return EXIT_SUCCESS;
 }
