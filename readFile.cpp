@@ -33,7 +33,7 @@ void readBooksFile(string filePath, vector<Book> &Inventory){
 }
 
 void readUsersFile(vector<User> &Users) {
-    rapidcsv::Document doc("path here", rapidcsv::LabelParams(0, 0));
+    rapidcsv::Document doc("../users.csv", rapidcsv::LabelParams(0, 0));
 
     cout << doc.GetRowCount();
 }
