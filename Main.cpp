@@ -9,7 +9,7 @@
 #include <iomanip>
 #include <string>
 
-#include "Book.h";
+#include "Book.h"
 // #include "Book.cpp"
 #include "readFile.h"
 // #include "readFile.cpp"
@@ -19,7 +19,7 @@
 using namespace std;
 
 int main() {
-    cout << "Please create a password." << endl;
+/*    cout << "Please create a password." << endl;
 
     cin >> //string something >> endl;
     //Add code for transfering password to new csv file
@@ -35,7 +35,16 @@ int main() {
     cout << //Name of book, author, publish, year, description endl;
 
     //if not
-    cout << "Search not successful" << endl;
-	return 0;
+    cout << "Search not successful" << endl;*/
+
+    string filePath;
+
+    cout << "Enter file path: ";
+
+    cin >> filePath;
+
+    readFile(filePath);
+
+	return EXIT_SUCCESS;
 }
 

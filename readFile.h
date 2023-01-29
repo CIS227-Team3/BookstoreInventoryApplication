@@ -11,5 +11,14 @@
 #include "includes/rapidcsv.h"
 #include "includes/json.hpp"
 
+#include <iostream>
+#include <fstream>
+#include "readFile.h"
+#include "Book.h"
+
+using namespace std;
+
+void readFile(string filePath);
+
 
 #endif /* READFILE_H_ */
