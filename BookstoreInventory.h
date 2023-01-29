@@ -12,7 +12,6 @@ class BookstoreInventory {
 
 public:
     BookstoreInventory();
-    void addBook(Book book);
     void listInventory();
 
 private:

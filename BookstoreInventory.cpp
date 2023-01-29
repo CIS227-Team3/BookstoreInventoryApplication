@@ -4,10 +4,6 @@ BookstoreInventory::BookstoreInventory() {
     addInitialInventory();
 }
 
-void BookstoreInventory::addBook(Book book) {
-    Inventory.push_back(book);
-}
-
 void BookstoreInventory::listInventory() {
     cout  << "ISBN | Book-Title | Book-Author | Year Published | Publisher " << endl;
     for (auto & i : Inventory) {
