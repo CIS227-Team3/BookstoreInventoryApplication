@@ -22,9 +22,16 @@ public:
 	string getPassword();
 	void updatePassword(string username, string password);
 
+	// void deleteUser(string username); // possibly used in the future
+
 private:
 	string username;
 	string password;
+	vector<User> users;
+	vector<User> getUsers();
+	bool searchForUser(string username);
+	bool validateUser(string username, string password);
+	void createUser(string username, string password);
 };
 
 #endif /* USER_H_ */
