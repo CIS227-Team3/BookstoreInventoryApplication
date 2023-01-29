@@ -16,8 +16,6 @@ class Book {
 public:
 	Book();
     Book(const string &isbn, const string &title, const string &author, int year, const string &publisher);
-
-private:
     string ISBN;
     string title;
 	string author;

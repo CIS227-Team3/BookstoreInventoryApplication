@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <string>
 
+#include "BookstoreInventory.h"
+//#includes "BookstoreInventory.cpp"
 #include "Book.h"
 // #include "Book.cpp"
 #include "readFile.h"
@@ -37,13 +39,11 @@ int main() {
     //if not
     cout << "Search not successful" << endl;*/
 
-    string filePath;
+    // Create initial inventory object which will prompt user
+    // for file path of CSV
+    BookstoreInventory inventory;
 
-    cout << "Enter file path: ";
-
-    cin >> filePath;
-
-    readFile(filePath);
+    inventory.listInventory();
 
 	return EXIT_SUCCESS;
 }
