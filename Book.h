@@ -15,14 +15,13 @@ using namespace std;
 class Book {
 public:
 	Book();
-	Book(string ISBN, string title, string author, int year, string publisher);
-	void bookToString();
+    Book(const string &isbn, const string &title, const string &author, int year, const string &publisher);
 
 private:
-	string ISBN;
-	string title;
+    string ISBN;
+    string title;
 	string author;
-	int year;
+    int year;
 	string publisher;
 };
 
