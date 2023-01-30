@@ -21,7 +21,7 @@ void BookstoreInventory::addInitialInventory() {
     readBooksFile(filePath,Inventory);
 }
 
-bool caseInsensitiveMatch(string &string1, string &string2) {
+bool caseInsensitiveMatch(string string1, string string2) {
     //convert string1 and string2 into lower case strings
     transform(string1.begin(), string1.end(), string1.begin(), ::tolower);
     transform(string2.begin(), string2.end(), string2.begin(), ::tolower);

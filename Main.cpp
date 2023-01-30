@@ -48,8 +48,10 @@ int main() {
     // for testing
     //inventory.listInventory();
 
-    if(inventory.searchForBook("jane doe")){
-        cout << "Found";
+    optional<Book> foundBook = inventory.searchForBook("JaNe doe");
+
+    if(foundBook){
+        cout << "Found: " << foundBook->title << " " << foundBook->ISBN;
     }
     else{
         cout << "Not Found";
