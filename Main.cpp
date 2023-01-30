@@ -41,14 +41,19 @@ int main() {
     //if not
     cout << "Search not successful" << endl;*/
 
-    // Create initial inventory object which will prompt user
-    // for file path of CSV
-    //BookstoreInventory inventory;
+    BookstoreInventory inventory;
 
     UserDatabase users;
 
     // for testing
     //inventory.listInventory();
+
+    if(inventory.searchForBook("jane doe")){
+        cout << "Found";
+    }
+    else{
+        cout << "Not Found";
+    }
 
 	return EXIT_SUCCESS;
 }

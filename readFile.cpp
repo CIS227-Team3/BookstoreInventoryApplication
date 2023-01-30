@@ -34,8 +34,6 @@ void readBooksFile(string filePath, vector<Book> &Inventory){
 
 void readUsersFile(vector<User> &Users) {
     rapidcsv::Document doc("../users.csv", rapidcsv::LabelParams(0, 0));
-
-    cout << doc.GetRowCount();
     
     for (unsigned int i = 0; i < doc.GetRowCount(); ++i) {
     	try {
@@ -44,10 +42,8 @@ void readUsersFile(vector<User> &Users) {
 
     		Users.push_back(User(username, password));
     	}
-
     	catch (...) {
     		cout << "Problem reading user in CSV" << endl;
-
     	}
     }
 }
