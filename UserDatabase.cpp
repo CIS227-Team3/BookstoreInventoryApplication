@@ -1,13 +1,16 @@
 #include "UserDatabase.h"
 
+//Constructor
 UserDatabase::UserDatabase() {
     addInitialUsers();
 }
 
+//Adds initial users to database
 void UserDatabase::addInitialUsers() {
     readUsersFile(this->Users);
 }
 
+//Updates User Database
 void UserDatabase::updateUserDatabase() {
 	// creates a temporary csv file to store all of the user data in the Users vector.
 	fstream userFileUpdate;
@@ -38,6 +41,7 @@ void UserDatabase::updateUserDatabase() {
 	userFileUpdate.close();
 }
 
+//Search for a user within the Database
 bool UserDatabase::searchUser(string username) {
 	bool userFound = false;
 
@@ -49,6 +53,7 @@ bool UserDatabase::searchUser(string username) {
 	return userFound;
 }
 
+//Validates User
 bool UserDatabase::validUser(string username, string password) {
 	bool userValid = false;
 
@@ -60,6 +65,7 @@ bool UserDatabase::validUser(string username, string password) {
 	return userValid;
 }
 
+//Adds a user to the database
 void UserDatabase::addUser() {
 	string username;
 	string password;
@@ -85,6 +91,7 @@ void UserDatabase::addUser() {
 	}
 }
 
+//Updates a user within the databse
 void UserDatabase::updateUser() {
 	string username;
 	string newPassword;
