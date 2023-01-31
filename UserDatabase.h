@@ -6,6 +6,7 @@
 #include "User.h"
 #include "readFile.h"
 
+//UserDatabase Class
 class UserDatabase {
 public:
     UserDatabase();
