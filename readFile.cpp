@@ -7,6 +7,7 @@
 
 #include "readFile.h"
 
+//Reads from a file of books
 void readBooksFile(string filePath, vector<Book> &Inventory){
     unsigned int added = 0;
     unsigned int failed = 0;
@@ -32,6 +33,7 @@ void readBooksFile(string filePath, vector<Book> &Inventory){
     cout << "Added " << added << " books to inventory. Failed adding: " << failed << endl;
 }
 
+//Reads from a file of users
 void readUsersFile(vector<User> &Users) {
     rapidcsv::Document doc("../users.csv", rapidcsv::LabelParams(0, 0));
     
