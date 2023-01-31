@@ -19,6 +19,8 @@
 // #include "readFile.cpp"
 #include "User.h"
 // #include "User.cpp"
+#include "menuOptions.h"
+// #include "menuOptions.cpp"
 
 using namespace std;
 
@@ -29,31 +31,50 @@ int main() {
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
     cout << endl;
-    cout << "Please type in your password" << endl;    
-    cin >> username;  
+	cout << "Please type in your username" << endl;
+	cin >> username;
 
-    cout << "Please type in your password" << endl;
-    cin >> password;
+	cout << "Please type in your password" << endl;
+	cin >> password;
 
-    cout << endl;   
+	cout << endl;
 
-    validUser(username, password); 
-	
-    BookstoreInventory inventory;
+	// for testing
+	//inventory.listInventory();
 
-    UserDatabase users;
+	if (users.loginUser(username, password)) {
+	menuOption = 1; // starts the menu at 1 to allow user to enter a title to search
+	while (menuOption != 0) {
+		switch (menuOption) {
+		case 1:
+			cout << "Please enter a title to search: " << endl;
+			cin >> title;
 
-    // for testing
-    //inventory.listInventory();
+				title = "jANe Doe";
+				inventory.searchForBook(title);
 
-    optional<Book> foundBook = inventory.searchForBook("JaNe doe");
+				/*
+				if(foundBook){
+					cout << "Found: " << foundBook->title << " " << foundBook->ISBN;
+				}
+				else{
+					cout << "Not Found";
+				}
+				*/
 
-    if(foundBook){
-        cout << "Found: " << foundBook->title << " " << foundBook->ISBN;
-    }
-    else{
-        cout << "Not Found";
-    }
+				menuOption = promptUserInput();
+
+				break;
+		default:
+				menuOption = promptUserInput();
+				break;
+		}
+
+	}
+
+	}
+
+	cout << "Exiting BOOKIN. Goodbye!" << endl;
 
 	return EXIT_SUCCESS;
 }
