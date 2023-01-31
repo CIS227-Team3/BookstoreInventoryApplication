@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//Class of bookstoreInventory
 class BookstoreInventory {
 
 public:
