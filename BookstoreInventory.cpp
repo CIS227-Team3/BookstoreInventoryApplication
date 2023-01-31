@@ -16,11 +16,12 @@ void BookstoreInventory::listInventory() {
 
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
-    string filePath;
+    string filePath = "books.csv";
 
-    cout << "Enter file path: ";
+    // for testing
+    // cout << "Enter file path: ";
 
-    cin >> filePath;
+    // cin >> filePath;
 
     readBooksFile(filePath,Inventory);
 }
@@ -38,11 +39,15 @@ bool caseInsensitiveMatch(string string1, string string2) {
 
 
 //Searches for a specific book within BookstoreInventory
-optional<Book> BookstoreInventory::searchForBook(string title) {
+void BookstoreInventory::searchForBook(string title) {
     for (auto & book : this->Inventory) {
         if(caseInsensitiveMatch(book.title, title)){
-            return book;
+            cout << "Book details: " << endl;
+        	cout << "ISBN: " << book.ISBN << endl;
+        	cout << "Title: " << book.title << endl;
+        	cout << "Author: " << book.author << endl;
+        	cout << "Year Published: " << book.year << endl;
+        	cout << "Publisher: " << book.publisher << endl;
         }
     }
-    return nullopt;
 }
