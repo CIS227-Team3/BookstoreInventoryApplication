@@ -25,8 +25,15 @@
 using namespace std;
 
 int main() {
-    User user;
     string password;
+    string username;
+
+    BookstoreInventory inventory;
+	UserDatabase users;
+
+	short unsigned int menuOption;
+	string title;
+	
     cout << "---------------------------" << endl;
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
