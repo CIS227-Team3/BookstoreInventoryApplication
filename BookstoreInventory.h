@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include <algorithm>
 #include "Book.h"
 #include "readFile.h"
@@ -15,7 +16,7 @@ class BookstoreInventory {
 public:
     BookstoreInventory();
     void listInventory();
-    optional<Book> searchForBook(string title);
+    void searchForBook(string title);
 
 private:
     vector<Book> Inventory;
