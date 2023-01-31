@@ -12,6 +12,7 @@ using namespace std;
 #ifndef BOOK_H_
 #define BOOK_H_
 
+//Book class, creates variables related to the Book object
 class Book {
 public:
 	Book();
