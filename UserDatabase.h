@@ -2,7 +2,10 @@
 #define BOOKSTOREINVENTORYAPPLICATION_USERDATABASE_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
+#include "stdio.h"
 #include "User.h"
 #include "readFile.h"
 
@@ -10,15 +13,14 @@
 class UserDatabase {
 public:
     UserDatabase();
-    void addUser();
-    void updateUser();
+    // void addUser();
+    // void updateUser();
+    bool loginUser(string username, string password);
 
 private:
     vector<User> Users;
     void addInitialUsers();
-    bool searchUser(string username); // searches for user based on username
-    bool validUser(string username, string password); // validates that user is in database and password matches
-    void updateUserDatabase();
+    // bool searchUser(string username); // searches for user based on username
 };
 
 
