@@ -29,19 +29,16 @@ int main() {
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
     cout << endl;
-    cout << "Please type in your password" << endl;
+    cout << "Please type in your password" << endl;    
+    cin >> username;  
 
+    cout << "Please type in your password" << endl;
     cin >> password;
 
     cout << endl;   
-    if (password == user.getPassword()) {
-        cout << "Welcome" << user.getUsername();
-        cout << endl;
-    } else {
-        cout << "Password is incorrect, now exiting." << endl;
-        return(0);
-    }
 
+    validUser(username, password); 
+	
     BookstoreInventory inventory;
 
     UserDatabase users;
