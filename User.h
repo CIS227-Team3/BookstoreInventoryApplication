@@ -12,6 +12,7 @@ using namespace std;
 #ifndef USER_H_
 #define USER_H_
 
+//CLass User
 class User {
 public:
 	User();
