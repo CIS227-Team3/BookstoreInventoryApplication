@@ -37,41 +37,33 @@ int main() {
 	cout << "Please type in your password" << endl;
 	cin >> password;
 
-	cout << endl;
+	 // removes newline character from buffer
+    cin.clear();
+    cin.ignore(1000, '\n');
 
 	// for testing
 	//inventory.listInventory();
 
-	if (users.loginUser(username, password)) {
-	menuOption = 1; // starts the menu at 1 to allow user to enter a title to search
-	while (menuOption != 0) {
-		switch (menuOption) {
-		case 1:
-			cout << "Please enter a title to search: " << endl;
-			cin >> title;
+    if (users.loginUser(username, password)) {
+    	menuOption = 1; // starts the menu at 1 to allow user to enter a title to search
+    	while (menuOption != 0) {
+    		switch (menuOption) {
+			case 1:
+				cout << "Please enter a title to search: " << endl;
+				getline(cin, title);
 
-				title = "jANe Doe";
-				inventory.searchForBook(title);
+				// title below used for testing
+					// title = "jANe Doe";
+					inventory.searchForBook(title);
 
-				/*
-				if(foundBook){
-					cout << "Found: " << foundBook->title << " " << foundBook->ISBN;
-				}
-				else{
-					cout << "Not Found";
-				}
-				*/
 
-				menuOption = promptUserInput();
-
-				break;
-		default:
-				menuOption = promptUserInput();
-				break;
+					break;
+			default:
+				cout << "Menu option not recognized." << endl;
+					break;
+			}
+		menuOption = promptUserInput();
 		}
-
-	}
-
 	}
 
 	cout << "Exiting BOOKIN. Goodbye!" << endl;
