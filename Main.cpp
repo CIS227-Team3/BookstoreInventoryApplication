@@ -29,52 +29,44 @@ int main() {
     string username;
 
     BookstoreInventory inventory;
-	UserDatabase users;
+    UserDatabase users;
 
-	short unsigned int menuOption;
-	string title;
-	
+    short unsigned int menuOption;
+    string title;
+
     cout << "---------------------------" << endl;
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
     cout << endl;
-	cout << "Please type in your username" << endl;
-	cin >> username;
+    cout << "Please type in your username" << endl;
+    cin >> username;
 
-	cout << "Please type in your password" << endl;
-	cin >> password;
+    cout << "Please type in your password" << endl;
+    cin >> password;
 
-	 // removes newline character from buffer
+    // removes newline character from buffer
     cin.clear();
     cin.ignore(1000, '\n');
 
-	// for testing
-	//inventory.listInventory();
-
     if (users.loginUser(username, password)) {
-    	menuOption = 1; // starts the menu at 1 to allow user to enter a title to search
-    	while (menuOption != 0) {
-    		switch (menuOption) {
-			case 1:
-				cout << "Please enter a title to search: " << endl;
-				getline(cin, title);
+        menuOption = 1; // starts the menu at 1 to allow user to enter a title to search
+        while (menuOption != 0) {
+            switch (menuOption) {
+                case 1:
+                    cout << "Please enter a title to search: " << endl;
+                    getline(cin, title);
+                    inventory.searchForBook(title);
+                    break;
+                default:
+                    cout << "Menu option not recognized." << endl;
+                    break;
+            }
+            menuOption = promptUserInput();
+        }
+    }
 
-				// title below used for testing
-					// title = "jANe Doe";
-					inventory.searchForBook(title);
+    cout << "Exiting BOOKIN. Goodbye!" << endl;
 
-
-					break;
-			default:
-				cout << "Menu option not recognized." << endl;
-					break;
-			}
-		menuOption = promptUserInput();
-		}
-	}
-
-	cout << "Exiting BOOKIN. Goodbye!" << endl;
-
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 

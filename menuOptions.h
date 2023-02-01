@@ -12,5 +12,7 @@
 using namespace std;
 
 short int promptUserInput();
+
 void printAndClearError();
+
 short validateMenuOption();

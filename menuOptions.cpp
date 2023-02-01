@@ -20,9 +20,7 @@ short int promptUserInput()
 
 void printAndClearError()
 {
-
 	cout << "Input cannot negative, non-numeric, or out-of-range. Please enter a positive value." << endl;
-
 
     cin.clear();  // clears error state if the user entered a string or char.
 	// reference: https://cplusplus.com/forum/general/207458/

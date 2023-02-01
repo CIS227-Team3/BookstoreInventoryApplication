@@ -2,41 +2,39 @@
 
 //Constructor
 UserDatabase::UserDatabase() {
-	cout << "Loading users..." << endl;
+    cout << "Loading users..." << endl;
     addInitialUsers();
 }
 
 //Adds initial users to database
 void UserDatabase::addInitialUsers() {
     readUsersFile(this->Users);
-	cout << "Finished loading users." << endl;
+    cout << "Finished loading users." << endl;
 }
 
 bool UserDatabase::loginUser(string username, string password) {
-	bool loginUser = false;
+    bool loginUser = false;
 
-	// searches for the username in the Users vector
-	for (unsigned int i = 0; i < Users.size(); ++i) {
-		if (username.compare(Users.at(i).getUsername()) == 0) {
-			cout << "Username: " << Users.at(i).getUsername() << endl;
+    // searches for the username in the Users vector
+    for (unsigned int i = 0; i < Users.size(); ++i) {
+        if (username.compare(Users.at(i).getUsername()) == 0) {
+            cout << "Username: " << Users.at(i).getUsername() << endl;
 
-			// makes sure that the password matches
-			if (password.compare(Users.at(i).getPassword()) == 0) {
-				loginUser = true;
-			}
+            // makes sure that the password matches
+            if (password.compare(Users.at(i).getPassword()) == 0) {
+                loginUser = true;
+            } else {
+                cout << "Incorrect password entered. Please re-try login" << endl;
+                loginUser = false;
+            }
+        }
+    }
 
-			else {
-				cout << "Incorrect password entered. Please re-try login" << endl;
-				loginUser = false;
-			}
-		}
-	}
+    if (loginUser == false) {
+        cout << "Login failed. Please retry login." << endl;
+    }
 
-	if (loginUser == false) {
-		cout << "Login failed. Please retry login." << endl;
-	}
-
-	return loginUser;
+    return loginUser;
 }
 /*
 bool UserDatabase::searchUser(string username) {

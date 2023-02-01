@@ -15,11 +15,14 @@ class BookstoreInventory {
 
 public:
     BookstoreInventory();
+
     void listInventory();
+
     void searchForBook(string title);
 
 private:
     vector<Book> Inventory;
+
     void addInitialInventory();
 };
 

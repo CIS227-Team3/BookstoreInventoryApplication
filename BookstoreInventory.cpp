@@ -13,16 +13,9 @@ void BookstoreInventory::listInventory() {
     }
 }
 
-
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
-    string filePath = "books.csv";
-
-    // for testing
-    // cout << "Enter file path: ";
-
-    // cin >> filePath;
-
+    string filePath = "../books.csv";
     readBooksFile(filePath,Inventory);
 }
 
@@ -37,7 +30,6 @@ bool caseInsensitiveMatch(string string1, string string2) {
     return false;
 }
 
-
 //Searches for a specific book within BookstoreInventory
 void BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
@@ -50,9 +42,7 @@ void BookstoreInventory::searchForBook(string title) {
         	cout << "Author: " << book.author << endl;
         	cout << "Year Published: " << book.year << endl;
         	cout << "Publisher: " << book.publisher << endl;
-        	
             bookFound = true;
-
         	break;
         }
     }
