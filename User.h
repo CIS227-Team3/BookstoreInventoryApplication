@@ -15,17 +15,23 @@ using namespace std;
 //CLass User
 class User {
 public:
-	User();
-	User(string username, string password);
-	void setUsername(string username);
-	string getUsername();
-	void setPassword(string password);
-	string getPassword();
-	void updatePassword(string username, string password);
+    User();
+
+    User(string username, string password);
+
+    void setUsername(string username);
+
+    string getUsername();
+
+    void setPassword(string password);
+
+    string getPassword();
+
+    void updatePassword(string username, string password);
 
 private:
-	string username;
-	string password;
+    string username;
+    string password;
 };
 
 #endif /* USER_H_ */
