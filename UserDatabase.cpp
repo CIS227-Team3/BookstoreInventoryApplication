@@ -16,12 +16,12 @@ bool UserDatabase::loginUser(string username, string password) {
     bool loginUser = false;
 
     // searches for the username in the Users vector
-    for (unsigned int i = 0; i < Users.size(); ++i) {
-        if (username.compare(Users.at(i).getUsername()) == 0) {
-            cout << "Username: " << Users.at(i).getUsername() << endl;
+    for (auto const& user : Users) {
+        if (username.compare(user.getUsername()) == 0) {
+            cout << "Username: " << user.getUsername() << endl;
 
             // makes sure that the password matches
-            if (password.compare(Users.at(i).getPassword()) == 0) {
+            if (password.compare(user.getPassword()) == 0) {
                 loginUser = true;
             } else {
                 cout << "Incorrect password entered. Please re-try login" << endl;

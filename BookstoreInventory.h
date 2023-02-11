@@ -6,7 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "Book.h"
-#include "readFile.h"
+#include "fileOperations.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ public:
     void searchForBook(string title);
 
 private:
-    vector<Book> Inventory;
+    deque<Book> Inventory;
 
     void addInitialInventory();
 };

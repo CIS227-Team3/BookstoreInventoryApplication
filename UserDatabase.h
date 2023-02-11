@@ -5,9 +5,12 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <list>
 #include "stdio.h"
 #include "User.h"
-#include "readFile.h"
+#include "fileOperations.h"
+
+using namespace std;
 
 //UserDatabase Class
 class UserDatabase {
@@ -19,7 +22,7 @@ public:
     bool loginUser(string username, string password);
 
 private:
-    vector<User> Users;
+    list<User> Users;
 
     void addInitialUsers();
     // bool searchUser(string username); // searches for user based on username
