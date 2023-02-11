@@ -53,10 +53,10 @@ void readUsersFile(vector<User> &Users) {
 
 void writeBooksFile(vector<Book> &Inventory) {
     std::string filename = "../printBooks.csv";
-    std::ofstream  out(filename, std::ios::out);
+    std::ofstream out(filename, std::ios::out);
     out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher" << endl;
 
-    for (auto & book : Inventory) {
+    for (auto &book: Inventory) {
         out << book.ISBN << ",";
         out << book.title << ",";
         out << book.author << ",";
@@ -64,6 +64,6 @@ void writeBooksFile(vector<Book> &Inventory) {
         out << book.publisher << "," << endl;
     }
 
-    out .close();
+    out.close();
 }
 

@@ -19,11 +19,16 @@ public:
 
     Book(const string &isbn, const string &title, const string &author, int year, const string &publisher);
 
+    Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
+         const string &description, const string &genre);
+
     string ISBN;
     string title;
     string author;
     int year;
     string publisher;
+    string description;
+    string genre;
 };
 
 #endif /* BOOK_H_ */
