@@ -5,12 +5,16 @@
  *      Author: Group 3
  */
 
-#include <string>
-
-using namespace std;
-
 #ifndef USER_H_
 #define USER_H_
+
+#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include "Book.h"
+
+using namespace std;
 
 //CLass User
 class User {
@@ -21,17 +25,21 @@ public:
 
     void setUsername(string username);
 
-    string getUsername();
+    string getUsername() const;
 
     void setPassword(string password);
 
-    string getPassword();
+    string getPassword() const;
 
     void updatePassword(string username, string password);
+
+    void listUserList();
 
 private:
     string username;
     string password;
+
+    deque<Book> UserList;
 };
 
 #endif /* USER_H_ */

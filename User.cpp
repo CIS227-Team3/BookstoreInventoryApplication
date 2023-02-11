@@ -5,6 +5,7 @@
  *      Author: Group 3
  */
 
+#include <deque>
 #include "User.h"
 
 //Constructor
@@ -17,6 +18,7 @@ User::User() {
 User::User(string username, string password) {
     this->username = username;
     this->password = password;
+    this->UserList;
 }
 
 //Sets Username
@@ -25,7 +27,7 @@ void User::setUsername(string username) {
 }
 
 //Gets Username
-string User::getUsername() {
+string User::getUsername() const {
     return username;
 }
 
@@ -35,11 +37,21 @@ void User::setPassword(string password) {
 }
 
 //Gets Password
-string User::getPassword() {
+string User::getPassword() const {
     return password;
 }
 
 //Updates Password
 void User::updatePassword(string username, string password) {
 
+}
+
+//Lists user's list in terminal
+void User::listUserList() {
+    cout << "ISBN | Book-Title | Book-Author" << endl;
+    for (auto &book: this->UserList) {
+        cout << book.ISBN << " | " << book.title << " | " << book.author << endl;
+    }
+
+    cout << "Total items in list: " << this->UserList.size();
 }
