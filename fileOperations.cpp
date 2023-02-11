@@ -51,7 +51,7 @@ void readUsersFile(list<User> &Users) {
     }
 }
 
-void writeBooksFile(vector<Book> &Inventory) {
+void writeBooksFile(deque<Book> &Inventory) {
     std::string filename = "../printBooks.csv";
     std::ofstream out(filename, std::ios::out);
     out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher" << endl;
