@@ -32,8 +32,6 @@ void readBooksFile(string filePath, vector<Book> &Inventory) {
         }
     }
     cout << "Added " << added << " books to inventory. Failed adding: " << failed << endl;
-
-    writeBooksFile(Inventory);
 }
 
 //Reads from a file of users
