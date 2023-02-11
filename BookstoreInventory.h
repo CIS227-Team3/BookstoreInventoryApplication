@@ -21,7 +21,7 @@ public:
     void searchForBook(string title);
 
 private:
-    vector<Book> Inventory;
+    deque<Book> Inventory;
 
     void addInitialInventory();
 };

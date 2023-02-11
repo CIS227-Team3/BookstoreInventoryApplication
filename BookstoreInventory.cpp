@@ -7,10 +7,10 @@ BookstoreInventory::BookstoreInventory() {
 
 //Lists inventory in terminal
 void BookstoreInventory::listInventory() {
-    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher " << endl;
+    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre " << endl;
     for (auto &book: this->Inventory) {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
-             << book.publisher << endl;
+             << book.publisher << " | " << book.description << " | " << book.genre << endl;
     }
 }
 
@@ -43,6 +43,8 @@ void BookstoreInventory::searchForBook(string title) {
             cout << "Author: " << book.author << endl;
             cout << "Year Published: " << book.year << endl;
             cout << "Publisher: " << book.publisher << endl;
+            cout << "Description: " << book.description << endl;
+            cout << "Genre: " << book.genre << endl;
             bookFound = true;
             break;
         }

@@ -13,17 +13,18 @@
 
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "Book.h"
 #include "User.h"
 #include "BookstoreInventory.h"
 
 using namespace std;
 
-void readBooksFile(string filePath, vector<Book> &Inventory);
+void readBooksFile(string filePath, deque<Book> &Inventory);
 
-void writeBooksFile(vector<Book> &Inventory);
+void writeBooksFile(deque<Book> &Inventory);
 
-void readUsersFile(vector<User> &Users);
+void readUsersFile(list<User> &Users);
 
 
 #endif /* READFILE_H_ */
