@@ -15,11 +15,11 @@ void BookstoreInventory::listInventory() {
 
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
-    string filePath = "../books.csv";
+    string filePath = "../miniBooks.csv";
     readBooksFile(filePath,Inventory);
 }
 
-//Watches for Cases so we can use lower or upper case charecters
+//Watches for Cases, so we can use lower or upper case characters
 bool caseInsensitiveMatch(string string1, string string2) {
     //convert string1 and string2 into lower case strings
     transform(string1.begin(), string1.end(), string1.begin(), ::tolower);
