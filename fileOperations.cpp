@@ -36,19 +36,59 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 
 //Reads from a file of users
 void readUsersFile(list<User> &Users) {
-    rapidcsv::Document doc("../users.csv", rapidcsv::LabelParams(0, 0));
+	string tmpFilename = "users.db";
+	const char* filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 
-    for (unsigned int i = 0; i < doc.GetRowCount(); ++i) {
-        try {
-            string username = doc.GetRowName(i);
-            string password = doc.GetCell<string>("Password", username);
+	string rowCountQuery = "SELECT COUNT(*) FROM users as rowCount";
+	string dataQuery = "SELECT * FROM users";
+	int numRows = 0;
 
-            Users.push_back(User(username, password));
-        }
-        catch (...) {
-            cout << "Problem reading user in CSV" << endl;
-        }
-    }
+	string username;
+	string password;
+	int isHashed;
+
+	// declares userDB connection
+	sqlite3 *userDB;
+
+	try {
+		// checks that database file successfully opened
+		if (sqlite3_open(filename, &userDB) == SQLITE_OK) {
+			// gets the number of rows in the database
+			sqlite3_stmt *rowCount;
+			sqlite3_prepare_v2(userDB, rowCountQuery.c_str(), rowCountQuery.length(), &rowCount, nullptr);
+
+			if (sqlite3_step(rowCount) != SQLITE_DONE) {
+				numRows = sqlite3_column_int(rowCount, 0);
+				cout << "Number of rows: " << numRows << endl;
+			}
+
+			// statement destructor
+			sqlite3_finalize(rowCount);
+
+			// gets user information from the database
+			sqlite3_stmt *query;
+			sqlite3_prepare_v2(userDB, dataQuery.c_str(), dataQuery.length(), &query, nullptr);
+
+			for (int i = 0; i < numRows; ++i) {
+				sqlite3_step(query);
+				username = (const char*)sqlite3_column_text(query, 0); // column 0 contains username
+				password = (const char*)sqlite3_column_text(query, 1); // column 1 contains password
+				isHashed = sqlite3_column_int(query, 2); // column 2 contains hash status
+
+				User user(username, password, isHashed);
+				Users.push_back(user);
+			}
+
+			// statement destructor
+			sqlite3_finalize(query);
+		}
+	}
+
+	catch (...) {
+		cout << "Error opening and accessing database." << endl;
+	}
+
+	sqlite3_close(userDB);
 }
 
 void writeBooksFile(deque<Book> &Inventory) {
