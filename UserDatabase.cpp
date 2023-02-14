@@ -14,6 +14,8 @@ void UserDatabase::addInitialUsers() {
 
 bool UserDatabase::loginUser(string username, string password) {
     bool loginUser = false;
+    MD5 md5;
+    string hashedPassword = md5(password);
 
     // searches for the username in the Users vector
     for (auto const& user : Users) {
@@ -21,7 +23,7 @@ bool UserDatabase::loginUser(string username, string password) {
             cout << "Username: " << user.getUsername() << endl;
 
             // makes sure that the password matches
-            if (password.compare(user.getPassword()) == 0) {
+            if (hashedPassword.compare(user.getPassword()) == 0) {
                 loginUser = true;
             } else {
                 cout << "Incorrect password entered. Please re-try login" << endl;
