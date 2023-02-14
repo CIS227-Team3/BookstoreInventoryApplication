@@ -53,9 +53,39 @@ int main() {
         while (menuOption != 0) {
             switch (menuOption) {
                 case 1:
+                    cout << "Press 0 to exit application." << endl;
+                    cout << "Press 1 to bring up this menu again." << endl;
+                    cout << "Press 2 to search for a book." << endl;
+                    cout << "Press 3 to add a book." << endl;
+                    cout << "Press 4 to add a description/plot and genre." << endl;
+                case 2:
                     cout << "Please enter a title to search: " << endl;
                     getline(cin, title);
                     inventory.searchForBook(title);
+                    break;
+                case 3:
+                    cout << "Please add the following information. " << endl;
+                    cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher: " << endl;
+                    cout << "Add ISBN: " << endl;
+                    //cin ISBN
+                    cout << "Add Book-Title: " << endl;
+                    //cin Book-Title
+                    cout << "Add Book-Author: " << endl;
+                    //cin Book-Author
+                    cout << "Add Year-Of-Publication: " << endl;
+                    //cin Year-Of-Publication
+                    cout << "Add Publisher: " << endl;
+                    //cin Publisher
+                    //add book to list
+                    break;
+                case 4:
+                    cout << "Please enter ISBN number: " << endl;
+                    //cin ISBN number
+                    cout << "Please enter description/plot: " << endl;
+                    //cin ISBN number
+                    cout << "Please enter genre: " << endl;
+                    //cin ISBN number
+                    //add it to a csv
                     break;
                 default:
                     cout << "Menu option not recognized." << endl;
