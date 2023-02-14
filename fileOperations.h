@@ -14,6 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include "includes/sqlite3.h"
 #include "Book.h"
 #include "User.h"
 #include "BookstoreInventory.h"

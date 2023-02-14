@@ -36,7 +36,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 
 //Reads from a file of users
 void readUsersFile(list<User> &Users) {
-	string tmpFilename = "users.db";
+	string tmpFilename = "../users.db";
 	const char* filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 
 	string rowCountQuery = "SELECT COUNT(*) FROM users as rowCount";
