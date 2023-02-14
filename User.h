@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <deque>
 #include "Book.h"
 
 using namespace std;
@@ -32,13 +33,18 @@ public:
     string getPassword() const;
 
     void updatePassword(string username, string password);
+    
+    void setEncryptStatus(int hashed);
+    
+    int getEncryptStatus();
 
     void listUserList();
 
 private:
     string username;
     string password;
-
+    int hashed;
+    
     deque<Book> UserList;
 };
 
