@@ -15,7 +15,7 @@ class BookstoreInventory {
 
 public:
     BookstoreInventory();
-
+    bool bookFound;
     void listInventory();
 
     void searchForBook(string title);
