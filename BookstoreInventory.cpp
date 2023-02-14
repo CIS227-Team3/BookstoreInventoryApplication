@@ -33,7 +33,7 @@ bool caseInsensitiveMatch(string string1, string string2) {
 
 //Searches for a specific book within BookstoreInventory
 void BookstoreInventory::searchForBook(string title) {
-    bool bookFound = false;
+    bookFound = false;
 
     for (auto &book: this->Inventory) {
         if (caseInsensitiveMatch(book.title, title)) {
