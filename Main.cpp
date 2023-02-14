@@ -39,7 +39,7 @@ int main() {
     while (menuOption1 != 0 ) {
         switch (menuOption1) { 
             case 1:
-                cout << "---------------------------" << endl;
+                cout << "---------------------------" << endl;  
                 cout << "Thank you for using BOOKIN!" << endl;
                 cout << "---------------------------" << endl;
                 cout << endl;
@@ -67,35 +67,54 @@ int main() {
                             cout << "Press 2 to search for a book." << endl;
                             cout << "Press 3 to add a book." << endl;
                             cout << "Press 4 to add a description/plot and genre." << endl;
+                            cout << "Press 5 to remove a book." << endl;
                         case 2:
                             cout << "Please enter a title to search: " << endl;
-                            getline(cin, title);
-                            inventory.searchForBook(title);
+                            cin >> book.title;
+                            inventory.searchForBook(book.title);
                             break;
                         case 3:
                             cout << "Please add this information." << endl;
                             cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher: " << endl;
                             cout << "Add ISBN: " << endl;
-                            //cin ISBN
+                            cin >> book.ISBN;
+                            cout << endl;
                             cout << "Add Book-Title: " << endl;
-                            //cin Book-Title
+                            cin >> book.title;
+                            cout << endl;
                             cout << "Add Book-Author: " << endl;
-                            //cin Book-Author
+                            cin >> book.author;
+                            cout << endl;
                             cout << "Add Year-Of-Publication: " << endl;
-                            //cin Year-Of-Publication
+                            cin >> book.year;
+                            cout << endl;
                             cout << "Add Publisher: " << endl;
-                            //cin Publisher
-                            //add book to list
+                            cin >> book.publisher;
+                            cout << endl;
+                            cout << "Adding book: " << endl;
+                            //add book
                             break;
                         case 4:
                             cout << "Please enter ISBN number: " << endl;
-                            //cin ISBN number
+                            cin >> book.ISBN;
+                            cout << endl;                     
                             cout << "Please enter description/plot: " << endl;
-                            //cin ISBN number
+                            cin >> book.description;
+                            cout << endl;
                             cout << "Please enter genre: " << endl;
-                            //cin ISBN number
+                            cin >> book.genre;
+                            cout << endl;
+                            cout << "Adding description/plot and genre: " << endl;                            
                             //add it to a csv
                             break;
+                        case 5:
+                            cout << "Please enter title of book you want to remove : " << endl;
+                            cin >> book.title;
+                            inventory.searchForBook(book.title);
+                            if (inventory.bookFound == true) {
+                                //Delete Book
+                            }
+                            break;    
                         default:
                             cout << "Menu option not recognized." << endl;
                             break;
