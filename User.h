@@ -22,7 +22,7 @@ class User {
 public:
     User();
 
-    User(string username, string password);
+    User(string username, string password, int hashed);
 
     void setUsername(string username);
 
