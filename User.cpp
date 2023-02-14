@@ -12,12 +12,14 @@
 User::User() {
     username = "none";
     password = "none";
+    hashed = 0;
 }
 
 //Makes a User
-User::User(string username, string password) {
+User::User(string username, string password, int hashed) {
     this->username = username;
     this->password = password;
+    this->hashed = hashed;
     this->UserList;
 }
 
@@ -39,6 +41,14 @@ void User::setPassword(string password) {
 //Gets Password
 string User::getPassword() const {
     return password;
+}
+
+void User::setEncryptStatus(int hashed) {
+	this->hashed = hashed;
+}
+
+int User::getEncryptStatus() {
+	return hashed;
 }
 
 //Updates Password
