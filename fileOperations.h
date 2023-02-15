@@ -10,11 +10,11 @@
 
 #include "includes/rapidcsv.h"
 #include "includes/json.hpp"
+#include "includes/sqlite3.h"
 
 #include <iostream>
 #include <fstream>
 #include <list>
-#include "includes/sqlite3.h"
 #include "Book.h"
 #include "User.h"
 #include "BookstoreInventory.h"
@@ -23,7 +23,7 @@ using namespace std;
 
 void readBooksFile(string filePath, deque<Book> &Inventory);
 
-void writeBooksFile(deque<Book> &Inventory);
+void writeBooksFile(deque<Book> &UserList);
 
 void readUsersFile(list<User> &Users);
 
