@@ -25,10 +25,11 @@ short int menuOptions() {
     cout << "Press 1 to bring up this menu again." << endl;
     cout << "Press 2 to search for a book." << endl;
     cout << "Press 3 to add a book to inventory." << endl;
-    cout << "Press 4 to add a description/plot and genre." << endl;
-    cout << "Press 5 to add a book to a personal list." << endl;
-    cout << "Press 6 to print your personal list." << endl;
-    cout << "Press 7 to export the inventory as CSV." << endl;
+    cout << "Press 4 to delete a book from inventory." << endl;
+    cout << "Press 5 to add a description/plot and genre." << endl;
+    cout << "Press 6 to add a book to a personal list." << endl;
+    cout << "Press 7 to print your personal list." << endl;
+    cout << "Press 8 to export the inventory as CSV." << endl;
     userInput = validateMenuOption();
 
     return userInput;
