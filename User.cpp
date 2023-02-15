@@ -65,3 +65,7 @@ void User::listUserList() {
 
     cout << "Total items in list: " << this->UserList.size();
 }
+
+void User::addToUserList(Book book) {
+    this->UserList.push_back(book);
+}

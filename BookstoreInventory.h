@@ -18,7 +18,7 @@ public:
 
     void listInventory();
 
-    void searchForBook(string title);
+    Book searchForBook(string title);
 
 private:
     deque<Book> Inventory;
