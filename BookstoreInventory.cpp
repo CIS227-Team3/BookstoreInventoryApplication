@@ -124,10 +124,11 @@ void BookstoreInventory::deleteBook(string title) {
                 sqlite3_step(del);
                 sqlite3_reset(del);
 
-                for (unsigned int i = 0; i < Inventory.size(); ++i) {
-			if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
-				deque<Book>::iterator *bookToDel = Inventory.at(i);
-				Inventory.erase(*bookToDel);
+                deque<Book>::iterator bookToDel = Inventory.begin();
+                for (auto bookToDel = Inventory.begin(); bookToDel != Inventory.end(); ++bookToDel) {
+			Book delBook = *bookToDel;
+			if (caseInsensitiveMatch(title, delBook.title)) {
+				Inventory.erase(bookToDel);
 				cout << "Book with title " << title << " has been successfully deleted from database." << endl;
 			}
 		}
