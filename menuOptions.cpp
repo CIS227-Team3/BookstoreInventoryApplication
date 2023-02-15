@@ -54,3 +54,18 @@ short int validateMenuOption() {
         }
     }
 }
+
+unsigned short int validateYear() {
+    unsigned short int year;
+
+    while (true) {
+        if (std::cin >> year) {
+            cin.ignore(1000, '\n');
+            return year;
+        }
+
+        else {
+            printAndClearError();
+        }
+    }
+}
