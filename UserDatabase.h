@@ -21,16 +21,14 @@ public:
     // void addUser();
     // void updateUser();
     bool loginUser(string username, string password);
-
     User getCurrentUser();
 
 private:
     list<User> Users;
-
     User currentUser;
-
     void addInitialUsers();
     // bool searchUser(string username); // searches for user based on username
+    
 };
 
 
