@@ -35,26 +35,25 @@ bool caseInsensitiveMatch(string string1, string string2) {
 Book BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
     cout << "Searching database for book with title " << title << endl;
-    while(!bookFound){
-        for (auto &book: this->Inventory) { // searches inventory for exact match in title
-            if (caseInsensitiveMatch(book.title, title)) { // if a match is found, information is output
-                cout << "Book details: " << endl;
-                cout << "ISBN: " << book.ISBN << endl;
-                cout << "Title: " << book.title << endl;
-                cout << "Author: " << book.author << endl;
-                cout << "Year Published: " << book.year << endl;
-                cout << "Publisher: " << book.publisher << endl;
-                cout << "Description: " << book.description << endl;
-                cout << "Genre: " << book.genre << endl;
-                bookFound = true;
-                return book;
-            }
-        }
-    }
+
+	for (auto &book: this->Inventory) { // searches inventory for exact match in title
+		if (caseInsensitiveMatch(book.title, title)) { // if a match is found, information is output
+			cout << "Book details: " << endl;
+			cout << "ISBN: " << book.ISBN << endl;
+			cout << "Title: " << book.title << endl;
+			cout << "Author: " << book.author << endl;
+			cout << "Year Published: " << book.year << endl;
+			cout << "Publisher: " << book.publisher << endl;
+			cout << "Description: " << book.description << endl;
+			cout << "Genre: " << book.genre << endl;
+			bookFound = true;
+			return book;
+		}
+	}
 
     if (!bookFound) {
-		cout << "Book with title " << title << " not found." << endl;
-	}
+	cout << "Book with title " << title << " not found." << endl;
+}
 }
 
 // Adds a new book to the database
