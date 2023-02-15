@@ -25,6 +25,7 @@ bool UserDatabase::loginUser(string username, string password) {
             // makes sure that the password matches
             if (hashedPassword.compare(user.getPassword()) == 0) {
                 loginUser = true;
+                this->currentUser = user;
             } else {
                 cout << "Incorrect password entered. Please re-try login" << endl;
                 loginUser = false;
@@ -37,6 +38,10 @@ bool UserDatabase::loginUser(string username, string password) {
     }
 
     return loginUser;
+}
+
+User UserDatabase::getCurrentUser() {
+    return this->currentUser;
 }
 /*
 bool UserDatabase::searchUser(string username) {

@@ -40,6 +40,8 @@ public:
 
     void listUserList();
 
+    void addToUserList(Book book);
+
 private:
     string username;
     string password;

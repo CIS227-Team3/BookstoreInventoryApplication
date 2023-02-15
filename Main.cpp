@@ -30,6 +30,8 @@ int main() {
 
     BookstoreInventory inventory;
     UserDatabase users;
+    User currentUser;
+    Book foundBook;
 
     short unsigned int menuOption1;
     short unsigned int menuOption2;
@@ -58,6 +60,7 @@ int main() {
                 cin.ignore(1000, '\n');
 
                  if (users.loginUser(username, password)) {
+                     currentUser = users.getCurrentUser();
                     menuOption2 = 1; // starts the menu at 1 to allow user to enter a title to search
                     while (menuOption2 != 0) {
                     switch (menuOption2) {

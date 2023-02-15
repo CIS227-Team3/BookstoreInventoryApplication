@@ -32,7 +32,7 @@ bool caseInsensitiveMatch(string string1, string string2) {
 }
 
 //Searches for a specific book within BookstoreInventory
-void BookstoreInventory::searchForBook(string title) {
+Book BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
 
     for (auto &book: this->Inventory) {
@@ -46,6 +46,7 @@ void BookstoreInventory::searchForBook(string title) {
             cout << "Description: " << book.description << endl;
             cout << "Genre: " << book.genre << endl;
             bookFound = true;
+            return book;
             break;
         }
     }
