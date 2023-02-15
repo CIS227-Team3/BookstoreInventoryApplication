@@ -9,34 +9,71 @@
 
 //Reads from a file of books
 void readBooksFile(string filePath, deque<Book> &Inventory) {
-    unsigned int added = 0;
-    unsigned int failed = 0;
+	string selectQuery = "SELECT * FROM books"; // table data is stored in books table in books.db
+	string rowCountQuery = "SELECT COUNT(*) FROM books as rowCount";
+	int numRows = 0;
 
-    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+	// converts string to cstring so filename can be used as parameter in sqlite_open function
+	// reference: https://www.geeksforgeeks.org/convert-string-char-array-cpp/
+	const char* filename = filePath.c_str();
 
-    for (int i = 0; i < doc.GetRowCount(); ++i) {
-        try {
-            string ISBN = doc.GetRowName(i);
-            string title = doc.GetCell<string>("Book-Title", ISBN);
-            string author = doc.GetCell<string>("Book-Author", ISBN);
-            int year = doc.GetCell<int>("Year-Of-Publication", ISBN);
-            string publisher = doc.GetCell<string>("Publisher", ISBN);
+	// reads user database information
+	sqlite3 *bookDB;
+	try {
+		// gets the number of rows in the database
+		// checks that database opened successfully
+		if (sqlite3_open(filename, &bookDB) == SQLITE_OK) {
+			cout << "Database opened successfully" << endl;
 
-            Inventory.push_back(Book(ISBN, title, author, year, publisher));
-            added++;
-        }
-        catch (...) {
-            cout << "Problem reading book in CSV with ISBN: " << doc.GetRowName(i) << ", did not add to inventory."
-                 << endl;
-            failed++;
-        }
-    }
-    cout << "Added " << added << " books to inventory. Failed adding: " << failed << endl;
+			// instantiates statement object
+			sqlite3_stmt *rowCount;
+			sqlite3_prepare_v2(bookDB, rowCountQuery.c_str(), rowCountQuery.length(), &rowCount, nullptr);
+
+			// checks that the end of the database rows has not been reached
+			if (sqlite3_step(rowCount) != SQLITE_DONE) {
+				numRows = sqlite3_column_int(rowCount, 0); // row count is in the first (and only) column
+				cout << "Number of rows: " << numRows << endl;
+			}
+
+			// sql statement destructor
+			sqlite3_finalize(rowCount);
+		}
+
+		// gets user information from the database
+		sqlite3_stmt *query;
+		sqlite3_prepare_v2(bookDB, selectQuery.c_str(), selectQuery.length(), &query, nullptr);
+
+		for (int i = 0; i < numRows; ++i) {
+			sqlite3_step(query);
+			string ISBN = (const char*)sqlite3_column_text(query, 0); // column 0 contains ISBN
+			string title = (const char*)sqlite3_column_text(query, 1); // column 1 contains title
+			string author = (const char*)sqlite3_column_text(query, 2); // column 2 contains author
+			int year = sqlite3_column_int(query, 3); // column 3 contains year
+			string publisher = (const char*)sqlite3_column_text(query, 4); // column 4 contains publisher
+			string description = (const char*)sqlite3_column_text(query, 5); // column 5 contains description
+			string genre = (const char*)sqlite3_column_text(query, 6); // column 6 contains genre
+			
+			// creates a book object and adds it to inventory
+			Book book(ISBN, title, author, year, publisher, description, genre);
+			Inventory.push_back(book);
+		}
+
+		// statement object destructor
+		sqlite3_finalize(query);
+
+	}
+
+	catch(...) {
+		cout << "Error opening or accessing database." << endl;
+	}
+
+	// closes database connection
+	sqlite3_close(bookDB);
 }
 
 //Reads from a file of users
 void readUsersFile(list<User> &Users) {
-	string tmpFilename = "../users.db";
+	string tmpFilename = "users.db";
 	const char* filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 
 	string rowCountQuery = "SELECT COUNT(*) FROM users as rowCount";
@@ -94,7 +131,7 @@ void readUsersFile(list<User> &Users) {
 void writeBooksFile(deque<Book> &Inventory) {
     string filename = "../printBooks.csv";
     ofstream out(filename, std::ios::out);
-    cout << "File can be found at: " << filesystem::canonical(filename) << endl;
+    cout << "File can be found as: " << filename << endl;
     out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher,Genre,Description" << endl;
 
     for (auto &book: Inventory) {
