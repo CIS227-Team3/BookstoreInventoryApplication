@@ -13,6 +13,8 @@ using namespace std;
 
 short int promptUserInput();
 
+short int menuOptions();
+
 void printAndClearError();
 
 short validateMenuOption();

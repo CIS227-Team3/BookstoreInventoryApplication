@@ -17,6 +17,22 @@ short int promptUserInput() {
     return userInput;
 }
 
+short int menuOptions() {
+    short int userInput;
+
+    // prompts user to enter command
+    cout << endl << endl <<"Press 0 to exit application." << endl;
+    cout << "Press 1 to bring up this menu again." << endl;
+    cout << "Press 2 to search for a book." << endl;
+    cout << "Press 3 to add a book to inventory." << endl;
+    cout << "Press 4 to add a description/plot and genre." << endl;
+    cout << "Press 5 to add a book to a personal list." << endl;
+    cout << "Press 6 to print your personal list." << endl;
+    userInput = validateMenuOption();
+
+    return userInput;
+}
+
 void printAndClearError() {
     cout << "Input cannot negative, non-numeric, or out-of-range. Please enter a positive value." << endl;
 
