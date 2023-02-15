@@ -20,6 +20,8 @@ public:
 
     Book searchForBook(string title);
 
+    void exportInventoryToCsv();
+
 private:
     deque<Book> Inventory;
 

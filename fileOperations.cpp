@@ -92,18 +92,22 @@ void readUsersFile(list<User> &Users) {
 }
 
 void writeBooksFile(deque<Book> &Inventory) {
-    std::string filename = "../printBooks.csv";
-    std::ofstream out(filename, std::ios::out);
-    out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher" << endl;
+    string filename = "../printBooks.csv";
+    ofstream out(filename, std::ios::out);
+    cout << "File can be found at: " << filesystem::canonical(filename) << endl;
+    out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher,Genre,Description" << endl;
 
     for (auto &book: Inventory) {
         out << book.ISBN << ",";
         out << book.title << ",";
         out << book.author << ",";
         out << book.year << ",";
-        out << book.publisher << "," << endl;
+        out << book.publisher << ",";
+        out << book.genre << ",";
+        out << book.description << "," << endl;
     }
 
     out.close();
+    cout << "Done writing file." << endl;
 }
 

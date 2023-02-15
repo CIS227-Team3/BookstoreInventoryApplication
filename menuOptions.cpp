@@ -28,6 +28,7 @@ short int menuOptions() {
     cout << "Press 4 to add a description/plot and genre." << endl;
     cout << "Press 5 to add a book to a personal list." << endl;
     cout << "Press 6 to print your personal list." << endl;
+    cout << "Press 7 to export the inventory as CSV." << endl;
     userInput = validateMenuOption();
 
     return userInput;

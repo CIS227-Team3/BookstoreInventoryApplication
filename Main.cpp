@@ -96,6 +96,9 @@ int main() {
                 case 6:
                     currentUser.listUserList();
                     break;
+                case 7:
+                    inventory.exportInventoryToCsv();
+                    break;
                 default:
                     cout << "Menu option not recognized." << endl;
                     break;
