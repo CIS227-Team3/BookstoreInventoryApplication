@@ -110,12 +110,6 @@ void BookstoreInventory::addBook(Book book) {
 
 // deletes a book from the database
 void BookstoreInventory::deleteBook(string title) {
-    string tempDBName = "books.db";
-    const char* dbName = tempDBName.c_str();
-
-    sqlite3 *bookDB;
-    string deleteQuery = "DELETE FROM books WHERE title = ?";
-
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
 
@@ -129,10 +123,17 @@ void BookstoreInventory::deleteBook(string title) {
 
                 sqlite3_step(del);
                 sqlite3_reset(del);
+
+                for (unsigned int i = 0; i < Inventory.size(); ++i) {
+			if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
+				deque<Book>::iterator *bookToDel = Inventory.at(i);
+				Inventory.erase(*bookToDel);
+				cout << "Book with title " << title << " has been successfully deleted from database." << endl;
+			}
+		}
             }
             sqlite3_finalize(del);
         }
-
     }
 
     catch(...) {
@@ -140,7 +141,6 @@ void BookstoreInventory::deleteBook(string title) {
     }
 
     sqlite3_close(bookDB);
-
     cout << "Book with title " << title << " successfully deleted from database." << endl;
 }
 
