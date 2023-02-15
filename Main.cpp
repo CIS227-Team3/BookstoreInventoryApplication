@@ -56,7 +56,15 @@ int main() {
         while (menuOption != 0) {
             switch (menuOption) {
                 case 1:
-                    // do nothing so the menu will prompt on loop
+                    cout << "Press 0 to exit application." << endl;
+                    cout << "Press 1 to bring up this menu again." << endl;
+                    cout << "Press 2 to search for a book." << endl;
+                    cout << "Press 3 to add book information." << endl;
+                    cout << "Press 4 to add a description/plot and genre (no inputs as of yet needed)." << endl;
+                    cout << "Press 5 to add a book title." << endl;
+                    cout << "Press 6 to list current user list." << endl;
+                    cout << "Press 7 to export inventory to csv file." << endl;
+                    
                     break;
                 case 2:
                     cout << "Please enter a title to search: " << endl;
