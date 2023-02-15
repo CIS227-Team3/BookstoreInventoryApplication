@@ -18,3 +18,4 @@ short int menuOptions();
 void printAndClearError();
 
 short validateMenuOption();
+unsigned short int validateYear();
