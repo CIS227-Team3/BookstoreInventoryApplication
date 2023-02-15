@@ -58,3 +58,7 @@ Book BookstoreInventory::searchForBook(string title) {
         }
     }
 }
+
+void BookstoreInventory::exportInventoryToCsv() {
+    writeBooksFile(this->Inventory);
+}
