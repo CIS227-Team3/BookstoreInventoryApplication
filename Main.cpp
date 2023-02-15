@@ -36,6 +36,13 @@ int main() {
     short unsigned int menuOption;
     string title;
 
+    string ISBN;
+	string author;
+	int year;
+	string publisher;
+	string description;
+	string genre;
+
     cout << "---------------------------" << endl;
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
@@ -64,44 +71,73 @@ int main() {
                     inventory.searchForBook(title);
                     break;
                 case 3:
+                {
                     cout << "Please add the following information. " << endl;
                     cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher: " << endl;
                     cout << "Add ISBN: " << endl;
-                    //cin ISBN
+                    getline(cin, ISBN);
                     cout << "Add Book-Title: " << endl;
-                    //cin Book-Title
+                    getline(cin, title);
                     cout << "Add Book-Author: " << endl;
-                    //cin Book-Author
+                    getline(cin, author);
                     cout << "Add Year-Of-Publication: " << endl;
-                    //cin Year-Of-Publication
+                    year = validateYear(); // validates that the year entered is an integer
                     cout << "Add Publisher: " << endl;
-                    //cin Publisher
-                    //add book to list
+                    getline(cin, publisher);
+
+                    // By default, user does not have to enter a description or a genre at the time it is added to the database
+                    Book book(ISBN, title, author, year, publisher, "", "");
+
+                    // adds book to inventory
+                    inventory.addBook(book);
+
                     break;
+                }
                 case 4:
-                    cout << "Please enter ISBN number: " << endl;
-                    //cin ISBN number
-                    cout << "Please enter description/plot: " << endl;
-                    //cin ISBN number
-                    cout << "Please enter genre: " << endl;
-                    //cin ISBN number
-                    //add it to a csv
-                    break;
+                {
+					cout << "Please enter title of book to delete:" << endl;
+					getline(cin, title);
+					inventory.deleteBook(title);
+					break;
+				}
                 case 5:
+                {
+                    cout << "Please enter title: " << endl;
+                    getline(cin, title);
+                    cout << "Please enter description/plot: " << endl;
+                    getline(cin, description);
+                    cout << "Please enter genre: " << endl;
+                    getline(cin, genre);
+                    
+                    // updates the description and genre of the specified book.
+                    inventory.updateDescription(title, description);
+                    inventory.updateGenre(title, genre);
+                    break;
+                }
+                case 6:
+                {
                     cout << "Please enter title of book to add:" << endl;
                     getline(cin, title);
                     foundBook = inventory.searchForBook(title);
                     currentUser.addToUserList(foundBook);
                     break;
-                case 6:
+                }
+
+                case 7:
+                {
                     currentUser.listUserList();
                     break;
-                case 7:
+                }
+                case 8:
+                {
                     inventory.exportInventoryToCsv();
                     break;
+                }
                 default:
+                {
                     cout << "Menu option not recognized." << endl;
                     break;
+                }
             }
             menuOption = menuOptions();
         }
@@ -111,4 +147,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
