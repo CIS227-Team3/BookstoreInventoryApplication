@@ -35,23 +35,26 @@ bool caseInsensitiveMatch(string string1, string string2) {
 Book BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
 
-    for (auto &book: this->Inventory) {
-        if (caseInsensitiveMatch(book.title, title)) {
-            cout << "Book details: " << endl;
-            cout << "ISBN: " << book.ISBN << endl;
-            cout << "Title: " << book.title << endl;
-            cout << "Author: " << book.author << endl;
-            cout << "Year Published: " << book.year << endl;
-            cout << "Publisher: " << book.publisher << endl;
-            cout << "Description: " << book.description << endl;
-            cout << "Genre: " << book.genre << endl;
-            bookFound = true;
-            return book;
-            break;
+    while(!bookFound){
+        for (auto &book: this->Inventory) {
+            if (caseInsensitiveMatch(book.title, title)) {
+                cout << "Book details: " << endl;
+                cout << "ISBN: " << book.ISBN << endl;
+                cout << "Title: " << book.title << endl;
+                cout << "Author: " << book.author << endl;
+                cout << "Year Published: " << book.year << endl;
+                cout << "Publisher: " << book.publisher << endl;
+                cout << "Description: " << book.description << endl;
+                cout << "Genre: " << book.genre << endl;
+                bookFound = true;
+                return book;
+            }
         }
-    }
 
-    if (!bookFound) {
-        cout << "Book with title " << title << " not found." << endl;
+        if (!bookFound) {
+            cout << "Book with title " << title << " not found." << endl;
+            cout << "Enter another title to search:" << endl;
+            getline(cin, title);
+        }
     }
 }
