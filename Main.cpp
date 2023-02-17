@@ -133,6 +133,20 @@ int main() {
                     inventory.exportInventoryToCsv();
                     break;
                 }
+		case 9:
+                {
+                    cout << "Welcome to the shopping cart!" << endl;
+                    cout << "Please enter the title of the book you want to purchase: " << endl;
+                    getline(cin, title);
+                    //add book to shoppingcart with random price
+                    break;
+                }
+                case 10:
+                {
+                    cout << "Here is a list of everything in your cart:" << endl;
+                    //print shopping cart
+                    break;
+                }
                 default:
                 {
                     cout << "Menu option not recognized." << endl;
