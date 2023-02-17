@@ -12,14 +12,16 @@
 User::User() {
     username = "none";
     password = "none";
-    hashed = 0;
+    hashed = 0; // 0 for false (sqlite database does not store boolean values)
+    isAdmin = 0; // 0 for false
 }
 
 //Makes a User
-User::User(string username, string password, int hashed) {
+User::User(string username, string password, int hashed, int isAdmin) {
     this->username = username;
     this->password = password;
     this->hashed = hashed;
+    this->isAdmin = isAdmin;
     this->UserList;
 }
 
@@ -49,6 +51,14 @@ void User::setEncryptStatus(int hashed) {
 
 int User::getEncryptStatus() {
 	return hashed;
+}
+
+void User::setAdminStatus(int isAdmin) {
+	this->isAdmin;
+}
+
+int User::getAdminStatus() {
+	return isAdmin;
 }
 
 //Updates Password

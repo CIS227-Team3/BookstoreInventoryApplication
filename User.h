@@ -21,22 +21,21 @@ using namespace std;
 class User {
 public:
     User();
-
-    User(string username, string password, int hashed);
+    User(string username, string password, int hashed, int isAdmin);
 
     void setUsername(string username);
-
     string getUsername() const;
 
     void setPassword(string password);
-
     string getPassword() const;
 
     void updatePassword(string username, string password);
     
     void setEncryptStatus(int hashed);
-    
     int getEncryptStatus();
+
+    void setAdminStatus(int status);
+    int getAdminStatus();
 
     void listUserList();
 
@@ -46,6 +45,7 @@ private:
     string username;
     string password;
     int hashed;
+    int isAdmin;
     
     deque<Book> UserList;
 };
