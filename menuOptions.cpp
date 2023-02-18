@@ -161,7 +161,7 @@ void adminMenu(UserDatabase &users) {
                 break;
             }
             case 2: {
-
+                users.addUser();
                 break;
             }
             case 3: {

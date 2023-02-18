@@ -18,8 +18,8 @@ class UserDatabase {
 public:
     UserDatabase();
 
-    // void addUser();
-    // void updateUser();
+    void addUser();
+    void updateUser();
     bool loginUser(string username, string password);
     User getCurrentUser();
 
@@ -27,8 +27,8 @@ private:
     list<User> Users;
     User currentUser;
     void addInitialUsers();
-    // bool searchUser(string username); // searches for user based on username
-    
+    bool searchUser(string username); // searches for user based on username
+    static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
 };
 
 
