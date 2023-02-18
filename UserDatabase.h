@@ -9,7 +9,6 @@
 #include "stdio.h"
 #include "User.h"
 #include "fileOperations.h"
-#include "includes/md5.h"
 
 using namespace std;
 
@@ -17,9 +16,8 @@ using namespace std;
 class UserDatabase {
 public:
     UserDatabase();
-
+    void updateUserPassword();
     void addUser();
-    void updateUser();
     bool loginUser(string username, string password);
     User getCurrentUser();
 
@@ -27,8 +25,9 @@ private:
     list<User> Users;
     User currentUser;
     void addInitialUsers();
-    bool searchUser(string username); // searches for user based on username
+    User searchUser(string username); // searches for user based on username
     static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
+    void updateUser(User user);
 };
 
 

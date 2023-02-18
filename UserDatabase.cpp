@@ -47,9 +47,9 @@ User UserDatabase::getCurrentUser() {
     return this->currentUser;
 }
 
-bool UserDatabase::searchUser(string username) {
-	bool userFound = false;
+User UserDatabase::searchUser(string username) {
     const char* dbName = "../users.db";
+    User user;
 
     sqlite3 *usersDB;
     string findQuery = "SELECT * FROM USERS where username = '" + username + "';";
@@ -60,18 +60,15 @@ bool UserDatabase::searchUser(string username) {
             if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &select, nullptr) == SQLITE_OK) {
                 sqlite3_bind_text(select, 1, username.c_str(), username.length(), NULL);
 
-                auto returnedColumns = sqlite3_exec(usersDB, findQuery.c_str(), this->searchUserCallback, nullptr, nullptr);
+                sqlite3_exec(usersDB, findQuery.c_str(), this->searchUserCallback, &user, nullptr);
                 sqlite3_reset(select);
-                if(returnedColumns == 4){
-                    userFound = true;
-                }
             }
         }
     }
     catch (...){
         cout << "Error finding user in database." << endl;
     }
-	return userFound;
+	return user;
 }
 
 void UserDatabase::addUser() {
@@ -90,7 +87,8 @@ void UserDatabase::addUser() {
 	cout << "Please enter a username: " << endl;
 	cin >> username;
 	// checks to make sure that user does not already exist
-	if (!searchUser(username)) {
+    User user = searchUser(username);
+	if (user.getUsername() == "none") {
 		// prompts user to enter a password
 		cout << "Please enter a password: " << endl;
 		cin >> password;
@@ -139,53 +137,76 @@ void UserDatabase::addUser() {
     }
 }
 
-int UserDatabase::searchUserCallback(void *notUsed, int argc, char **argv, char **azColName) {
+int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **azColName) {
     // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
     // int argc: holds the number of results
     // (array) azColName: holds each column returned
     // (array) argv: holds each value
     // only goes in here if statement finds user
+    User* user = static_cast<User*>(data); // cast data to user object
+    user->setUsername(argv[0]);
+    user->setPassword(argv[1]);
+    user->setEncryptStatus(stoi(argv[2]));
+    user->setAdminStatus(stoi(argv[3]));
     return argc;
 }
 
-/*
-void UserDatabase::updateUser() {
-	string username;
-	string newPassword;
-	cout << "Please enter your username:" << endl;
-	cin >> username;
-	// checks that user is in database
-	while (!searchUser(username)) {
-		cout << "Username not found. Please re-enter your username." << endl;
-		cin >> username;
-	}
-	cout << "Please enter your new password:" << endl;
-	cin >> newPassword;
-	for (unsigned int i = 0; i < Users.size(); ++i) {
-		if (username == Users.at(i).getUsername()) {
-			// sets the password as the matching user
-			Users.at(i).setPassword(newPassword);
-			// looks through csv file for username for row number
-			string filename = "users.csv";
-			rapidcsv::Document doc(filename, rapidcsv::LabelParams(0, 0));
-			unsigned int rowIndex;
-			try {
-				unsigned int numRows = doc.GetRowCount();
-				// gets the row number containing the username
-				for (unsigned int i = 0; i < numRows; ++i) {
-					if (username == doc.GetCell<string>(0, i)) {
-						rowIndex = i;
-					}
-				}
-				// sets the password cell with the new password
-				// column for password = 1
-				doc.SetCell(1, rowIndex, newPassword);
-				cout << "User successfully updated";
-			}
-			catch (...) {
-				cout << "Unable to update user. Please try again." << endl;
-			}
-		}
-	}
+
+void UserDatabase::updateUser(User user) {
+    string tempDBName = "../users.db";
+    const char* dbName = tempDBName.c_str();
+
+    string username = user.getUsername();
+    string password = user.getPassword();
+    int encrypted = user.getEncryptStatus();
+    int isAdmin = user.getAdminStatus();
+
+    sqlite3 *usersDB;
+    string updateQuery = "UPDATE users SET username = ?, password = ?, hash = ?, isAdmin = ? WHERE username = ?";
+
+    try{
+        if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
+            sqlite3_stmt *update = NULL;
+            if (sqlite3_prepare_v2(usersDB, updateQuery.c_str(), updateQuery.length(), &update, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(update, 1, username.c_str(), username.length(), NULL);
+                sqlite3_bind_text(update, 2, password.c_str(), password.length(), NULL);
+                sqlite3_bind_int(update, 3, encrypted);
+                sqlite3_bind_int(update, 4, isAdmin);
+                sqlite3_bind_text(update, 5, username.c_str(), username.length(), NULL);
+
+                sqlite3_step(update);
+                sqlite3_reset(update);
+            }
+            sqlite3_finalize(update);
+        }
+    }
+    catch (...){
+        cout << "Error updating user." << endl;
+    }
 }
-*/
+
+void UserDatabase::updateUserPassword() {
+    string username;
+    string password;
+
+    cout << "Please enter username of user whose password will be updated: " << endl;
+    cin >> username;
+
+    User user = searchUser(username);
+    if(user.getUsername() != "none"){
+        cout << "Please enter new password: " << endl;
+        cin >> password;
+
+        // instantiates md5 object for hashing
+        MD5 md5;
+        // hashes input password
+        string hashedPassword = md5(password);
+
+        user.setPassword(hashedPassword);
+        updateUser(user);
+    }
+    else{
+        cout << "Username not found" << endl;
+    }
+}

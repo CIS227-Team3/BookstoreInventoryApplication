@@ -165,7 +165,7 @@ void adminMenu(UserDatabase &users) {
                 break;
             }
             case 3: {
-
+                users.updateUserPassword();
                 break;
             }
             case 4: {
