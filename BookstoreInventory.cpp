@@ -17,7 +17,7 @@ void BookstoreInventory::listInventory() {
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
 	cout << "Loading books..." << endl;
-    string filePath = "books.db";
+    string filePath = "../books.db";
     readBooksFile(filePath, Inventory);
     cout << "Finished loading books. " << endl;
 }
@@ -66,7 +66,7 @@ Book BookstoreInventory::searchForBook(string title) {
 
 // Adds a new book to the database
 void BookstoreInventory::addBook(Book book) {
-    string tempDBName = "books.db";
+    string tempDBName = "../books.db";
     const char* dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
@@ -121,7 +121,7 @@ void BookstoreInventory::addBook(Book book) {
 
 // deletes a book from the database
 void BookstoreInventory::deleteBook(string title) {
-    string tempDBName = "books.db";
+    string tempDBName = "../books.db";
     const char* dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
@@ -165,7 +165,7 @@ void BookstoreInventory::deleteBook(string title) {
 
 // updates the description of a book already in inventory
 void BookstoreInventory::updateDescription(string title, string description) {
-    string tempDBName = "books.db";
+    string tempDBName = "../books.db";
     const char* dbName = tempDBName.c_str();
 
     Book bookUpdate;
@@ -208,7 +208,7 @@ void BookstoreInventory::updateDescription(string title, string description) {
 
 // updates the genre of a book already in inventory
 void BookstoreInventory::updateGenre(string title, string genre) {
-    string tempDBName = "books.db";
+    string tempDBName = "../books.db";
     const char* dbName = tempDBName.c_str();
 
     Book bookUpdate;
