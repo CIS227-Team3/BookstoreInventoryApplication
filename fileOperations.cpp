@@ -54,7 +54,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 			string genre = (const char*)sqlite3_column_text(query, 6); // column 6 contains genre
 			
 			// creates a book object and adds it to inventory
-			Book book(ISBN, title, author, year, publisher, description, genre);
+			Book book(ISBN, title, author, year, publisher, description, genre, 10, 1);
 			Inventory.push_back(book);
 		}
 
@@ -73,7 +73,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 
 //Reads from a file of users
 void readUsersFile(list<User> &Users) {
-	string tmpFilename = "users.db";
+	string tmpFilename = "../users.db";
 	const char* filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 
 	string rowCountQuery = "SELECT COUNT(*) FROM users as rowCount";
@@ -112,7 +112,7 @@ void readUsersFile(list<User> &Users) {
 				password = (const char*)sqlite3_column_text(query, 1); // column 1 contains password
 				isHashed = sqlite3_column_int(query, 2); // column 2 contains hash status
 
-				User user(username, password, isHashed);
+				User user(username, password, isHashed, 1);
 				Users.push_back(user);
 			}
 

@@ -8,6 +8,8 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "BookstoreInventory.h"
+#include "UserDatabase.h"
 
 using namespace std;
 
@@ -19,3 +21,7 @@ void printAndClearError();
 
 short validateMenuOption();
 unsigned short int validateYear();
+
+void inventoryManagementOptions(BookstoreInventory &inventory);
+
+void adminMenu(UserDatabase &users);

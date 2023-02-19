@@ -54,7 +54,7 @@ int User::getEncryptStatus() {
 }
 
 void User::setAdminStatus(int isAdmin) {
-	this->isAdmin;
+	this->isAdmin = isAdmin;
 }
 
 int User::getAdminStatus() {

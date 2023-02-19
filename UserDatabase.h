@@ -17,9 +17,8 @@ using namespace std;
 class UserDatabase {
 public:
     UserDatabase();
-
-    // void addUser();
-    // void updateUser();
+    void updateUserPassword();
+    void addUser();
     bool loginUser(string username, string password);
     User getCurrentUser();
 
@@ -27,8 +26,9 @@ private:
     list<User> Users;
     User currentUser;
     void addInitialUsers();
-    // bool searchUser(string username); // searches for user based on username
-    
+    User searchUser(const string& username); // searches for user based on username
+    static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
+    void updateUser(User user);
 };
 
 
