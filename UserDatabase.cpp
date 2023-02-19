@@ -47,21 +47,20 @@ User UserDatabase::getCurrentUser() {
     return this->currentUser;
 }
 
-User UserDatabase::searchUser(string username) {
+User UserDatabase::searchUser(const string& username) {
     const char* dbName = "../users.db";
     User user;
 
     sqlite3 *usersDB;
-    string findQuery = "SELECT * FROM USERS where username = '" + username + "';";
+    string findQuery = "SELECT * FROM USERS where username = ?";
 
     try{
         if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
-            sqlite3_stmt *select = NULL;
-            if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &select, nullptr) == SQLITE_OK) {
-                sqlite3_bind_text(select, 1, username.c_str(), username.length(), NULL);
-
-                sqlite3_exec(usersDB, findQuery.c_str(), this->searchUserCallback, &user, nullptr);
-                sqlite3_reset(select);
+            sqlite3_stmt *find = NULL;
+            if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(find, 1, username.c_str(), username.length(), NULL);
+                sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserCallback, &user, nullptr);
+                sqlite3_reset(find);
             }
         }
     }
@@ -191,12 +190,12 @@ void UserDatabase::updateUserPassword() {
     string password;
 
     cout << "Please enter username of user whose password will be updated: " << endl;
-    cin >> username;
+    getline(cin, username);
 
     User user = searchUser(username);
     if(user.getUsername() != "none"){
         cout << "Please enter new password: " << endl;
-        cin >> password;
+        getline(cin, password);
 
         // instantiates md5 object for hashing
         MD5 md5;
