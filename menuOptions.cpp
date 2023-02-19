@@ -85,18 +85,17 @@ float validatePrice() {
 }
 
 unsigned int validateQuantity() {
-	unsigned int quantity;
+    unsigned int quantity;
 
-	while (true) {
-		if (std::cin >> quantity) {
-			cin.ignore(1000, '\n');
-			return quantity;
-		}
-
-		else {
-			printAndClearError();
-		}
-	}
+    while (true) {
+        if (std::cin >> quantity) {
+            cin.ignore(1000, '\n');
+            return quantity;
+        } else {
+            printAndClearError();
+        }
+    }
+}
 
 void inventoryManagementOptions(BookstoreInventory &inventory){
     short int menuOption = 1;
