@@ -70,3 +70,33 @@ unsigned short int validateYear() {
         }
     }
 }
+
+float validatePrice() {
+	float msrp;
+
+	while (true) {
+		if (std::cin >> msrp) {
+			cin.ignore(1000, '\n');
+			return msrp;
+		}
+
+		else {
+			printAndClearError();
+		}
+	}
+}
+
+unsigned int validateQuantity() {
+	unsigned int quantity;
+
+	while (true) {
+		if (std::cin >> quantity) {
+			cin.ignore(1000, '\n');
+			return quantity;
+		}
+
+		else {
+			printAndClearError();
+		}
+	}
+}

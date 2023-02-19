@@ -42,6 +42,8 @@ int main() {
 	string publisher;
 	string description;
 	string genre;
+	float msrp;
+	int quantity;
 
     cout << "---------------------------" << endl;
     cout << "Thank you for using BOOKIN!" << endl;
@@ -84,9 +86,13 @@ int main() {
                     year = validateYear(); // validates that the year entered is an integer
                     cout << "Add Publisher: " << endl;
                     getline(cin, publisher);
+                    cout << "Add Price: " << endl;
+                    msrp = validatePrice();
+                    cout << "Add Quantity: " << endl;
+                    quantity = validateQuantity();
 
                     // By default, user does not have to enter a description or a genre at the time it is added to the database
-                    Book book(ISBN, title, author, year, publisher, "", "");
+                    Book book(ISBN, title, author, year, publisher, "", "", msrp, quantity);
 
                     // adds book to inventory
                     inventory.addBook(book);
@@ -131,20 +137,6 @@ int main() {
                 case 8:
                 {
                     inventory.exportInventoryToCsv();
-                    break;
-                }
-		case 9:
-                {
-                    cout << "Welcome to the shopping cart!" << endl;
-                    cout << "Please enter the title of the book you want to purchase: " << endl;
-                    getline(cin, title);
-                    //add book to shoppingcart with random price
-                    break;
-                }
-                case 10:
-                {
-                    cout << "Here is a list of everything in your cart:" << endl;
-                    //print shopping cart
                     break;
                 }
                 default:
