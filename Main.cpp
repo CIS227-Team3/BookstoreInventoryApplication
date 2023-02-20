@@ -66,27 +66,23 @@ int main() {
                     adminMenu(users);
                     break;
                 }
-                case 4:
-                {
+                case 4: {
                     cout << "Please enter title of book to add:" << endl;
                     getline(cin, title);
                     foundBook = inventory.searchForBook(title);
                     currentUser.addToUserList(foundBook);
                     break;
                 }
-                case 5:
-                {
+                case 5: {
                     currentUser.listUserList();
                     break;
                 }
-                case 6:
-                {
+                case 6: {
                     inventory.exportInventoryToCsv();
                     break;
                 }
 
-		case 7:
-                {
+                case 7: {
                     cout << "Welcome to the shopping cart!" << endl;
                     cout << "Please enter the title of the book you want to purchase: " << endl;
                     getline(cin, title);
@@ -94,14 +90,12 @@ int main() {
                     currentUser.addToUserShoppingList(foundBook);
                     break;
                 }
-                case 8:
-                {
+                case 8: {
                     cout << "Here is a list of everything in your cart:" << endl;
                     currentUser.listUserShoppingList();
                     break;
                 }
-                default:
-                {
+                default: {
                     cout << "Menu option not recognized." << endl;
                     break;
                 }

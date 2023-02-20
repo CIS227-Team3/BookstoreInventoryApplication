@@ -19,7 +19,8 @@ class Book {
 public:
     Book();
 
-    Book(const string &isbn, const string &title, const string &author, int year, const string &publisher, const float &msrp, const int &quantity);
+    Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
+         const float &msrp, const int &quantity);
 
     Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
          const string &description, const string &genre, const float &msrp, const int &quantity);
@@ -35,8 +36,7 @@ public:
     unsigned int quantity;
 
     // custom compare for set based on price
-    bool operator< (const Book & msgObj) const
-    {
+    bool operator<(const Book &msgObj) const {
         float right = msgObj.msrp;
         float left = this->msrp;
         return (left < right);

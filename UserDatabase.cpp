@@ -14,20 +14,20 @@ void UserDatabase::addInitialUsers() {
 
 bool UserDatabase::loginUser(string username, string password) {
     bool loginUser = false;
-	// instantiates md5 object for hashing
+    // instantiates md5 object for hashing
     MD5 md5;
-	// hashes input password
+    // hashes input password
     string hashedPassword = md5(password);
 
     // searches for the username in the Users list
-    for (auto const& user : Users) {
+    for (auto const &user: Users) {
         if (username.compare(user.getUsername()) == 0) {
             cout << "Username: " << user.getUsername() << endl;
 
             // makes sure that the password matches
             if (hashedPassword.compare(user.getPassword()) == 0) {
                 loginUser = true;
-				// stores the username of the logged-in user
+                // stores the username of the logged-in user
                 this->currentUser = user;
             } else {
                 cout << "Incorrect password entered. Please re-try login" << endl;
@@ -47,14 +47,14 @@ User UserDatabase::getCurrentUser() {
     return this->currentUser;
 }
 
-User UserDatabase::searchUser(const string& username) {
-    const char* dbName = "../users.db";
+User UserDatabase::searchUser(const string &username) {
+    const char *dbName = "../users.db";
     User user;
 
     sqlite3 *usersDB;
     string findQuery = "SELECT * FROM USERS where username = ?";
 
-    try{
+    try {
         if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
             sqlite3_stmt *find = NULL;
             if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
@@ -64,33 +64,33 @@ User UserDatabase::searchUser(const string& username) {
             }
         }
     }
-    catch (...){
+    catch (...) {
         cout << "Error finding user in database." << endl;
     }
-	return user;
+    return user;
 }
 
 void UserDatabase::addUser() {
-	string username;
-	string password;
+    string username;
+    string password;
     short int hashed = 1; //default because password gets hashed on entry
     short int isAdmin;
 
     string tempDBName = "../users.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     sqlite3 *usersDB;
     string insertQuery = "INSERT INTO users VALUES(?, ?, ?, ?)";
 
-	// prompts user to enter a username
-	cout << "Please enter a username: " << endl;
-	cin >> username;
-	// checks to make sure that user does not already exist
+    // prompts user to enter a username
+    cout << "Please enter a username: " << endl;
+    cin >> username;
+    // checks to make sure that user does not already exist
     User user = searchUser(username);
-	if (user.getUsername() == "none") {
-		// prompts user to enter a password
-		cout << "Please enter a password: " << endl;
-		cin >> password;
+    if (user.getUsername() == "none") {
+        // prompts user to enter a password
+        cout << "Please enter a password: " << endl;
+        cin >> password;
 
         // instantiates md5 object for hashing
         MD5 md5;
@@ -110,10 +110,11 @@ void UserDatabase::addUser() {
             }
         }
 
-        try{
+        try {
             if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
                 sqlite3_stmt *insert = NULL;
-                if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) == SQLITE_OK) {
+                if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
+                    SQLITE_OK) {
                     sqlite3_bind_text(insert, 1, username.c_str(), username.length(), NULL);
                     sqlite3_bind_text(insert, 2, hashedPassword.c_str(), hashedPassword.length(), NULL);
                     sqlite3_bind_int(insert, 3, hashed);
@@ -127,11 +128,10 @@ void UserDatabase::addUser() {
                 sqlite3_finalize(insert);
             }
         }
-        catch (...){
+        catch (...) {
             cout << "Error adding user to database." << endl;
         }
-	}
-    else{
+    } else {
         cout << "Username already taken" << endl;
     }
 }
@@ -143,7 +143,7 @@ int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **a
     // (array) azColName: holds each column returned
     // (array) argv: holds each value
     // only goes in here if statement finds user
-    User* user = static_cast<User*>(data); // cast data to user object
+    User *user = static_cast<User *>(data); // cast data to user object
     user->setUsername(argv[0]);
     user->setPassword(argv[1]);
     user->setEncryptStatus(stoi(argv[2]));
@@ -154,7 +154,7 @@ int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **a
 
 void UserDatabase::updateUser(User user) {
     string tempDBName = "../users.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     string username = user.getUsername();
     string password = user.getPassword();
@@ -164,7 +164,7 @@ void UserDatabase::updateUser(User user) {
     sqlite3 *usersDB;
     string updateQuery = "UPDATE users SET username = ?, password = ?, hash = ?, isAdmin = ? WHERE username = ?";
 
-    try{
+    try {
         if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
             sqlite3_stmt *update = NULL;
             if (sqlite3_prepare_v2(usersDB, updateQuery.c_str(), updateQuery.length(), &update, nullptr) == SQLITE_OK) {
@@ -180,7 +180,7 @@ void UserDatabase::updateUser(User user) {
             sqlite3_finalize(update);
         }
     }
-    catch (...){
+    catch (...) {
         cout << "Error updating user." << endl;
     }
 }
@@ -193,7 +193,7 @@ void UserDatabase::updateUserPassword() {
     getline(cin, username);
 
     User user = searchUser(username);
-    if(user.getUsername() != "none"){
+    if (user.getUsername() != "none") {
         cout << "Please enter new password: " << endl;
         getline(cin, password);
 
@@ -204,8 +204,7 @@ void UserDatabase::updateUserPassword() {
 
         user.setPassword(hashedPassword);
         updateUser(user);
-    }
-    else{
+    } else {
         cout << "Username not found" << endl;
     }
 }

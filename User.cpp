@@ -46,19 +46,19 @@ string User::getPassword() const {
 }
 
 void User::setEncryptStatus(int hashed) {
-	this->hashed = hashed;
+    this->hashed = hashed;
 }
 
 int User::getEncryptStatus() {
-	return hashed;
+    return hashed;
 }
 
 void User::setAdminStatus(int isAdmin) {
-	this->isAdmin = isAdmin;
+    this->isAdmin = isAdmin;
 }
 
 int User::getAdminStatus() {
-	return isAdmin;
+    return isAdmin;
 }
 
 //Updates Password
@@ -78,10 +78,12 @@ void User::listUserList() {
 
 //Lists user's shopping list in terminal
 void User::listUserShoppingList() {
-    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity" << endl;
+    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
+         << endl;
     for (auto &book: this->UserShoppingList) {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
-             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | " << book.quantity <<endl;
+             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
+             << book.quantity << endl;
     }
 }
 
