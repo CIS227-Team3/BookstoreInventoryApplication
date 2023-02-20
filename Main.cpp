@@ -90,13 +90,14 @@ int main() {
                     cout << "Welcome to the shopping cart!" << endl;
                     cout << "Please enter the title of the book you want to purchase: " << endl;
                     getline(cin, title);
-                    //add book to shoppingcart with random price
+                    foundBook = inventory.searchForBook(title);
+                    currentUser.addToUserShoppingList(foundBook);
                     break;
                 }
                 case 8:
                 {
                     cout << "Here is a list of everything in your cart:" << endl;
-                    //print shopping cart
+                    currentUser.listUserShoppingList();
                     break;
                 }
                 default:

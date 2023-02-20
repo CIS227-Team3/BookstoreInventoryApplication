@@ -76,6 +76,19 @@ void User::listUserList() {
     cout << "Total items in list: " << this->UserList.size();
 }
 
+//Lists user's shopping list in terminal
+void User::listUserShoppingList() {
+    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity" << endl;
+    for (auto &book: this->UserShoppingList) {
+        cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
+             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | " << book.quantity <<endl;
+    }
+}
+
 void User::addToUserList(Book book) {
     this->UserList.push_back(book);
+}
+
+void User::addToUserShoppingList(Book book) {
+    this->UserShoppingList.insert(book);
 }

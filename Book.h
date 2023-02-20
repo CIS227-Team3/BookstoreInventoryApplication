@@ -34,6 +34,14 @@ public:
     float msrp;
     unsigned int quantity;
 
+    // custom compare for set based on price
+    bool operator< (const Book & msgObj) const
+    {
+        float right = msgObj.msrp;
+        float left = this->msrp;
+        return (left < right);
+    }
+
 private:
     float generatePrice();
 };
