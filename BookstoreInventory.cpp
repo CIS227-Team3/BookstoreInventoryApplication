@@ -7,17 +7,19 @@ BookstoreInventory::BookstoreInventory() {
 
 //Lists inventory in terminal
 void BookstoreInventory::listInventory() {
-    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre " << endl;
+    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity" << endl;
     for (auto &book: this->Inventory) {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
-             << book.publisher << " | " << book.description << " | " << book.genre << endl;
+             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | " << book.quantity <<endl;
     }
 }
 
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
+	cout << "Loading books..." << endl;
     string filePath = "../books.db";
     readBooksFile(filePath, Inventory);
+    cout << "Finished loading books. " << endl;
 }
 
 //Watches for Cases, so we can use lower or upper case characters
@@ -36,23 +38,29 @@ Book BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
     cout << "Searching database for book with title " << title << endl;
 
-	for (auto &book: this->Inventory) { // searches inventory for exact match in title
-		if (caseInsensitiveMatch(book.title, title)) { // if a match is found, information is output
-			cout << "Book details: " << endl;
-			cout << "ISBN: " << book.ISBN << endl;
-			cout << "Title: " << book.title << endl;
-			cout << "Author: " << book.author << endl;
-			cout << "Year Published: " << book.year << endl;
-			cout << "Publisher: " << book.publisher << endl;
-			cout << "Description: " << book.description << endl;
-			cout << "Genre: " << book.genre << endl;
-			bookFound = true;
-			return book;
+    while(!bookFound){
+		for (auto &book: this->Inventory) {
+			if (caseInsensitiveMatch(book.title, title)) {
+				cout << "Book details: " << endl;
+				cout << "ISBN: " << book.ISBN << endl;
+				cout << "Title: " << book.title << endl;
+				cout << "Author: " << book.author << endl;
+				cout << "Year Published: " << book.year << endl;
+				cout << "Publisher: " << book.publisher << endl;
+				cout << "Description: " << book.description << endl;
+				cout << "Genre: " << book.genre << endl;
+				cout << "Price: $" << book.msrp << endl;
+				cout << "Quantity in Stock: " << book.quantity << endl;
+				bookFound = true;
+				return book;
+			}
 		}
-	}
 
-    if (!bookFound) {
-		cout << "Book with title " << title << " not found." << endl;
+		if (!bookFound) {
+			cout << "Book with title " << title << " not found." << endl;
+			cout << "Enter another title to search:" << endl;
+			getline(cin, title);
+		}
 	}
 }
 
@@ -62,7 +70,7 @@ void BookstoreInventory::addBook(Book book) {
     const char* dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
-    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
@@ -76,6 +84,8 @@ void BookstoreInventory::addBook(Book book) {
                 string publisher = book.publisher;
                 string description = book.description;
                 string genre = book.genre;
+                float msrp = book.msrp;
+                int quantity = book.quantity;
 
                 // binds values to ? in prepared insert query statement
                 // text (statementName, paramNum, value (converted to c_str), length of value, pointer)
@@ -87,6 +97,8 @@ void BookstoreInventory::addBook(Book book) {
                 sqlite3_bind_text(insert, 5, publisher.c_str(), publisher.length(), NULL);
                 sqlite3_bind_text(insert, 6, description.c_str(), description.length(), NULL);
                 sqlite3_bind_text(insert, 7, genre.c_str(), genre.length(), NULL);
+                sqlite3_bind_double(insert, 8, msrp);
+                sqlite3_bind_int(insert, 9, quantity);
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
@@ -207,7 +219,7 @@ void BookstoreInventory::updateGenre(string title, string genre) {
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
 
-            sqlite3_stmt *update = NULL;
+            sqlite3_stmt *update;
             if (sqlite3_prepare_v2(bookDB, updateQuery.c_str(), updateQuery.length(), &update, nullptr) == SQLITE_OK) {
 
                 // binds values to ? in prepared insert query statement

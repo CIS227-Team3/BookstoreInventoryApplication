@@ -22,6 +22,9 @@ void printAndClearError();
 short validateMenuOption();
 unsigned short int validateYear();
 
+float validatePrice();
+unsigned int validateQuantity();
+
 void inventoryManagementOptions(BookstoreInventory &inventory);
 
 void adminMenu(UserDatabase &users);

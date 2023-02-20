@@ -84,6 +84,7 @@ int main() {
                     inventory.exportInventoryToCsv();
                     break;
                 }
+
 		case 7:
                 {
                     cout << "Welcome to the shopping cart!" << endl;

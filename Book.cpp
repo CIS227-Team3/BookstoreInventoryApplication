@@ -32,14 +32,11 @@ Book::Book() {
     quantity = 1;
 }
 
-Book::Book(const string &isbn, const string &title, const string &author, int year, const string &publisher) {
-	ISBN = isbn;
-	this->title = title;
-	this->author = author;
-	this->year = year;
-	this->publisher = publisher;
-	msrp = generatePrice();
-	quantity = 1;
+Book::Book(const string &isbn, const string &title, const string &author, int year,
+		   const string &publisher, const float &msrp, const int &quantity) :
+		ISBN(isbn), title(title), author(author), year(year),
+		publisher(publisher), msrp(msrp), quantity(quantity) {
+
 }
 
 Book::Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,

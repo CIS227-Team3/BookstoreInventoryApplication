@@ -23,7 +23,6 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 		// gets the number of rows in the database
 		// checks that database opened successfully
 		if (sqlite3_open(filename, &bookDB) == SQLITE_OK) {
-			cout << "Database opened successfully" << endl;
 
 			// instantiates statement object
 			sqlite3_stmt *rowCount;
@@ -32,7 +31,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 			// checks that the end of the database rows has not been reached
 			if (sqlite3_step(rowCount) != SQLITE_DONE) {
 				numRows = sqlite3_column_int(rowCount, 0); // row count is in the first (and only) column
-				cout << "Number of rows: " << numRows << endl;
+				cout << "Number of books found: " << numRows << endl;
 			}
 
 			// sql statement destructor
@@ -52,9 +51,11 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 			string publisher = (const char*)sqlite3_column_text(query, 4); // column 4 contains publisher
 			string description = (const char*)sqlite3_column_text(query, 5); // column 5 contains description
 			string genre = (const char*)sqlite3_column_text(query, 6); // column 6 contains genre
-			
+			float msrp = sqlite3_column_double(query, 7); // column 7 contains msrp
+			int quantity = sqlite3_column_int(query, 8); // column 8 contains quantity
+
 			// creates a book object and adds it to inventory
-			Book book(ISBN, title, author, year, publisher, description, genre, 10, 1);
+			Book book(ISBN, title, author, year, publisher, description, genre, msrp, quantity);
 			Inventory.push_back(book);
 		}
 
@@ -83,6 +84,7 @@ void readUsersFile(list<User> &Users) {
 	string username;
 	string password;
 	int isHashed;
+	int isAdmin;
 
 	// declares userDB connection
 	sqlite3 *userDB;
@@ -96,7 +98,7 @@ void readUsersFile(list<User> &Users) {
 
 			if (sqlite3_step(rowCount) != SQLITE_DONE) {
 				numRows = sqlite3_column_int(rowCount, 0);
-				cout << "Number of rows: " << numRows << endl;
+				// cout << "Number of rows: " << numRows << endl;
 			}
 
 			// statement destructor
@@ -111,8 +113,9 @@ void readUsersFile(list<User> &Users) {
 				username = (const char*)sqlite3_column_text(query, 0); // column 0 contains username
 				password = (const char*)sqlite3_column_text(query, 1); // column 1 contains password
 				isHashed = sqlite3_column_int(query, 2); // column 2 contains hash status
+				isAdmin = sqlite3_column_int(query, 3);
 
-				User user(username, password, isHashed, 1);
+				User user(username, password, isHashed, isAdmin);
 				Users.push_back(user);
 			}
 
@@ -132,7 +135,7 @@ void writeBooksFile(deque<Book> &Inventory) {
     string filename = "../printBooks.csv";
     ofstream out(filename, std::ios::out);
     cout << "File can be found as: " << filename << endl;
-    out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher,Genre,Description" << endl;
+    out << "ISBN,Book-Title,Book-Author,Year-Of-Publication,Publisher,Genre,Description,MSRP,Quantity" << endl;
 
     for (auto &book: Inventory) {
         out << book.ISBN << ",";
@@ -141,7 +144,9 @@ void writeBooksFile(deque<Book> &Inventory) {
         out << book.year << ",";
         out << book.publisher << ",";
         out << book.genre << ",";
-        out << book.description << "," << endl;
+        out << book.description << ",";
+        out << book.msrp << ",";
+        out << book.quantity << "," << endl;
     }
 
     out.close();
