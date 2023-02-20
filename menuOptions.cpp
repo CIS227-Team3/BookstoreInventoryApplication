@@ -21,7 +21,7 @@ short int menuOptions() {
     short int userInput;
 
     // prompts user to enter command
-    cout << endl << endl <<"Press 0 to exit application." << endl;
+    cout << endl << endl << "Press 0 to exit application." << endl;
     cout << "Press 1 to bring up this menu again." << endl;
     cout << "Press 2 to bring up the book management menu." << endl;
     cout << "Press 3 to bring up the user management menu." << endl;
@@ -61,27 +61,23 @@ unsigned short int validateYear() {
         if (std::cin >> year) {
             cin.ignore(1000, '\n');
             return year;
-        }
-
-        else {
+        } else {
             printAndClearError();
         }
     }
 }
 
 float validatePrice() {
-	float msrp;
+    float msrp;
 
-	while (true) {
-		if (std::cin >> msrp) {
-			cin.ignore(1000, '\n');
-			return msrp;
-		}
-
-		else {
-			printAndClearError();
-		}
-	}
+    while (true) {
+        if (std::cin >> msrp) {
+            cin.ignore(1000, '\n');
+            return msrp;
+        } else {
+            printAndClearError();
+        }
+    }
 }
 
 unsigned int validateQuantity() {
@@ -97,7 +93,7 @@ unsigned int validateQuantity() {
     }
 }
 
-void inventoryManagementOptions(BookstoreInventory &inventory){
+void inventoryManagementOptions(BookstoreInventory &inventory) {
     short int menuOption = 1;
     string title;
     string ISBN;
@@ -107,21 +103,19 @@ void inventoryManagementOptions(BookstoreInventory &inventory){
     string description;
     string genre;
 
-    while(menuOption != 0){
+    while (menuOption != 0) {
         switch (menuOption) {
             case 1: {
                 // do nothing so the menu will prompt on loop
                 break;
             }
-            case 2:
-            {
+            case 2: {
                 cout << "Please enter a title to search: " << endl;
                 getline(cin, title);
                 inventory.searchForBook(title);
                 break;
             }
-            case 3:
-            {
+            case 3: {
                 cout << "Please add the following information. " << endl;
                 cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher: " << endl;
                 cout << "Add ISBN: " << endl;
@@ -142,15 +136,13 @@ void inventoryManagementOptions(BookstoreInventory &inventory){
                 inventory.addBook(book);
                 break;
             }
-            case 4:
-            {
+            case 4: {
                 cout << "Please enter title of book to delete:" << endl;
                 getline(cin, title);
                 inventory.deleteBook(title);
                 break;
             }
-            case 5:
-            {
+            case 5: {
                 cout << "Please enter title: " << endl;
                 getline(cin, title);
                 cout << "Please enter description/plot: " << endl;
@@ -163,13 +155,12 @@ void inventoryManagementOptions(BookstoreInventory &inventory){
                 inventory.updateGenre(title, genre);
                 break;
             }
-            default:
-            {
+            default: {
                 cout << "Menu option not recognized." << endl;
                 break;
             }
         }
-        cout << endl << endl <<"Press 0 to exit this menu." << endl;
+        cout << endl << endl << "Press 0 to exit this menu." << endl;
         cout << "Press 1 to bring up this menu again." << endl;
         cout << "Press 2 to search for a book." << endl;
         cout << "Press 3 to add a book to inventory." << endl;
@@ -182,7 +173,7 @@ void inventoryManagementOptions(BookstoreInventory &inventory){
 void adminMenu(UserDatabase &users) {
     short int menuOption = 1;
 
-    while(menuOption != 0){
+    while (menuOption != 0) {
         switch (menuOption) {
             case 1: {
                 // do nothing so the menu will prompt on loop
@@ -204,13 +195,12 @@ void adminMenu(UserDatabase &users) {
 
                 break;
             }
-            default:
-            {
+            default: {
                 cout << "Menu option not recognized." << endl;
                 break;
             }
         }
-        cout << endl << endl <<"Press 0 to exit this menu." << endl;
+        cout << endl << endl << "Press 0 to exit this menu." << endl;
         cout << "Press 1 to bring up this menu again." << endl;
         cout << "Press 2 to add a user." << endl;
         cout << "Press 3 to change a users password." << endl;

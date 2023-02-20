@@ -7,16 +7,18 @@ BookstoreInventory::BookstoreInventory() {
 
 //Lists inventory in terminal
 void BookstoreInventory::listInventory() {
-    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity" << endl;
+    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
+         << endl;
     for (auto &book: this->Inventory) {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
-             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | " << book.quantity <<endl;
+             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
+             << book.quantity << endl;
     }
 }
 
 //Adds initial inventory of file path
 void BookstoreInventory::addInitialInventory() {
-	cout << "Loading books..." << endl;
+    cout << "Loading books..." << endl;
     string filePath = "../books.db";
     readBooksFile(filePath, Inventory);
     cout << "Finished loading books. " << endl;
@@ -38,36 +40,36 @@ Book BookstoreInventory::searchForBook(string title) {
     bool bookFound = false;
     cout << "Searching database for book with title " << title << endl;
 
-    while(!bookFound){
-		for (auto &book: this->Inventory) {
-			if (caseInsensitiveMatch(book.title, title)) {
-				cout << "Book details: " << endl;
-				cout << "ISBN: " << book.ISBN << endl;
-				cout << "Title: " << book.title << endl;
-				cout << "Author: " << book.author << endl;
-				cout << "Year Published: " << book.year << endl;
-				cout << "Publisher: " << book.publisher << endl;
-				cout << "Description: " << book.description << endl;
-				cout << "Genre: " << book.genre << endl;
-				cout << "Price: $" << book.msrp << endl;
-				cout << "Quantity in Stock: " << book.quantity << endl;
-				bookFound = true;
-				return book;
-			}
-		}
+    while (!bookFound) {
+        for (auto &book: this->Inventory) {
+            if (caseInsensitiveMatch(book.title, title)) {
+                cout << "Book details: " << endl;
+                cout << "ISBN: " << book.ISBN << endl;
+                cout << "Title: " << book.title << endl;
+                cout << "Author: " << book.author << endl;
+                cout << "Year Published: " << book.year << endl;
+                cout << "Publisher: " << book.publisher << endl;
+                cout << "Description: " << book.description << endl;
+                cout << "Genre: " << book.genre << endl;
+                cout << "Price: $" << book.msrp << endl;
+                cout << "Quantity in Stock: " << book.quantity << endl;
+                bookFound = true;
+                return book;
+            }
+        }
 
-		if (!bookFound) {
-			cout << "Book with title " << title << " not found." << endl;
-			cout << "Enter another title to search:" << endl;
-			getline(cin, title);
-		}
-	}
+        if (!bookFound) {
+            cout << "Book with title " << title << " not found." << endl;
+            cout << "Enter another title to search:" << endl;
+            getline(cin, title);
+        }
+    }
 }
 
 // Adds a new book to the database
 void BookstoreInventory::addBook(Book book) {
     string tempDBName = "../books.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
     string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -77,7 +79,7 @@ void BookstoreInventory::addBook(Book book) {
 
             sqlite3_stmt *insert = NULL;
             if (sqlite3_prepare_v2(bookDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) == SQLITE_OK) {
-                string ISBN = book.ISBN; 
+                string ISBN = book.ISBN;
                 string title = book.title;
                 string author = book.author;
                 int year = book.year;
@@ -110,7 +112,7 @@ void BookstoreInventory::addBook(Book book) {
 
     }
 
-    catch(...) {
+    catch (...) {
         cout << "Error adding book to database." << endl;
     }
 
@@ -122,7 +124,7 @@ void BookstoreInventory::addBook(Book book) {
 // deletes a book from the database
 void BookstoreInventory::deleteBook(string title) {
     string tempDBName = "../books.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
     string deleteQuery = "DELETE FROM books WHERE title = ?";
@@ -143,19 +145,19 @@ void BookstoreInventory::deleteBook(string title) {
 
                 deque<Book>::iterator bookToDel = Inventory.begin();
                 for (auto bookToDel = Inventory.begin(); bookToDel != Inventory.end(); ++bookToDel) {
-                	Book delBook = *bookToDel;
-					if (caseInsensitiveMatch(title, delBook.title)) {
-						Inventory.erase(bookToDel);
-						cout << "Book with title " << title << " has been successfully deleted from database." << endl;
-						break;
-					}
-				}
+                    Book delBook = *bookToDel;
+                    if (caseInsensitiveMatch(title, delBook.title)) {
+                        Inventory.erase(bookToDel);
+                        cout << "Book with title " << title << " has been successfully deleted from database." << endl;
+                        break;
+                    }
+                }
             }
             sqlite3_finalize(del);
         }
     }
 
-    catch(...) {
+    catch (...) {
         cout << "Error deleting book from database." << endl;
     }
 
@@ -166,7 +168,7 @@ void BookstoreInventory::deleteBook(string title) {
 // updates the description of a book already in inventory
 void BookstoreInventory::updateDescription(string title, string description) {
     string tempDBName = "../books.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     Book bookUpdate;
 
@@ -192,14 +194,14 @@ void BookstoreInventory::updateDescription(string title, string description) {
         }
 
         for (unsigned int i = 0; i < Inventory.size(); ++i) {
-        	if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
-        		Inventory.at(i).description = description;
-        		cout << "Description of book with title " << title << " successfully updated in database." << endl;
-        	}
+            if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
+                Inventory.at(i).description = description;
+                cout << "Description of book with title " << title << " successfully updated in database." << endl;
+            }
         }
     }
 
-    catch(...) {
+    catch (...) {
         cout << "Error updating book in database." << endl;
     }
 
@@ -209,7 +211,7 @@ void BookstoreInventory::updateDescription(string title, string description) {
 // updates the genre of a book already in inventory
 void BookstoreInventory::updateGenre(string title, string genre) {
     string tempDBName = "../books.db";
-    const char* dbName = tempDBName.c_str();
+    const char *dbName = tempDBName.c_str();
 
     Book bookUpdate;
 
@@ -236,14 +238,14 @@ void BookstoreInventory::updateGenre(string title, string genre) {
 
         // gets book object with matching title
         for (unsigned int i = 0; i < Inventory.size(); ++i) {
-			if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
-				Inventory.at(i).genre = genre;
-				cout << "Genre of book with title " << title << " successfully updated in database." << endl;
-			}
-		}
+            if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
+                Inventory.at(i).genre = genre;
+                cout << "Genre of book with title " << title << " successfully updated in database." << endl;
+            }
+        }
     }
 
-    catch(...) {
+    catch (...) {
         cout << "Error updating book in database." << endl;
     }
 

@@ -16,16 +16,24 @@ class BookstoreInventory {
 
 public:
     BookstoreInventory();
+
     void listInventory();
+
     Book searchForBook(string title);
+
     void exportInventoryToCsv();
+
     void addBook(Book book);
+
     void deleteBook(string);
+
     void updateDescription(string title, string description);
+
     void updateGenre(string title, string genre);
 
 private:
     deque<Book> Inventory;
+
     void addInitialInventory();
 };
 
