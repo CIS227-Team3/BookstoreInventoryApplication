@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include <deque>
+#include <set>
 #include "Book.h"
 
 using namespace std;
@@ -38,8 +39,10 @@ public:
     int getAdminStatus();
 
     void listUserList();
+    void listUserShoppingList();
 
     void addToUserList(Book book);
+    void addToUserShoppingList(Book book);
 
 private:
     string username;
@@ -48,6 +51,7 @@ private:
     int isAdmin;
     
     deque<Book> UserList;
+    set<Book> UserShoppingList;
 };
 
 #endif /* USER_H_ */
