@@ -21,6 +21,8 @@ public:
 
     Book searchForBook(string title);
 
+    multiset<Book> searchForBookByISBN(vector<string> isbns);
+
     void exportInventoryToCsv();
 
     void addBook(Book book);

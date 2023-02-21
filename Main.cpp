@@ -87,13 +87,20 @@ int main() {
                     cout << "Please enter the title of the book you want to purchase: " << endl;
                     getline(cin, title);
                     foundBook = inventory.searchForBook(title);
-                    currentUser.addToUserShoppingList(foundBook);
+                    users.addToUserShoppingList(foundBook);
                     break;
                 }
                 case 8: {
                     cout << "Here is a list of everything in your cart:" << endl;
-                    currentUser.listUserShoppingList();
+                    users.listUserShoppingList();
                     break;
+                }
+                case 9 : {
+                    users.saveUserShoppingList();
+                    break;
+                }
+                case 10: {
+                    users.getUserShoppingList(inventory);
                 }
                 default: {
                     cout << "Menu option not recognized." << endl;
