@@ -260,8 +260,8 @@ void BookstoreInventory::exportInventoryToCsv() {
 
 multiset<Book> BookstoreInventory::searchForBookByISBN(vector<string> isbns) {
     multiset<Book> books;
-    
-    for(auto &isbn: isbns){
+
+    for (auto &isbn: isbns) {
         for (auto &book: Inventory) {
             if (book.ISBN == isbn) {
                 books.insert(book);

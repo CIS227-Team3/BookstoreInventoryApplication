@@ -7,6 +7,7 @@
 
 #include <deque>
 #include "User.h"
+#include "BookstoreInventory.h"
 
 //Constructor
 User::User() {
@@ -77,7 +78,7 @@ void User::listUserList() {
 }
 
 //Lists user's shopping list in terminal
-void User::listUserShoppingList() {
+/*void User::listUserShoppingList() {
     cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
          << endl;
     for (auto &book: this->UserShoppingList) {
@@ -85,13 +86,13 @@ void User::listUserShoppingList() {
              << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
              << book.quantity << endl;
     }
-}
+}*/
 
 void User::addToUserList(Book book) {
     this->UserList.push_back(book);
 }
 
-void User::addToUserShoppingList(Book book) {
+/*void User::addToUserShoppingList(Book book) {
     this->UserShoppingList.insert(book);
 }
 
@@ -128,8 +129,7 @@ void User::saveUserShoppingList() {
     }
 }
 
-/*
-void User::getUserShoppingList() {
+void User::getUserShoppingList(BookstoreInventory inventory) {
     string tempDBName = "../users.db";
     const char *dbName = tempDBName.c_str();
 
@@ -145,7 +145,8 @@ void User::getUserShoppingList() {
             sqlite3_stmt *find = NULL;
             if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
                 sqlite3_bind_text(find, 1, username.c_str(), username.length(), NULL);
-                sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserShoppingCartCallback, &bookISBNs, nullptr);
+                sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserShoppingCartCallback, &bookISBNs,
+                             nullptr);
                 sqlite3_reset(find);
             }
         }
@@ -154,10 +155,7 @@ void User::getUserShoppingList() {
         cout << "Error finding user in database." << endl;
     }
 
-    for (auto &isbn : bookISBNs) {
-        Book book = BookstoreInventory::searchForBookByISBN(isbn);
-        addToUserShoppingList(book);
-    }
+    UserShoppingList = inventory.searchForBookByISBN(bookISBNs);
 }
 
 int User::searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName) {
@@ -173,8 +171,7 @@ int User::searchUserShoppingCartCallback(void *data, int argc, char **argv, char
 
     // Keep printing tokens while one of the
     // delimiters present in str[].
-    while (token != NULL)
-    {
+    while (token != NULL) {
         bookISBNs->push_back(token);
         printf("%s\n", token);
         token = strtok(NULL, ",");
