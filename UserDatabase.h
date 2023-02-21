@@ -10,6 +10,7 @@
 #include "User.h"
 #include "fileOperations.h"
 #include "includes/md5.h"
+#include "BookstoreInventory.h"
 
 using namespace std;
 
@@ -34,6 +35,8 @@ public:
     void getUserShoppingList(BookstoreInventory inventory);
 
     void listUserShoppingList();
+
+    void readUsersFile(UserDatabase &users, string filePath);
 
     list<User> Users;
 

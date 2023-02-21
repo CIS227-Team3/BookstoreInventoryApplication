@@ -338,3 +338,29 @@ void UserDatabase::listUserShoppingList() {
              << book.quantity << endl;
     }
 }
+void readUsersFile(UserDatabase &users, string filePath) {
+    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+
+    for (int i = 0; i < doc.GetRowCount(); ++i) {
+        try {
+            string username = doc.GetRowName(i);
+            string password = doc.GetCell<string>("Password", username);
+            int hashed = doc.GetCell<int>("EA Applied", username);
+            int isAdmin = doc.GetCell<int>("Admin", username);
+
+            // instantiates md5 object for hashing
+            MD5 md5;
+            // hashes input password
+            string hashedPassword = md5(password);
+
+            User user(username, hashedPassword, hashed, isAdmin);
+
+            users.addUser(user);
+
+            users.Users.push_back(user);
+        }
+        catch (...) {
+
+        }
+    }
+}

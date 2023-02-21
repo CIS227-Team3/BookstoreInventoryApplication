@@ -271,3 +271,31 @@ multiset<Book> BookstoreInventory::searchForBookByISBN(vector<string> isbns) {
 
     return books;
 }
+
+
+void readBookFile(BookstoreInventory &inventoryObject, string filePath) {
+    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+
+    for (int i = 0; i < doc.GetRowCount(); ++i) {
+        try {
+            string ISBN = doc.GetRowName(i);
+            string title = doc.GetCell<string>("Book-Title", ISBN);
+            string author = doc.GetCell<string>("Book-Author", ISBN);
+            int year = doc.GetCell<int>("Year-Of-Publication", ISBN);
+            string publisher = doc.GetCell<string>("Publisher", ISBN);
+            string description = doc.GetCell<string>("Description", ISBN);
+            string genre = doc.GetCell<string>("Genre", ISBN);
+            float msrp = doc.GetCell<float>("MSRP", ISBN);
+            int quantity = doc.GetCell<int>("Quantity", ISBN);
+
+            Book book(ISBN, title, author, year, publisher, description, genre, msrp, quantity);
+
+            inventoryObject.addBook(book);
+
+            inventoryObject.Inventory.push_back(book);
+        }
+        catch (...) {
+
+        }
+    }
+}

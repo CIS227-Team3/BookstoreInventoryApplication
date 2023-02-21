@@ -17,8 +17,6 @@
 #include <list>
 #include "Book.h"
 #include "User.h"
-#include "BookstoreInventory.h"
-#include "UserDatabase.h"
 
 using namespace std;
 
@@ -27,9 +25,5 @@ void readBooksDatabase(string filePath, deque<Book> &Inventory);
 void writeBooksFile(deque<Book> &UserList);
 
 void readUsersDatabase(list<User> &Users);
-
-void readUsersFile(UserDatabase &users, string filePath);
-
-void readBookFile(BookstoreInventory &inventoryObject, string filePath);
 
 #endif /* READFILE_H_ */
