@@ -20,7 +20,7 @@ void BookstoreInventory::listInventory() {
 void BookstoreInventory::addInitialInventory() {
     cout << "Loading books..." << endl;
     string filePath = "../books.db";
-    readBooksFile(filePath, Inventory);
+    readBooksDatabase(filePath, Inventory);
     cout << "Finished loading books. " << endl;
 }
 
@@ -72,7 +72,7 @@ void BookstoreInventory::addBook(Book book) {
     const char *dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
-    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (isbn) DO UPDATE SET quantity = quantity + 1";
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {

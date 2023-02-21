@@ -21,6 +21,7 @@ public:
     void updateUserPassword();
 
     void addUser();
+    void addUser(User user);
 
     bool loginUser(string username, string password);
 
@@ -34,8 +35,9 @@ public:
 
     void listUserShoppingList();
 
-private:
     list<User> Users;
+
+private:
     User currentUser;
     multiset<Book> UserShoppingList;
 

@@ -8,7 +8,7 @@
 #include "fileOperations.h"
 
 //Reads from a file of books
-void readBooksFile(string filePath, deque<Book> &Inventory) {
+void readBooksDatabase(string filePath, deque<Book> &Inventory) {
     string selectQuery = "SELECT * FROM books"; // table data is stored in books table in books.db
     string rowCountQuery = "SELECT COUNT(*) FROM books as rowCount";
     int numRows = 0;
@@ -73,7 +73,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 }
 
 //Reads from a file of users
-void readUsersFile(list<User> &Users) {
+void readUsersDatabase(list<User> &Users) {
     string tmpFilename = "../users.db";
     const char *filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 
@@ -151,5 +151,59 @@ void writeBooksFile(deque<Book> &Inventory) {
 
     out.close();
     cout << "Done writing file." << endl;
+}
+
+void readBookFile(BookstoreInventory &inventoryObject, string filePath) {
+    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+
+    for (int i = 0; i < doc.GetRowCount(); ++i) {
+        try {
+            string ISBN = doc.GetRowName(i);
+            string title = doc.GetCell<string>("Book-Title", ISBN);
+            string author = doc.GetCell<string>("Book-Author", ISBN);
+            int year = doc.GetCell<int>("Year-Of-Publication", ISBN);
+            string publisher = doc.GetCell<string>("Publisher", ISBN);
+            string description = doc.GetCell<string>("Description", ISBN);
+            string genre = doc.GetCell<string>("Genre", ISBN);
+            float msrp = doc.GetCell<float>("MSRP", ISBN);
+            int quantity = doc.GetCell<int>("Quantity", ISBN);
+
+            Book book(ISBN, title, author, year, publisher, description, genre, msrp, quantity);
+
+            inventoryObject.addBook(book);
+
+            inventoryObject.Inventory.push_back(book);
+        }
+        catch (...) {
+
+        }
+    }
+}
+
+void readUsersFile(UserDatabase &users, string filePath) {
+    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+
+    for (int i = 0; i < doc.GetRowCount(); ++i) {
+        try {
+            string username = doc.GetRowName(i);
+            string password = doc.GetCell<string>("Password", username);
+            int hashed = doc.GetCell<int>("EA Applied", username);
+            int isAdmin = doc.GetCell<int>("Admin", username);
+
+            // instantiates md5 object for hashing
+            MD5 md5;
+            // hashes input password
+            string hashedPassword = md5(password);
+
+            User user(username, hashedPassword, hashed, isAdmin);
+
+            users.addUser(user);
+
+            users.Users.push_back(user);
+        }
+        catch (...) {
+
+        }
+    }
 }
 

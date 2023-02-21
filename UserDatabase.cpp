@@ -8,7 +8,7 @@ UserDatabase::UserDatabase() {
 
 //Adds initial users to database
 void UserDatabase::addInitialUsers() {
-    readUsersFile(this->Users);
+    readUsersDatabase(this->Users);
     cout << "Finished loading users." << endl;
 }
 
@@ -133,6 +133,36 @@ void UserDatabase::addUser() {
         }
     } else {
         cout << "Username already taken" << endl;
+    }
+}
+
+void UserDatabase::addUser(User user) {
+    string tempDBName = "../users.db";
+    const char *dbName = tempDBName.c_str();
+
+    sqlite3 *usersDB;
+    string insertQuery = "INSERT INTO users VALUES(?, ?, ?, ?)";
+
+    try {
+        if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
+            sqlite3_stmt *insert = NULL;
+            if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
+                SQLITE_OK) {
+                sqlite3_bind_text(insert, 1, user.getUsername().c_str(), user.getUsername().length(), NULL);
+                sqlite3_bind_text(insert, 2, user.getPassword().c_str(), user.getPassword().length(), NULL);
+                sqlite3_bind_int(insert, 3, user.getEncryptStatus());
+                sqlite3_bind_int(insert, 4, user.getAdminStatus());
+
+                sqlite3_step(insert);
+                sqlite3_reset(insert);
+
+                Users.push_back(user);
+            }
+            sqlite3_finalize(insert);
+        }
+    }
+    catch (...) {
+        cout << "Error adding user to database." << endl;
     }
 }
 
