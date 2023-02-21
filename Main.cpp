@@ -95,6 +95,13 @@ int main() {
                     currentUser.listUserShoppingList();
                     break;
                 }
+                case 9 : {
+                    currentUser.saveUserShoppingList();
+                    break;
+                }
+                case 10: {
+
+                }
                 default: {
                     cout << "Menu option not recognized." << endl;
                     break;

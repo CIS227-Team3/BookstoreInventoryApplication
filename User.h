@@ -15,6 +15,7 @@
 #include <deque>
 #include <set>
 #include "Book.h"
+#include "includes/sqlite3.h"
 
 using namespace std;
 
@@ -51,6 +52,8 @@ public:
 
     void addToUserShoppingList(Book book);
 
+    void saveUserShoppingList();
+
 private:
     string username;
     string password;
@@ -58,7 +61,7 @@ private:
     int isAdmin;
 
     deque<Book> UserList;
-    set<Book> UserShoppingList;
+    multiset<Book> UserShoppingList;
 };
 
 #endif /* USER_H_ */
