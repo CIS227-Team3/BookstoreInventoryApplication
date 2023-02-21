@@ -17,6 +17,7 @@ short int promptUserInput() {
     return userInput;
 }
 
+/*
 short int menuOptions() {
     short int userInput;
 
@@ -31,6 +32,24 @@ short int menuOptions() {
     userInput = validateMenuOption();
 
     return userInput;
+}
+
+*/
+
+void displayUserOptions() {
+	cout << endl << endl << "Press 0 to exit this menu." << endl;
+	cout << "Press 1 to bring up this menu again." << endl;
+	cout << "Press 2 to search for a book." << endl;
+	cout << "Press 3 to add a book to inventory." << endl;
+	cout << "Press 4 to delete a book from inventory." << endl;
+	cout << "Press 5 to add a description/plot and genre." << endl;
+}
+
+void displayAdminOptions() {
+	cout << "Press 6 to add a user." << endl;
+	cout << "Press 7 to change a users password." << endl;
+	cout << "Press 8 to import book file." << endl;
+	cout << "Press 9 to import user file." << endl;
 }
 
 void printAndClearError() {
@@ -80,8 +99,8 @@ float validatePrice() {
     }
 }
 
-unsigned int validateQuantity() {
-    unsigned int quantity;
+unsigned short int validateQuantity() {
+    unsigned short int quantity;
 
     while (true) {
         if (std::cin >> quantity) {
@@ -93,6 +112,7 @@ unsigned int validateQuantity() {
     }
 }
 
+/*
 void inventoryManagementOptions(BookstoreInventory &inventory) {
     short int menuOption = 1;
     string title;
@@ -102,6 +122,8 @@ void inventoryManagementOptions(BookstoreInventory &inventory) {
     string publisher;
     string description;
     string genre;
+    float price;
+    int quantity;
 
     while (menuOption != 0) {
         switch (menuOption) {
@@ -128,9 +150,13 @@ void inventoryManagementOptions(BookstoreInventory &inventory) {
                 year = validateYear(); // validates that the year entered is an integer
                 cout << "Add Publisher: " << endl;
                 getline(cin, publisher);
+                cout << "Add Price: " << endl;
+                price = validatePrice();
+                cout << "Add Quantity: " << endl;
+                quantity = validateQuantity();
 
                 // By default, user does not have to enter a description or a genre at the time it is added to the database
-                Book book(ISBN, title, author, year, publisher, "", "", 10, 1);
+                Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
 
                 // adds book to inventory
                 inventory.addBook(book);
@@ -160,12 +186,7 @@ void inventoryManagementOptions(BookstoreInventory &inventory) {
                 break;
             }
         }
-        cout << endl << endl << "Press 0 to exit this menu." << endl;
-        cout << "Press 1 to bring up this menu again." << endl;
-        cout << "Press 2 to search for a book." << endl;
-        cout << "Press 3 to add a book to inventory." << endl;
-        cout << "Press 4 to delete a book from inventory." << endl;
-        cout << "Press 5 to add a description/plot and genre." << endl;
+
         menuOption = validateMenuOption();
     }
 }
@@ -200,12 +221,8 @@ void adminMenu(UserDatabase &users) {
                 break;
             }
         }
-        cout << endl << endl << "Press 0 to exit this menu." << endl;
-        cout << "Press 1 to bring up this menu again." << endl;
-        cout << "Press 2 to add a user." << endl;
-        cout << "Press 3 to change a users password." << endl;
-        cout << "Press 4 to import book file." << endl;
-        cout << "Press 5 to import user file." << endl;
+
         menuOption = validateMenuOption();
     }
 }
+*/
