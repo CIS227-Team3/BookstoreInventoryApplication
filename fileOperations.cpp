@@ -8,7 +8,7 @@
 #include "fileOperations.h"
 
 //Reads from a file of books
-void readBooksFile(string filePath, deque<Book> &Inventory) {
+void readBooksDatabase(string filePath, deque<Book> &Inventory) {
     string selectQuery = "SELECT * FROM books"; // table data is stored in books table in books.db
     string rowCountQuery = "SELECT COUNT(*) FROM books as rowCount";
     int numRows = 0;
@@ -73,7 +73,7 @@ void readBooksFile(string filePath, deque<Book> &Inventory) {
 }
 
 //Reads from a file of users
-void readUsersFile(list<User> &Users) {
+void readUsersDatabase(list<User> &Users) {
     string tmpFilename = "../users.db";
     const char *filename = tmpFilename.c_str(); // stores filename as a c_string to be used in sqlite commands
 

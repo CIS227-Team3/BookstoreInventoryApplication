@@ -1,5 +1,6 @@
-Username,Password,EA Applied
-connorschaffer,abcd1234,N
-joshforner,abcd1234,N
-aliciarogers,abcd1234,N
-profCarmon,password,N
+Username,Password,EA Applied,Admin
+connorschaffer,abcd1234,1,1
+joshforner,abcd1234,1,1
+aliciarogers,abcd1234,1,1
+profCarmon,password,1,1
+random,password,1,1

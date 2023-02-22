@@ -24,7 +24,7 @@ short int menuOptions() {
     cout << endl << endl << "Press 0 to exit application." << endl;
     cout << "Press 1 to bring up this menu again." << endl;
     cout << "Press 2 to bring up the book management menu." << endl;
-    cout << "Press 3 to bring up the user management menu." << endl;
+    cout << "Press 3 to bring up admin menu." << endl;
     cout << "Press 6 to add a book to a personal list." << endl;
     cout << "Press 7 to print your personal list." << endl;
     cout << "Press 8 to export the inventory as CSV." << endl;
@@ -170,8 +170,9 @@ void inventoryManagementOptions(BookstoreInventory &inventory) {
     }
 }
 
-void adminMenu(UserDatabase &users) {
+void adminMenu(UserDatabase &users, BookstoreInventory &inventory) {
     short int menuOption = 1;
+    string filePath;
 
     while (menuOption != 0) {
         switch (menuOption) {
@@ -188,11 +189,15 @@ void adminMenu(UserDatabase &users) {
                 break;
             }
             case 4: {
-
+                cout << "Please enter absolute path to book file you wish to import: " << endl;
+                getline(cin, filePath);
+                inventory.readBookFile(inventory, filePath);
                 break;
             }
             case 5: {
-
+                cout << "Please enter absolute path to user file you wish to import: " << endl;
+                getline(cin, filePath);
+                users.readUsersFile(users, filePath);
                 break;
             }
             default: {

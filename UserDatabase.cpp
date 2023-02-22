@@ -8,7 +8,7 @@ UserDatabase::UserDatabase() {
 
 //Adds initial users to database
 void UserDatabase::addInitialUsers() {
-    readUsersFile(this->Users);
+    readUsersDatabase(this->Users);
     cout << "Finished loading users." << endl;
 }
 
@@ -133,6 +133,41 @@ void UserDatabase::addUser() {
         }
     } else {
         cout << "Username already taken" << endl;
+    }
+}
+
+void UserDatabase::addUser(User user) {
+    string username = user.getUsername();
+    string password = user.getPassword();
+    short int hashed = user.getEncryptStatus();
+    short int isAdmin = user.getAdminStatus();
+
+    string tempDBName = "../users.db";
+    const char *dbName = tempDBName.c_str();
+
+    sqlite3 *usersDB;
+    string insertQuery = "INSERT INTO users VALUES(?, ?, ?, ?)";
+
+    try {
+        if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
+            sqlite3_stmt *insert = NULL;
+            if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
+                SQLITE_OK) {
+                sqlite3_bind_text(insert, 1, username.c_str(), username.length(), NULL);
+                sqlite3_bind_text(insert, 2, password.c_str(), password.length(), NULL);
+                sqlite3_bind_int(insert, 3, hashed);
+                sqlite3_bind_int(insert, 4, isAdmin);
+
+                sqlite3_step(insert);
+                sqlite3_reset(insert);
+
+                Users.push_back(user);
+            }
+            sqlite3_finalize(insert);
+        }
+    }
+    catch (...) {
+        cout << "Error adding user to database." << endl;
     }
 }
 
@@ -306,5 +341,31 @@ void UserDatabase::listUserShoppingList() {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
              << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
              << book.quantity << endl;
+    }
+}
+void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
+    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
+
+    for (int i = 0; i < doc.GetRowCount(); ++i) {
+        try {
+            string username = doc.GetRowName(i);
+            string password = doc.GetCell<string>("Password", username);
+            int hashed = doc.GetCell<int>("EA Applied", username);
+            int isAdmin = doc.GetCell<int>("Admin", username);
+
+            // instantiates md5 object for hashing
+            MD5 md5;
+            // hashes input password
+            string hashedPassword = md5(password);
+
+            User user(username, hashedPassword, hashed, isAdmin);
+
+            users.addUser(user);
+
+            users.Users.push_back(user);
+        }
+        catch (...) {
+
+        }
     }
 }

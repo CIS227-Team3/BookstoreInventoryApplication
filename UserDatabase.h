@@ -10,6 +10,7 @@
 #include "User.h"
 #include "fileOperations.h"
 #include "includes/md5.h"
+#include "BookstoreInventory.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
     void updateUserPassword();
 
     void addUser();
+    void addUser(User user);
 
     bool loginUser(string username, string password);
 
@@ -34,8 +36,11 @@ public:
 
     void listUserShoppingList();
 
-private:
+    void readUsersFile(UserDatabase &users, string filePath);
+
     list<User> Users;
+
+private:
     User currentUser;
     multiset<Book> UserShoppingList;
 

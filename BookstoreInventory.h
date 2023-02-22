@@ -33,8 +33,11 @@ public:
 
     void updateGenre(string title, string genre);
 
-private:
+    void readBookFile(BookstoreInventory &inventoryObject, string filePath);
+
     deque<Book> Inventory;
+
+private:
 
     void addInitialInventory();
 };

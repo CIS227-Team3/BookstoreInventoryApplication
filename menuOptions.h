@@ -29,4 +29,4 @@ unsigned int validateQuantity();
 
 void inventoryManagementOptions(BookstoreInventory &inventory);
 
-void adminMenu(UserDatabase &users);
+void adminMenu(UserDatabase &users, BookstoreInventory &inventory);
