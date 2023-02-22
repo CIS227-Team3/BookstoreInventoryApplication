@@ -273,7 +273,7 @@ multiset<Book> BookstoreInventory::searchForBookByISBN(vector<string> isbns) {
 }
 
 
-void readBookFile(BookstoreInventory &inventoryObject, string filePath) {
+void BookstoreInventory::readBookFile(BookstoreInventory &inventoryObject, string filePath) {
     rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
 
     for (int i = 0; i < doc.GetRowCount(); ++i) {

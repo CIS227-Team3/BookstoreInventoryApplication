@@ -338,7 +338,7 @@ void UserDatabase::listUserShoppingList() {
              << book.quantity << endl;
     }
 }
-void readUsersFile(UserDatabase &users, string filePath) {
+void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
     rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
 
     for (int i = 0; i < doc.GetRowCount(); ++i) {
