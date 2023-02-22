@@ -355,17 +355,22 @@ void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
 
             // instantiates md5 object for hashing
             MD5 md5;
-            // hashes input password
-            string hashedPassword = md5(password);
-
-            User user(username, hashedPassword, hashed, isAdmin);
+            
+            // if the password is not already hashed, hash algorithm is applied
+            if (hashed == 0) {
+            	// hashes input password
+				string hashedPassword = md5(password);
+				password = hashedPassword;
+				// sets the hash status to 1
+				hashed = 1;
+            }
 
             users.addUser(user);
-
+    
             users.Users.push_back(user);
         }
         catch (...) {
-
+            cout << "Error reading users file." << endl;
         }
     }
 }
