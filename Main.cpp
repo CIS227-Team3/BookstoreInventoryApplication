@@ -154,12 +154,12 @@ int main() {
 						getline(cin, title);
 
 						Book book = inventory.searchForBook(title);
-						currentUser.addToUserShoppingList(book);
+						users.addToUserShoppingList(book);
 						break;
 					}
 
 					case 10: {
-						currentUser.listUserShoppingList();
+						users.listUserShoppingList();
 						break;
 					}
 
@@ -263,12 +263,12 @@ int main() {
 						getline(cin, title);
 
 						Book book = inventory.searchForBook(title);
-						currentUser.addToUserShoppingList(book);
+						users.addToUserShoppingList(book);
 						break;
 					}
 
 					case 10: {
-						currentUser.listUserShoppingList();
+						users.listUserShoppingList();
 						break;
 					}
 

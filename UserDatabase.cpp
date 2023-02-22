@@ -355,15 +355,18 @@ void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
 
             // instantiates md5 object for hashing
             MD5 md5;
+            string hashedPassword;
             
             // if the password is not already hashed, hash algorithm is applied
             if (hashed == 0) {
             	// hashes input password
-				string hashedPassword = md5(password);
+                hashedPassword = md5(password);
 				password = hashedPassword;
 				// sets the hash status to 1
 				hashed = 1;
             }
+
+            User user(username, hashedPassword, hashed, isAdmin);
 
             users.addUser(user);
     
