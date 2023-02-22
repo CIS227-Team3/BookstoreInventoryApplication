@@ -61,6 +61,7 @@ User UserDatabase::searchUser(const string &username) {
                 sqlite3_bind_text(find, 1, username.c_str(), username.length(), NULL);
                 sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserCallback, &user, nullptr);
                 sqlite3_reset(find);
+                sqlite3_finalize(find);
             }
         }
     }
@@ -306,6 +307,7 @@ void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
                 sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserShoppingCartCallback, &bookISBNs,
                              nullptr);
                 sqlite3_reset(find);
+                sqlite3_finalize(find);
             }
         }
     }
