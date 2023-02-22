@@ -137,6 +137,11 @@ void UserDatabase::addUser() {
 }
 
 void UserDatabase::addUser(User user) {
+    string username = user.getUsername();
+    string password = user.getPassword();
+    short int hashed = user.getEncryptStatus();
+    short int isAdmin = user.getAdminStatus();
+
     string tempDBName = "../users.db";
     const char *dbName = tempDBName.c_str();
 
@@ -148,10 +153,10 @@ void UserDatabase::addUser(User user) {
             sqlite3_stmt *insert = NULL;
             if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
                 SQLITE_OK) {
-                sqlite3_bind_text(insert, 1, user.getUsername().c_str(), user.getUsername().length(), NULL);
-                sqlite3_bind_text(insert, 2, user.getPassword().c_str(), user.getPassword().length(), NULL);
-                sqlite3_bind_int(insert, 3, user.getEncryptStatus());
-                sqlite3_bind_int(insert, 4, user.getAdminStatus());
+                sqlite3_bind_text(insert, 1, username.c_str(), username.length(), NULL);
+                sqlite3_bind_text(insert, 2, password.c_str(), password.length(), NULL);
+                sqlite3_bind_int(insert, 3, hashed);
+                sqlite3_bind_int(insert, 4, isAdmin);
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
