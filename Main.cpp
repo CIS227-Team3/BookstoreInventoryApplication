@@ -36,14 +36,23 @@ int main() {
     short unsigned int menuOption;
     string title;
 
+    string ISBN;
+	string author;
+	int year;
+	string publisher;
+	string description;
+	string genre;
+	float price;
+	unsigned short int quantity;
+
     cout << "---------------------------" << endl;
     cout << "Thank you for using BOOKIN!" << endl;
     cout << "---------------------------" << endl;
     cout << endl;
-    cout << "Please type in your username" << endl;
+    cout << "Please type in your username:" << endl;
     cin >> username;
 
-    cout << "Please type in your password" << endl;
+    cout << "Please type in your password:" << endl;
     cin >> password;
 
     // removes newline character from buffer
@@ -52,65 +61,265 @@ int main() {
 
     if (users.loginUser(username, password)) {
         currentUser = users.getCurrentUser();
-        menuOption = 1; // starts the menu at 1 for menu
-        while (menuOption != 0) {
-            switch (menuOption) {
-                case 1:
-                    // do nothing so the menu will prompt on loop
-                    break;
-                case 2: {
-                    inventoryManagementOptions(inventory);
-                    break;
-                }
-                case 3: {
-                    adminMenu(users);
-                    break;
-                }
-                case 4: {
-                    cout << "Please enter title of book to add:" << endl;
-                    getline(cin, title);
-                    foundBook = inventory.searchForBook(title);
-                    currentUser.addToUserList(foundBook);
-                    break;
-                }
-                case 5: {
-                    currentUser.listUserList();
-                    break;
-                }
-                case 6: {
-                    inventory.exportInventoryToCsv();
-                    break;
-                }
+        displayUserOptions();
 
-                case 7: {
-                    cout << "Welcome to the shopping cart!" << endl;
-                    cout << "Please enter the title of the book you want to purchase: " << endl;
-                    getline(cin, title);
-                    foundBook = inventory.searchForBook(title);
-                    users.addToUserShoppingList(foundBook);
-                    break;
-                }
-                case 8: {
-                    cout << "Here is a list of everything in your cart:" << endl;
-                    users.listUserShoppingList();
-                    break;
-                }
-                case 9 : {
-                    users.saveUserShoppingList();
-                    break;
-                }
-                case 10: {
-                    users.getUserShoppingList(inventory);
-                }
-                default: {
-                    cout << "Menu option not recognized." << endl;
-                    break;
-                }
-            }
-            menuOption = menuOptions();
+        // only displays the admin options if the user is an admin
+        if (currentUser.getAdminStatus() == 1) {
+        	displayAdminOptions();
         }
-    }
 
+        menuOption = validateMenuOption();
+
+		while (menuOption != 0) {
+			if (currentUser.getAdminStatus() == 0) {
+				switch (menuOption) {
+					case 1: {
+						displayUserOptions();
+						break;
+					}
+					case 2: {
+						cout << "Please enter a title to search: " << endl;
+						getline(cin, title);
+						inventory.searchForBook(title);
+						break;
+					}
+					case 3: {
+						cout << "Please add the following information. " << endl;
+
+						cout << "Add Book-Title: " << endl;
+						getline(cin, title);
+
+						cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
+						cout << "Add ISBN: " << endl;
+						getline(cin, ISBN);
+						cout << "Add Book-Author: " << endl;
+						getline(cin, author);
+						cout << "Add Year-Of-Publication: " << endl;
+						year = validateYear(); // validates that the year entered is an integer
+						cout << "Add Publisher: " << endl;
+						getline(cin, publisher);
+						cout << "Add Price: " << endl;
+						price = validatePrice();
+						cout << "Add Quantity: " << endl;
+						quantity = validateQuantity();
+
+						// By default, user does not have to enter a description or a genre at the time it is added to the database
+						Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
+
+						// adds book to inventory
+						inventory.addBook(book);
+
+						break;
+					}
+					case 4: {
+						cout << "Please enter title of book to delete:" << endl;
+						getline(cin, title);
+						inventory.deleteBook(title);
+						break;
+					}
+					case 5: {
+						cout << "Please enter title: " << endl;
+						getline(cin, title);
+						cout << "Please enter description/plot: " << endl;
+						getline(cin, description);
+						cout << "Please enter genre: " << endl;
+						getline(cin, genre);
+
+						// updates the description and genre of the specified book.
+						inventory.updateDescription(title, description);
+						inventory.updateGenre(title, genre);
+						break;
+					}
+
+					case 6: {
+						cout << "Please enter title of book to add:" << endl;
+						getline(cin, title);
+						foundBook = inventory.searchForBook(title);
+						currentUser.addToUserList(foundBook);
+						break;
+					}
+
+					case 7: {
+						currentUser.listUserList();
+						break;
+					}
+
+					case 8: {
+						inventory.exportInventoryToCsv();
+						break;
+					}
+
+					case 9: {
+						cout << "Please enter the title of the book you would like to add to your cart:" << endl;
+						getline(cin, title);
+
+						Book book = inventory.searchForBook(title);
+						users.addToUserShoppingList(book);
+						break;
+					}
+
+					case 10: {
+						users.listUserShoppingList();
+						break;
+					}
+
+					case 11: {
+						users.saveUserShoppingList();
+						break;
+					}
+
+					default: {
+						cout << "Menu option not recognized." << endl;
+						break;
+					}
+				}
+			}
+
+			else if (currentUser.getAdminStatus() == 1) {
+				switch (menuOption) {
+
+					case 1: {
+						displayUserOptions();
+						break;
+					}
+
+					case 2: {
+						cout << "Please enter a title to search: " << endl;
+						getline(cin, title);
+						inventory.searchForBook(title);
+						break;
+					}
+
+					case 3: {
+						cout << "Please add the following information. " << endl;
+
+						cout << "Add Book-Title: " << endl;
+						getline(cin, title);
+
+						cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
+						cout << "Add ISBN: " << endl;
+						getline(cin, ISBN);
+						cout << "Add Book-Author: " << endl;
+						getline(cin, author);
+						cout << "Add Year-Of-Publication: " << endl;
+						year = validateYear(); // validates that the year entered is an integer
+						cout << "Add Publisher: " << endl;
+						getline(cin, publisher);
+						cout << "Add Price: " << endl;
+						price = validatePrice();
+						cout << "Add Quantity: " << endl;
+						quantity = validateQuantity();
+
+						// By default, user does not have to enter a description or a genre at the time it is added to the database
+						Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
+
+						// adds book to inventory
+						inventory.addBook(book);
+
+						break;
+					}
+
+					case 4: {
+						cout << "Please enter title of book to delete:" << endl;
+						getline(cin, title);
+						inventory.deleteBook(title);
+						break;
+					}
+
+					case 5: {
+						cout << "Please enter title: " << endl;
+						getline(cin, title);
+						cout << "Please enter description/plot: " << endl;
+						getline(cin, description);
+						cout << "Please enter genre: " << endl;
+						getline(cin, genre);
+
+						// updates the description and genre of the specified book.
+						inventory.updateDescription(title, description);
+						inventory.updateGenre(title, genre);
+						break;
+					}
+
+					case 6: {
+						cout << "Please enter title of book to add:" << endl;
+						getline(cin, title);
+						foundBook = inventory.searchForBook(title);
+						currentUser.addToUserList(foundBook);
+						break;
+					}
+
+					case 7: {
+						currentUser.listUserList();
+						break;
+					}
+
+					case 8: {
+						inventory.exportInventoryToCsv();
+						break;
+					}
+
+					case 9: {
+						cout << "Please enter the title of the book you would like to add to your cart:" << endl;
+						getline(cin, title);
+
+						Book book = inventory.searchForBook(title);
+						users.addToUserShoppingList(book);
+						break;
+					}
+
+					case 10: {
+						users.listUserShoppingList();
+						break;
+					}
+
+					case 11: {
+						users.saveUserShoppingList();
+						break;
+					}
+
+					case 12: {
+						users.addUser();
+						break;
+					}
+
+					case 13: {
+						users.updateUserPassword();
+						break;
+					}
+
+					case 14: {
+						string filePath;
+						cout << "Please enter the name of the book file you would like to import:" << endl;
+						cin >> filePath;
+
+						inventory.readBookFile(inventory, filePath);
+						break;
+					}
+
+					case 15: {
+						string filePath;
+						cout << "Please enter the name of the users file you would like to import:" << endl;
+						cin >> filePath;
+
+						users.readUsersFile(users, filePath);
+						break;
+					}
+
+					default: {
+						cout << "Menu option not recognized." << endl;
+						break;
+					}
+				}
+			}
+			// displays menu options and gets/validates user input
+			displayUserOptions();
+			if (currentUser.getAdminStatus() == 1) {
+				displayAdminOptions();
+			}
+
+			menuOption = validateMenuOption();
+		}
+	}
     cout << "Exiting BOOKIN. Goodbye!" << endl;
 
     return EXIT_SUCCESS;

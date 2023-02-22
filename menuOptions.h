@@ -8,14 +8,16 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include "BookstoreInventory.h"
-#include "UserDatabase.h"
 
 using namespace std;
 
 short int promptUserInput();
 
 short int menuOptions();
+
+void displayUserOptions();
+
+void displayAdminOptions();
 
 void printAndClearError();
 
@@ -27,6 +29,6 @@ float validatePrice();
 
 unsigned int validateQuantity();
 
-void inventoryManagementOptions(BookstoreInventory &inventory);
+// void inventoryManagementOptions(BookstoreInventory &inventory);
 
-void adminMenu(UserDatabase &users, BookstoreInventory &inventory);
+// void adminMenu(UserDatabase &users);
