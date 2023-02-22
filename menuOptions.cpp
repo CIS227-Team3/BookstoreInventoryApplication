@@ -17,25 +17,6 @@ short int promptUserInput() {
     return userInput;
 }
 
-/*
-short int menuOptions() {
-    short int userInput;
-
-    // prompts user to enter command
-    cout << endl << endl << "Press 0 to exit application." << endl;
-    cout << "Press 1 to bring up this menu again." << endl;
-    cout << "Press 2 to bring up the book management menu." << endl;
-    cout << "Press 3 to bring up the user management menu." << endl;
-    cout << "Press 6 to add a book to a personal list." << endl;
-    cout << "Press 7 to print your personal list." << endl;
-    cout << "Press 8 to export the inventory as CSV." << endl;
-    userInput = validateMenuOption();
-
-    return userInput;
-}
-
-*/
-
 void displayUserOptions() {
 	cout << endl << endl << "Press 0 to exit this menu." << endl;
 	cout << "Press 1 to bring up this menu again." << endl;
@@ -46,13 +27,18 @@ void displayUserOptions() {
     cout << "Press 6 to add a book to your personal list." << endl;
     cout << "Press 7 to print your personal list." << endl;
     cout << "Press 8 to export the inventory as CSV." << endl;
+    cout << "Press 9 to add a book to your cart." << endl;
+    cout << "Press 10 to view your cart." << endl;
+    cout << "Press 11 to save your cart." << endl;
+
 }
 
 void displayAdminOptions() {
-	cout << "Press 9 to add a user." << endl;
-	cout << "Press 10 to change a users password." << endl;
-	cout << "Press 11 to import book file." << endl;
-	cout << "Press 12 to import user file." << endl;
+	cout << endl << "-----ADMIN ONLY-----" << endl;
+	cout << "Press 12 to add a user." << endl;
+	cout << "Press 13 to change a users password." << endl;
+	cout << "Press 14 to import book file." << endl;
+	cout << "Press 15 to import user file." << endl;
 }
 
 void printAndClearError() {
@@ -114,118 +100,3 @@ unsigned  int validateQuantity() {
         }
     }
 }
-
-/*
-void inventoryManagementOptions(BookstoreInventory &inventory) {
-    short int menuOption = 1;
-    string title;
-    string ISBN;
-    string author;
-    int year;
-    string publisher;
-    string description;
-    string genre;
-    float price;
-    int quantity;
-
-    while (menuOption != 0) {
-        switch (menuOption) {
-            case 1: {
-                // do nothing so the menu will prompt on loop
-                break;
-            }
-            case 2: {
-                cout << "Please enter a title to search: " << endl;
-                getline(cin, title);
-                inventory.searchForBook(title);
-                break;
-            }
-            case 3: {
-                cout << "Please add the following information. " << endl;
-                cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher: " << endl;
-                cout << "Add ISBN: " << endl;
-                getline(cin, ISBN);
-                cout << "Add Book-Title: " << endl;
-                getline(cin, title);
-                cout << "Add Book-Author: " << endl;
-                getline(cin, author);
-                cout << "Add Year-Of-Publication: " << endl;
-                year = validateYear(); // validates that the year entered is an integer
-                cout << "Add Publisher: " << endl;
-                getline(cin, publisher);
-                cout << "Add Price: " << endl;
-                price = validatePrice();
-                cout << "Add Quantity: " << endl;
-                quantity = validateQuantity();
-
-                // By default, user does not have to enter a description or a genre at the time it is added to the database
-                Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
-
-                // adds book to inventory
-                inventory.addBook(book);
-                break;
-            }
-            case 4: {
-                cout << "Please enter title of book to delete:" << endl;
-                getline(cin, title);
-                inventory.deleteBook(title);
-                break;
-            }
-            case 5: {
-                cout << "Please enter title: " << endl;
-                getline(cin, title);
-                cout << "Please enter description/plot: " << endl;
-                getline(cin, description);
-                cout << "Please enter genre: " << endl;
-                getline(cin, genre);
-
-                // updates the description and genre of the specified book.
-                inventory.updateDescription(title, description);
-                inventory.updateGenre(title, genre);
-                break;
-            }
-            default: {
-                cout << "Menu option not recognized." << endl;
-                break;
-            }
-        }
-
-        menuOption = validateMenuOption();
-    }
-}
-
-void adminMenu(UserDatabase &users) {
-    short int menuOption = 1;
-
-    while (menuOption != 0) {
-        switch (menuOption) {
-            case 1: {
-                // do nothing so the menu will prompt on loop
-                break;
-            }
-            case 2: {
-                users.addUser();
-                break;
-            }
-            case 3: {
-                users.updateUserPassword();
-                break;
-            }
-            case 4: {
-
-                break;
-            }
-            case 5: {
-
-                break;
-            }
-            default: {
-                cout << "Menu option not recognized." << endl;
-                break;
-            }
-        }
-
-        menuOption = validateMenuOption();
-    }
-}
-*/

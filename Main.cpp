@@ -89,37 +89,25 @@ int main() {
 						cout << "Add Book-Title: " << endl;
 						getline(cin, title);
 
-						Book book = inventory.searchForBook(title);
-						// searches for book to check existence
-						// if the book already exists in inventory, quantity is increased by 1
-						if (book.title != "none") {
-							cout << "Book with title " << title << " already exists in inventory. Quantity will be increased by 1." << endl;
-							Book book = inventory.searchForBook(title);
-							inventory.incrementQuantity(book, inventory);
-						}
+						cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
+						cout << "Add ISBN: " << endl;
+						getline(cin, ISBN);
+						cout << "Add Book-Author: " << endl;
+						getline(cin, author);
+						cout << "Add Year-Of-Publication: " << endl;
+						year = validateYear(); // validates that the year entered is an integer
+						cout << "Add Publisher: " << endl;
+						getline(cin, publisher);
+						cout << "Add Price: " << endl;
+						price = validatePrice();
+						cout << "Add Quantity: " << endl;
+						quantity = validateQuantity();
 
-						// if book is not already in inventory, the rest of the book information is requested from the user and added to the database
-						else {
-							cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
-							cout << "Add ISBN: " << endl;
-							getline(cin, ISBN);
-							cout << "Add Book-Author: " << endl;
-							getline(cin, author);
-							cout << "Add Year-Of-Publication: " << endl;
-							year = validateYear(); // validates that the year entered is an integer
-							cout << "Add Publisher: " << endl;
-							getline(cin, publisher);
-							cout << "Add Price: " << endl;
-							price = validatePrice();
-							cout << "Add Quantity: " << endl;
-							quantity = validateQuantity();
+						// By default, user does not have to enter a description or a genre at the time it is added to the database
+						Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
 
-							// By default, user does not have to enter a description or a genre at the time it is added to the database
-							Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
-
-							// adds book to inventory
-							inventory.addBook(book);
-						}
+						// adds book to inventory
+						inventory.addBook(book);
 
 						break;
 					}
@@ -161,6 +149,25 @@ int main() {
 						break;
 					}
 
+					case 9: {
+						cout << "Please enter the title of the book you would like to add to your cart:" << endl;
+						getline(cin, title);
+
+						Book book = inventory.searchForBook(title);
+						currentUser.addToUserShoppingList(book);
+						break;
+					}
+
+					case 10: {
+						currentUser.listUserShoppingList();
+						break;
+					}
+
+					case 11: {
+						users.saveUserShoppingList();
+						break;
+					}
+
 					default: {
 						cout << "Menu option not recognized." << endl;
 						break;
@@ -189,37 +196,25 @@ int main() {
 						cout << "Add Book-Title: " << endl;
 						getline(cin, title);
 
-						Book book = inventory.searchForBook(title);
-						// searches for book to check existence
-						// if the book already exists in inventory, quantity is increased by 1
-						if (book.title != "none") {
-							cout << "Book with title " << title << " already exists in inventory. Quantity will be increased by 1." << endl;
-							Book book = inventory.searchForBook(title);
-							inventory.incrementQuantity(book, inventory);
-						}
+						cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
+						cout << "Add ISBN: " << endl;
+						getline(cin, ISBN);
+						cout << "Add Book-Author: " << endl;
+						getline(cin, author);
+						cout << "Add Year-Of-Publication: " << endl;
+						year = validateYear(); // validates that the year entered is an integer
+						cout << "Add Publisher: " << endl;
+						getline(cin, publisher);
+						cout << "Add Price: " << endl;
+						price = validatePrice();
+						cout << "Add Quantity: " << endl;
+						quantity = validateQuantity();
 
-						// if book is not already in inventory, the rest of the book information is requested from the user and added to the database
-						else {
-							cout << "ISBN, Book-Title, Book-Author, Year-Of-Publication, Publisher, Price, Quantity: " << endl;
-							cout << "Add ISBN: " << endl;
-							getline(cin, ISBN);
-							cout << "Add Book-Author: " << endl;
-							getline(cin, author);
-							cout << "Add Year-Of-Publication: " << endl;
-							year = validateYear(); // validates that the year entered is an integer
-							cout << "Add Publisher: " << endl;
-							getline(cin, publisher);
-							cout << "Add Price: " << endl;
-							price = validatePrice();
-							cout << "Add Quantity: " << endl;
-							quantity = validateQuantity();
+						// By default, user does not have to enter a description or a genre at the time it is added to the database
+						Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
 
-							// By default, user does not have to enter a description or a genre at the time it is added to the database
-							Book book(ISBN, title, author, year, publisher, "", "", price, quantity);
-
-							// adds book to inventory
-							inventory.addBook(book);
-						}
+						// adds book to inventory
+						inventory.addBook(book);
 
 						break;
 					}
@@ -264,22 +259,49 @@ int main() {
 					}
 
 					case 9: {
-						users.addUser();
+						cout << "Please enter the title of the book you would like to add to your cart:" << endl;
+						getline(cin, title);
+
+						Book book = inventory.searchForBook(title);
+						currentUser.addToUserShoppingList(book);
 						break;
 					}
 
 					case 10: {
-						users.updateUserPassword();
+						currentUser.listUserShoppingList();
 						break;
 					}
 
 					case 11: {
-
+						users.saveUserShoppingList();
 						break;
 					}
 
 					case 12: {
+						users.addUser();
+						break;
+					}
 
+					case 13: {
+						users.updateUserPassword();
+						break;
+					}
+
+					case 14: {
+						string filePath;
+						cout << "Please enter the name of the book file you would like to import:" << endl;
+						cin >> filePath;
+
+						inventory.readBookFile(inventory, filePath);
+						break;
+					}
+
+					case 15: {
+						string filePath;
+						cout << "Please enter the name of the users file you would like to import:" << endl;
+						cin >> filePath;
+
+						users.readUsersFile(users, filePath);
 						break;
 					}
 
@@ -297,7 +319,7 @@ int main() {
 
 			menuOption = validateMenuOption();
 		}
-		}
+	}
     cout << "Exiting BOOKIN. Goodbye!" << endl;
 
     return EXIT_SUCCESS;
