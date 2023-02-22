@@ -61,12 +61,14 @@ User UserDatabase::searchUser(const string &username) {
                 sqlite3_bind_text(find, 1, username.c_str(), username.length(), NULL);
                 sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserCallback, &user, nullptr);
                 sqlite3_reset(find);
+                sqlite3_finalize(find);
             }
         }
     }
     catch (...) {
         cout << "Error finding user in database." << endl;
     }
+    sqlite3_close(usersDB);
     return user;
 }
 
@@ -131,6 +133,7 @@ void UserDatabase::addUser() {
         catch (...) {
             cout << "Error adding user to database." << endl;
         }
+        sqlite3_close(usersDB);
     } else {
         cout << "Username already taken" << endl;
     }
@@ -169,6 +172,7 @@ void UserDatabase::addUser(User user) {
     catch (...) {
         cout << "Error adding user to database." << endl;
     }
+    sqlite3_close(usersDB);
 }
 
 int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **azColName) {
@@ -218,6 +222,7 @@ void UserDatabase::updateUser(User user) {
     catch (...) {
         cout << "Error updating user." << endl;
     }
+    sqlite3_close(usersDB);
 }
 
 void UserDatabase::updateUserPassword() {
@@ -280,6 +285,7 @@ void UserDatabase::saveUserShoppingList() {
     catch (...) {
         cout << "Error saving shopping list." << endl;
     }
+    sqlite3_close(usersDB);
 }
 
 void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
@@ -301,12 +307,14 @@ void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
                 sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserShoppingCartCallback, &bookISBNs,
                              nullptr);
                 sqlite3_reset(find);
+                sqlite3_finalize(find);
             }
         }
     }
     catch (...) {
         cout << "Error finding user in database." << endl;
     }
+    sqlite3_close(usersDB);
 
     UserShoppingList = inventory.searchForBookByISBN(bookISBNs);
 }
