@@ -22,6 +22,7 @@ public:
     void updateUserPassword();
 
     void addUser();
+
     void addUser(User user);
 
     bool loginUser(string username, string password);
@@ -48,6 +49,7 @@ private:
 
     User searchUser(const string &username); // searches for user based on username
     static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
+
     static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);
 
     void updateUser(User user);

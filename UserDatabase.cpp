@@ -272,7 +272,8 @@ void UserDatabase::saveUserShoppingList() {
             sqlite3_stmt *insert = NULL;
             if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
                 SQLITE_OK) {
-                sqlite3_bind_text(insert, 1, currentUser.getUsername().c_str(), currentUser.getUsername().length(), NULL);
+                sqlite3_bind_text(insert, 1, currentUser.getUsername().c_str(), currentUser.getUsername().length(),
+                                  NULL);
                 sqlite3_bind_text(insert, 2, bookList.c_str(), bookList.length(), NULL);
                 sqlite3_bind_text(insert, 3, bookList.c_str(), bookList.length(), NULL);
 
@@ -351,6 +352,7 @@ void UserDatabase::listUserShoppingList() {
              << book.quantity << endl;
     }
 }
+
 void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
     rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
 
@@ -364,20 +366,20 @@ void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
             // instantiates md5 object for hashing
             MD5 md5;
             string hashedPassword;
-            
+
             // if the password is not already hashed, hash algorithm is applied
             if (hashed == 0) {
-            	// hashes input password
+                // hashes input password
                 hashedPassword = md5(password);
-				password = hashedPassword;
-				// sets the hash status to 1
-				hashed = 1;
+                password = hashedPassword;
+                // sets the hash status to 1
+                hashed = 1;
             }
 
             User user(username, hashedPassword, hashed, isAdmin);
 
             users.addUser(user);
-    
+
             users.Users.push_back(user);
         }
         catch (...) {

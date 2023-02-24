@@ -27,7 +27,7 @@ public:
 
     void addBook(Book book);
 
-    void deleteBook(string);
+    void deleteBook(string title);
 
     void updateDescription(string title, string description);
 

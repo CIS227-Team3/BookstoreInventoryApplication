@@ -7,7 +7,6 @@
 
 #include <deque>
 #include "User.h"
-#include "BookstoreInventory.h"
 
 //Constructor
 User::User() {
