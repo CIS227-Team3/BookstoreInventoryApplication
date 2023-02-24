@@ -36,11 +36,23 @@ Book::Book() {
 Book::Book(const string &isbn, const string &title, const string &author, int year,
            const string &publisher, const float &msrp, const int &quantity) :
         ISBN(isbn), title(title), author(author), year(year),
-        publisher(publisher), msrp(msrp), quantity(quantity) {
-
-}
+        publisher(publisher), msrp(msrp), quantity(quantity) {}
 
 Book::Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
            const string &description, const string &genre, const float &msrp, const int &quantity) :
         ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
         genre(genre), msrp(msrp), quantity(quantity) {}
+
+Book::Book(boost::optional<Book> anOptional){
+    if(anOptional){
+        this->ISBN = anOptional->ISBN;
+        this->title = anOptional->title;
+        this->author = anOptional->author;
+        this->year = anOptional->year;
+        this->publisher = anOptional->publisher;
+        this->description = anOptional->description;
+        this->genre = anOptional->genre;
+        this->msrp = anOptional->msrp;
+        this->quantity = anOptional->quantity;
+    }
+}

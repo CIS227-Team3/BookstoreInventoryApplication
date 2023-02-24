@@ -10,8 +10,6 @@
 
 #include "UserDatabase.h"
 #include "BookstoreInventory.h"
-#include "Book.h"
-#include "User.h"
 #include "menuOptions.h"
 
 using namespace std;
@@ -61,6 +59,8 @@ int main() {
         }
 
         menuOption = validateMenuOption();
+
+        inventory.getAllBooks();
 
         while (menuOption != 0) {
             if (currentUser.getAdminStatus() == 0) {

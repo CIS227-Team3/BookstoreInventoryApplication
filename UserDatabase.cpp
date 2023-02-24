@@ -41,7 +41,7 @@ boost::optional<User> UserDatabase::searchUser(const string &username) {
     User user;
 
     sqlite3 *usersDB;
-    string findQuery = "SELECT * FROM USERS where username = ?";
+    string findQuery = "SELECT * FROM users where username = ?";
 
     try {
         if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
