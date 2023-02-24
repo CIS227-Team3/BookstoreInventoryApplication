@@ -165,21 +165,6 @@ void UserDatabase::addUser(User user) {
     sqlite3_close(usersDB);
 }
 
-int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **azColName) {
-    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
-    // data: is 4th argument passed in sqlite3_exec command
-    // int argc: holds the number of results
-    // (array) azColName: holds each column returned
-    // (array) argv: holds each value
-    // only goes in here if statement finds user
-    User *user = static_cast<User *>(data); // cast data to user object
-    user->setUsername(argv[0]);
-    user->setPassword(argv[1]);
-    user->setEncryptStatus(stoi(argv[2]));
-    user->setAdminStatus(stoi(argv[3]));
-    return argc;
-}
-
 void UserDatabase::updateUser(User user) {
     string tempDBName = "../users.db";
     const char *dbName = tempDBName.c_str();
@@ -309,28 +294,6 @@ void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
     UserShoppingList = inventory.searchForBookByISBN(bookISBNs);
 }
 
-int UserDatabase::searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName) {
-    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
-    // data: is 4th argument passed in sqlite3_exec command
-    // int argc: holds the number of results
-    // (array) azColName: holds each column returned
-    // (array) argv: holds each value
-    vector<string> *bookISBNs = static_cast<vector<string> *>(data); // cast data to user object
-
-    // Returns first token
-    char *token = strtok(argv[1], ",");
-
-    // Keep printing tokens while one of the
-    // delimiters present in str[].
-    while (token != NULL) {
-        bookISBNs->push_back(token);
-        printf("%s\n", token);
-        token = strtok(NULL, ",");
-    }
-
-    return argc;
-}
-
 void UserDatabase::listUserShoppingList() {
     cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
          << endl;
@@ -377,4 +340,41 @@ void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
             cout << "Error reading users file." << endl;
         }
     }
+}
+
+int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **azColName) {
+    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
+    // int argc: holds the number of results
+    // (array) azColName: holds each column returned
+    // (array) argv: holds each value
+    // only goes in here if statement finds user
+    User *user = static_cast<User *>(data); // cast data to user object
+    user->setUsername(argv[0]);
+    user->setPassword(argv[1]);
+    user->setEncryptStatus(stoi(argv[2]));
+    user->setAdminStatus(stoi(argv[3]));
+    return argc;
+}
+
+int UserDatabase::searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName) {
+    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
+    // int argc: holds the number of results
+    // (array) azColName: holds each column returned
+    // (array) argv: holds each value
+    vector<string> *bookISBNs = static_cast<vector<string> *>(data); // cast data to user object
+
+    // Returns first token
+    char *token = strtok(argv[1], ",");
+
+    // Keep printing tokens while one of the
+    // delimiters present in str[].
+    while (token != NULL) {
+        bookISBNs->push_back(token);
+        printf("%s\n", token);
+        token = strtok(NULL, ",");
+    }
+
+    return argc;
 }
