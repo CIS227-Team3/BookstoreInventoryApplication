@@ -3,12 +3,6 @@
 //Constructor
 UserDatabase::UserDatabase() {
     cout << "Loading users..." << endl;
-    addInitialUsers();
-}
-
-//Adds initial users to database
-void UserDatabase::addInitialUsers() {
-    readUsersDatabase(this->Users);
     cout << "Finished loading users." << endl;
 }
 
@@ -19,20 +13,15 @@ bool UserDatabase::loginUser(string username, string password) {
     // hashes input password
     string hashedPassword = md5(password);
 
-    // searches for the username in the Users list
-    for (auto const &user: Users) {
-        if (username.compare(user.getUsername()) == 0) {
-            cout << "Username: " << user.getUsername() << endl;
+    boost::optional<User> user = searchUser(username);
 
-            // makes sure that the password matches
-            if (hashedPassword.compare(user.getPassword()) == 0) {
-                loginUser = true;
-                // stores the username of the logged-in user
-                this->currentUser = user;
-            } else {
-                cout << "Incorrect password entered. Please re-try login" << endl;
-                loginUser = false;
-            }
+    if(user){
+        if(hashedPassword == user->getPassword()){
+            loginUser = true;
+            this->currentUser = user;
+        } else {
+            cout << "Incorrect password entered. Please re-try login" << endl;
+            loginUser = false;
         }
     }
 
@@ -47,7 +36,7 @@ User UserDatabase::getCurrentUser() {
     return this->currentUser;
 }
 
-User UserDatabase::searchUser(const string &username) {
+boost::optional<User> UserDatabase::searchUser(const string &username) {
     const char *dbName = "../users.db";
     User user;
 
@@ -62,14 +51,19 @@ User UserDatabase::searchUser(const string &username) {
                 sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchUserCallback, &user, nullptr);
                 sqlite3_reset(find);
                 sqlite3_finalize(find);
+                sqlite3_close(usersDB);
+
+                if(user.getUsername() == "none"){
+                    return boost::none;
+                }
+                return user;
             }
         }
     }
     catch (...) {
         cout << "Error finding user in database." << endl;
     }
-    sqlite3_close(usersDB);
-    return user;
+    return boost::none;
 }
 
 void UserDatabase::addUser() {
@@ -88,8 +82,8 @@ void UserDatabase::addUser() {
     cout << "Please enter a username: " << endl;
     cin >> username;
     // checks to make sure that user does not already exist
-    User user = searchUser(username);
-    if (user.getUsername() == "none") {
+    boost::optional<User> user = searchUser(username);
+    if (!user) {
         // prompts user to enter a password
         cout << "Please enter a password: " << endl;
         cin >> password;
@@ -124,8 +118,6 @@ void UserDatabase::addUser() {
 
                     sqlite3_step(insert);
                     sqlite3_reset(insert);
-
-                    Users.push_back(User(username, password, hashed, isAdmin));
                 }
                 sqlite3_finalize(insert);
             }
@@ -163,8 +155,6 @@ void UserDatabase::addUser(User user) {
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
-
-                Users.push_back(user);
             }
             sqlite3_finalize(insert);
         }
@@ -189,7 +179,6 @@ int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **a
     user->setAdminStatus(stoi(argv[3]));
     return argc;
 }
-
 
 void UserDatabase::updateUser(User user) {
     string tempDBName = "../users.db";
@@ -232,8 +221,8 @@ void UserDatabase::updateUserPassword() {
     cout << "Please enter username of user whose password will be updated: " << endl;
     getline(cin, username);
 
-    User user = searchUser(username);
-    if (user.getUsername() != "none") {
+    boost::optional<User> user = searchUser(username);
+    if (user) {
         cout << "Please enter new password: " << endl;
         getline(cin, password);
 
@@ -242,13 +231,13 @@ void UserDatabase::updateUserPassword() {
         // hashes input password
         string hashedPassword = md5(password);
 
-        user.setPassword(hashedPassword);
+        user->setPassword(hashedPassword);
+
         updateUser(user);
     } else {
         cout << "Username not found" << endl;
     }
 }
-
 
 void UserDatabase::addToUserShoppingList(Book book) {
     this->UserShoppingList.insert(book);
@@ -342,7 +331,6 @@ int UserDatabase::searchUserShoppingCartCallback(void *data, int argc, char **ar
     return argc;
 }
 
-
 void UserDatabase::listUserShoppingList() {
     cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
          << endl;
@@ -376,11 +364,14 @@ void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
                 hashed = 1;
             }
 
-            User user(username, hashedPassword, hashed, isAdmin);
+            boost::optional<User> foundUser = searchUser(username);
 
-            users.addUser(user);
+            // if user does not exist add it
+            if(!foundUser){
+                User user(username, hashedPassword, hashed, isAdmin);
 
-            users.Users.push_back(user);
+                users.addUser(user);
+            }
         }
         catch (...) {
             cout << "Error reading users file." << endl;

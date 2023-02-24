@@ -24,6 +24,4 @@ void readBooksDatabase(string filePath, deque<Book> &Inventory);
 
 void writeBooksFile(deque<Book> &UserList);
 
-void readUsersDatabase(list<User> &Users);
-
 #endif /* READFILE_H_ */
