@@ -57,6 +57,9 @@ public:
 
     void listUserShoppingList();
 
+    deque<Book> getUserList();
+
+
 private:
     string username;
     string password;

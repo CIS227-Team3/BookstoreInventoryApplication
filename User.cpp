@@ -82,6 +82,7 @@ void User::addToUserList(Book book) {
     this->UserList.push_back(book);
 }
 
+
 void User::getUserShoppingList(BookstoreInventory inventory) {
     string tempDBName = "../users.db";
     const char *dbName = tempDBName.c_str();
@@ -187,3 +188,8 @@ int User::searchUserShoppingCartCallback(void *data, int argc, char **argv, char
 
     return argc;
 }
+
+deque<Book> User::getUserList() {
+    return this->UserList;
+}
+
