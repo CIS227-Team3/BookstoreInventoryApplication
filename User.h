@@ -15,7 +15,7 @@
 #include <deque>
 #include <set>
 #include <boost/optional.hpp>
-#include "Book.h"
+#include "BookstoreInventory.h"
 #include "includes/sqlite3.h"
 
 using namespace std;
@@ -49,7 +49,16 @@ public:
 
     void addToUserList(Book book);
 
+    void addToUserShoppingList(Book book);
+
+    void saveUserShoppingList();
+
+    void getUserShoppingList(BookstoreInventory inventory);
+
+    void listUserShoppingList();
+
     deque<Book> getUserList();
+
 
 private:
     string username;
@@ -58,6 +67,9 @@ private:
     int isAdmin;
 
     deque<Book> UserList;
+    multiset<Book> UserShoppingList;
+
+    static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);
 };
 
 #endif /* USER_H_ */

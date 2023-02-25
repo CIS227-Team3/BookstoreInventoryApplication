@@ -29,23 +29,12 @@ public:
 
     User getCurrentUser();
 
-    void addToUserShoppingList(Book book);
-
-    void saveUserShoppingList();
-
-    void getUserShoppingList(BookstoreInventory inventory);
-
-    void listUserShoppingList();
-
     boost::optional<User> searchUser(const string &username); // searches for user based on username
 
 private:
     User currentUser;
-    multiset<Book> UserShoppingList;
     
     static int searchUserCallback(void *data, int argc, char **argv, char **azColName);
-
-    static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);
 
     void updateUser(User user);
 };
