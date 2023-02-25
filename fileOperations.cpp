@@ -53,8 +53,8 @@ void readBookFile(BookstoreInventory &inventoryObject, string filePath) {
     }
 }
 
-void exportInventoryToCsv(BookstoreInventory &inventoryObject) {
-    deque<Book> allBooks = inventoryObject.getAllBooks();
+void exportUserListToCsv(User &user) {
+    deque<Book> allBooks = user.getUserList();
     writeBooksFile(allBooks);
 }
 

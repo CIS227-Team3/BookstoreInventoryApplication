@@ -81,3 +81,7 @@ void User::listUserList() {
 void User::addToUserList(Book book) {
     this->UserList.push_back(book);
 }
+
+deque<Book> User::getUserList() {
+    return this->UserList;
+}

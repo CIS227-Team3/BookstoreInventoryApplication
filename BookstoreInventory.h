@@ -16,8 +16,6 @@ class BookstoreInventory {
 public:
     BookstoreInventory();
 
-    void listInventory();
-
     boost::optional<Book> searchForBook(string title);
 
     boost::optional<Book> searchForBookByISBN(string isbn);
@@ -30,12 +28,8 @@ public:
 
     void updateGenre(string title, string genre);
 
-    deque<Book> getAllBooks();
-
 private:
     static int searchBookCallback(void *data, int argc, char **argv, char **azColName);
-
-    static int allBooksCallback(void *data, int argc, char **argv, char **azColName);
 };
 
 

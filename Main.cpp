@@ -133,7 +133,7 @@ int main() {
                     break;
                 }
                 case 8: {
-                    exportInventoryToCsv(inventory);
+                    exportUserListToCsv(currentUser);
                     break;
                 }
                 case 9: {

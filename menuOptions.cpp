@@ -26,7 +26,7 @@ void displayUserOptions() {
     cout << "Press 5 to add a description/plot and genre." << endl;
     cout << "Press 6 to add a book to your personal list." << endl;
     cout << "Press 7 to print your personal list." << endl;
-    cout << "Press 8 to export the inventory as CSV." << endl;
+    cout << "Press 8 to export the personal as CSV." << endl;
     cout << "Press 9 to add a book to your cart." << endl;
     cout << "Press 10 to view your cart." << endl;
     cout << "Press 11 to save your cart." << endl;
