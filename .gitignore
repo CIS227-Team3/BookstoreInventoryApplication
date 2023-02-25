@@ -1,3 +1,11 @@
 /.idea
 /cmake-build-debug
 CMakeLists.txt
+/.metadata/
+.project
+.settings/language.settings.xml
+.settings/org.eclipse.cdt.codan.core.prefs
+.settings/org.eclipse.cdt.core.prefs
+.settings/org.eclipse.cdt.managedbuilder.core.prefs
+.settings/org.eclipse.core.resources.prefs
+Debug/includes/md5.o
