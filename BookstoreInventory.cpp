@@ -246,7 +246,7 @@ void BookstoreInventory::exportInventoryToCsv() {
 }
 
 boost::optional<Book> BookstoreInventory::searchForBookByISBN(string isbn) {
-    const char *dbName = "../users.db";
+    const char *dbName = "../books.db";
     Book book;
 
     sqlite3 *bookDB;

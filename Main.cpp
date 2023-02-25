@@ -51,6 +51,7 @@ int main() {
 
     if (users.loginUser(username, password)) {
         currentUser = users.getCurrentUser();
+        users.getUserShoppingList(inventory);
         displayUserOptions();
 
         // only displays the admin options if the user is an admin

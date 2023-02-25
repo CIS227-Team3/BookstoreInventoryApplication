@@ -377,7 +377,6 @@ int UserDatabase::searchUserShoppingCartCallback(void *data, int argc, char **ar
     // delimiters present in str[].
     while (token != NULL) {
         bookISBNs->push_back(token);
-        printf("%s\n", token);
         token = strtok(NULL, ",");
     }
 
