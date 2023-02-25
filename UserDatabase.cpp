@@ -309,44 +309,6 @@ void UserDatabase::listUserShoppingList() {
     }
 }
 
-void UserDatabase::readUsersFile(UserDatabase &users, string filePath) {
-    rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, 0));
-
-    for (int i = 0; i < doc.GetRowCount(); ++i) {
-        try {
-            string username = doc.GetRowName(i);
-            string password = doc.GetCell<string>("Password", username);
-            int hashed = doc.GetCell<int>("EA Applied", username);
-            int isAdmin = doc.GetCell<int>("Admin", username);
-
-            // instantiates md5 object for hashing
-            MD5 md5;
-            string hashedPassword;
-
-            // if the password is not already hashed, hash algorithm is applied
-            if (hashed == 0) {
-                // hashes input password
-                hashedPassword = md5(password);
-                password = hashedPassword;
-                // sets the hash status to 1
-                hashed = 1;
-            }
-
-            boost::optional<User> foundUser = searchUser(username);
-
-            // if user does not exist add it
-            if(!foundUser){
-                User user(username, hashedPassword, hashed, isAdmin);
-
-                users.addUser(user);
-            }
-        }
-        catch (...) {
-            cout << "Error reading users file." << endl;
-        }
-    }
-}
-
 int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **azColName) {
     // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
     // data: is 4th argument passed in sqlite3_exec command

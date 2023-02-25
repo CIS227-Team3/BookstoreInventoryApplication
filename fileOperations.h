@@ -16,7 +16,7 @@
 #include <fstream>
 #include <list>
 #include "BookstoreInventory.h"
-#include "User.h"
+#include "UserDatabase.h"
 
 using namespace std;
 
@@ -25,5 +25,7 @@ void exportInventoryToCsv(BookstoreInventory &inventoryObject);
 void writeBooksFile(deque<Book> &UserList);
 
 void readBookFile(BookstoreInventory &inventoryObject, string filePath);
+
+void readUsersFile(UserDatabase &users, string filePath);
 
 #endif /* READFILE_H_ */

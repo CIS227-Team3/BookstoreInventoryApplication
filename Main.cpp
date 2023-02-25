@@ -186,7 +186,7 @@ int main() {
                         cout << "Please enter the name of the users file you would like to import:" << endl;
                         cin >> filePath;
 
-                        users.readUsersFile(users, filePath);
+                        readUsersFile(users, filePath);
                     } else {
                         cout << "Menu option not recognized." << endl;
                     }

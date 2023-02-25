@@ -9,7 +9,6 @@
 #include <boost/optional.hpp>
 #include "stdio.h"
 #include "User.h"
-#include "fileOperations.h"
 #include "includes/md5.h"
 #include "BookstoreInventory.h"
 
@@ -37,8 +36,6 @@ public:
     void getUserShoppingList(BookstoreInventory inventory);
 
     void listUserShoppingList();
-
-    void readUsersFile(UserDatabase &users, string filePath);
 
     boost::optional<User> searchUser(const string &username); // searches for user based on username
 
