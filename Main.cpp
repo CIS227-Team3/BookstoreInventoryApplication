@@ -51,7 +51,7 @@ int main() {
 
     if (users.loginUser(username, password)) {
         currentUser = users.getCurrentUser();
-        users.getUserShoppingList(inventory);
+        currentUser.getUserShoppingList(inventory);
         displayUserOptions();
 
         // only displays the admin options if the user is an admin
@@ -141,15 +141,15 @@ int main() {
                     getline(cin, title);
 
                     Book book = inventory.searchForBook(title);
-                    users.addToUserShoppingList(book);
+                    currentUser.addToUserShoppingList(book);
                     break;
                 }
                 case 10: {
-                    users.listUserShoppingList();
+                    currentUser.listUserShoppingList();
                     break;
                 }
                 case 11: {
-                    users.saveUserShoppingList();
+                    currentUser.saveUserShoppingList();
                     break;
                 }
                 case 12: {
