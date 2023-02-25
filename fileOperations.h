@@ -20,8 +20,6 @@
 
 using namespace std;
 
-void readBooksDatabase(string filePath, deque<Book> &Inventory);
-
 void writeBooksFile(deque<Book> &UserList);
 
 #endif /* READFILE_H_ */
