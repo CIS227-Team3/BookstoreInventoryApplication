@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <deque>
 #include <set>
+#include <boost/optional.hpp>
 #include "Book.h"
 #include "includes/sqlite3.h"
 
@@ -25,6 +26,8 @@ public:
     User();
 
     User(string username, string password, int hashed, int isAdmin);
+
+    User(boost::optional<User> anOptional);
 
     void setUsername(string username);
 

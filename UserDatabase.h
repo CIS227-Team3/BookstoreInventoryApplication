@@ -11,6 +11,7 @@
 #include "fileOperations.h"
 #include "includes/md5.h"
 #include "BookstoreInventory.h"
+#include <boost/optional.hpp>
 
 using namespace std;
 
@@ -39,15 +40,12 @@ public:
 
     void readUsersFile(UserDatabase &users, string filePath);
 
-    list<User> Users;
+    boost::optional<User> searchUser(const string &username); // searches for user based on username
 
 private:
     User currentUser;
     multiset<Book> UserShoppingList;
-
-    void addInitialUsers();
-
-    User searchUser(const string &username); // searches for user based on username
+    
     static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
 
     static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);

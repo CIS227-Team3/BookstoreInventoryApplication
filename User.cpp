@@ -5,7 +5,6 @@
  *      Author: Group 3
  */
 
-#include <deque>
 #include "User.h"
 
 //Constructor
@@ -22,7 +21,15 @@ User::User(string username, string password, int hashed, int isAdmin) {
     this->password = password;
     this->hashed = hashed;
     this->isAdmin = isAdmin;
-    this->UserList;
+}
+
+User::User(boost::optional<User> anOptional) {
+    if(anOptional){
+        this->username = anOptional->username;
+        this->password = anOptional->password;
+        this->hashed = anOptional->hashed;
+        this->isAdmin = anOptional->isAdmin;
+    }
 }
 
 //Sets Username
