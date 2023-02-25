@@ -15,11 +15,15 @@
 #include <iostream>
 #include <fstream>
 #include <list>
-#include "Book.h"
+#include "BookstoreInventory.h"
 #include "User.h"
 
 using namespace std;
 
+void exportInventoryToCsv(BookstoreInventory &inventoryObject);
+
 void writeBooksFile(deque<Book> &UserList);
+
+void readBookFile(BookstoreInventory &inventoryObject, string filePath);
 
 #endif /* READFILE_H_ */
