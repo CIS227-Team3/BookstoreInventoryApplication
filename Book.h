@@ -13,7 +13,9 @@ using namespace std;
 #define BOOK_H_
 
 #include <chrono>
+#include <deque>
 #include <boost/optional.hpp>
+#include "includes/sqlite3.h"
 
 //Book class, creates variables related to the Book object
 class Book {

@@ -6,7 +6,6 @@
 #include <string>
 #include <algorithm>
 #include <boost/optional.hpp>
-#include "User.h"
 #include "Book.h"
 
 using namespace std;
