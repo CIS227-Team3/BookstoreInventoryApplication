@@ -13,6 +13,7 @@ using namespace std;
 #define BOOK_H_
 
 #include <chrono>
+#include <boost/optional.hpp>
 
 //Book class, creates variables related to the Book object
 class Book {
@@ -24,6 +25,8 @@ public:
 
     Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
          const string &description, const string &genre, const float &msrp, const int &quantity);
+
+    Book(boost::optional<Book> anOptional);
 
     string ISBN;
     string title;

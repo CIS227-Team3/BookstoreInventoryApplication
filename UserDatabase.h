@@ -6,12 +6,12 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <boost/optional.hpp>
 #include "stdio.h"
 #include "User.h"
 #include "fileOperations.h"
 #include "includes/md5.h"
 #include "BookstoreInventory.h"
-#include <boost/optional.hpp>
 
 using namespace std;
 
@@ -46,7 +46,7 @@ private:
     User currentUser;
     multiset<Book> UserShoppingList;
     
-    static int searchUserCallback(void *notUsed, int argc, char **argv, char **azColName);
+    static int searchUserCallback(void *data, int argc, char **argv, char **azColName);
 
     static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);
 

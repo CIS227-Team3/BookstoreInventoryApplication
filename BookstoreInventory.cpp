@@ -2,26 +2,20 @@
 
 //Constructor
 BookstoreInventory::BookstoreInventory() {
-    addInitialInventory();
+    cout << "Loading books..." << endl;
+    cout << "Finished loading books. " << endl;
 }
 
 //Lists inventory in terminal
 void BookstoreInventory::listInventory() {
     cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
          << endl;
-    for (auto &book: this->Inventory) {
+    deque<Book> allBooks = getAllBooks();
+    for (auto &book: allBooks) {
         cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
              << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
              << book.quantity << endl;
     }
-}
-
-//Adds initial inventory of file path
-void BookstoreInventory::addInitialInventory() {
-    cout << "Loading books..." << endl;
-    string filePath = "../books.db";
-    readBooksDatabase(filePath, Inventory);
-    cout << "Finished loading books. " << endl;
 }
 
 //Watches for Cases, so we can use lower or upper case characters
@@ -36,34 +30,46 @@ bool caseInsensitiveMatch(string string1, string string2) {
 }
 
 //Searches for a specific book within BookstoreInventory
-Book BookstoreInventory::searchForBook(string title) {
-    bool bookFound = false;
-    cout << "Searching database for book with title " << title << endl;
+boost::optional<Book> BookstoreInventory::searchForBook(string title) {
+    const char *dbName = "../books.db";
+    Book book;
 
-    while (!bookFound) {
-        for (auto &book: this->Inventory) {
-            if (caseInsensitiveMatch(book.title, title)) {
-                cout << "Book details: " << endl;
-                cout << "ISBN: " << book.ISBN << endl;
-                cout << "Title: " << book.title << endl;
-                cout << "Author: " << book.author << endl;
-                cout << "Year Published: " << book.year << endl;
-                cout << "Publisher: " << book.publisher << endl;
-                cout << "Description: " << book.description << endl;
-                cout << "Genre: " << book.genre << endl;
-                cout << "Price: $" << book.msrp << endl;
-                cout << "Quantity in Stock: " << book.quantity << endl;
-                bookFound = true;
-                return book;
+    sqlite3 *bookDB;
+    string findQuery = "SELECT * FROM books where title like ?";
+
+    title.push_back('%'); // appending % searches for any values starting with title (case-insensitive)
+
+    try {
+        if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
+            sqlite3_stmt *find = NULL;
+            if (sqlite3_prepare_v2(bookDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(find, 1, title.c_str(), title.length(), NULL);
+                sqlite3_exec(bookDB, sqlite3_expanded_sql(find), this->searchBookCallback, &book, nullptr);
+                sqlite3_reset(find);
+                sqlite3_finalize(find);
+                sqlite3_close(bookDB);
+
+                if (book.title == "none") {
+                    return boost::none;
+                } else {
+                    cout << "Book details: " << endl;
+                    cout << "ISBN: " << book.ISBN << endl;
+                    cout << "Title: " << book.title << endl;
+                    cout << "Author: " << book.author << endl;
+                    cout << "Year Published: " << book.year << endl;
+                    cout << "Publisher: " << book.publisher << endl;
+                    cout << "Description: " << book.description << endl;
+                    cout << "Genre: " << book.genre << endl;
+                    cout << "Price: $" << book.msrp << endl;
+                    cout << "Quantity in Stock: " << book.quantity << endl;
+                    return book;
+                }
             }
         }
-
-        if (!bookFound) {
-            cout << "Book with title " << title << " not found." << endl;
-            cout << "Enter another title to search:" << endl;
-            getline(cin, title);
-        }
+    } catch (...) {
+        cout << "Error finding book in database." << endl;
     }
+    return boost::none;
 }
 
 // Adds a new book to the database
@@ -104,8 +110,6 @@ void BookstoreInventory::addBook(Book book) {
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
-
-                Inventory.push_back(book);
             }
             sqlite3_finalize(insert);
         }
@@ -127,7 +131,9 @@ void BookstoreInventory::deleteBook(string title) {
     const char *dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
-    string deleteQuery = "DELETE FROM books WHERE title = ?";
+    string deleteQuery = "DELETE FROM books WHERE title like ?";
+
+    title.push_back('%'); // appending % searches for any values starting with title (case-insensitive)
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
@@ -142,16 +148,6 @@ void BookstoreInventory::deleteBook(string title) {
 
                 sqlite3_step(del);
                 sqlite3_reset(del);
-
-                deque<Book>::iterator bookToDel = Inventory.begin();
-                for (auto bookToDel = Inventory.begin(); bookToDel != Inventory.end(); ++bookToDel) {
-                    Book delBook = *bookToDel;
-                    if (caseInsensitiveMatch(title, delBook.title)) {
-                        Inventory.erase(bookToDel);
-                        cout << "Book with title " << title << " has been successfully deleted from database." << endl;
-                        break;
-                    }
-                }
             }
             sqlite3_finalize(del);
         }
@@ -173,7 +169,9 @@ void BookstoreInventory::updateDescription(string title, string description) {
     Book bookUpdate;
 
     sqlite3 *bookDB;
-    string updateQuery = "UPDATE books SET description = ? WHERE title = ?";
+    string updateQuery = "UPDATE books SET description = ? WHERE title like ?";
+
+    title.push_back('%'); // appending % searches for any values starting with title (case-insensitive)
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
@@ -192,13 +190,6 @@ void BookstoreInventory::updateDescription(string title, string description) {
             }
             sqlite3_finalize(update);
         }
-
-        for (unsigned int i = 0; i < Inventory.size(); ++i) {
-            if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
-                Inventory.at(i).description = description;
-                cout << "Description of book with title " << title << " successfully updated in database." << endl;
-            }
-        }
     }
 
     catch (...) {
@@ -216,7 +207,9 @@ void BookstoreInventory::updateGenre(string title, string genre) {
     Book bookUpdate;
 
     sqlite3 *bookDB;
-    string updateQuery = "UPDATE books SET genre = ? WHERE title = ?";
+    string updateQuery = "UPDATE books SET genre = ? WHERE title like ?";
+
+    title.push_back('%'); // appending % searches for any values starting with title (case-insensitive)
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
@@ -235,14 +228,6 @@ void BookstoreInventory::updateGenre(string title, string genre) {
             }
             sqlite3_finalize(update);
         }
-
-        // gets book object with matching title
-        for (unsigned int i = 0; i < Inventory.size(); ++i) {
-            if (caseInsensitiveMatch(title, Inventory.at(i).title)) {
-                Inventory.at(i).genre = genre;
-                cout << "Genre of book with title " << title << " successfully updated in database." << endl;
-            }
-        }
     }
 
     catch (...) {
@@ -250,26 +235,40 @@ void BookstoreInventory::updateGenre(string title, string genre) {
     }
 
     sqlite3_close(bookDB);
-
-
 }
 
 void BookstoreInventory::exportInventoryToCsv() {
-    writeBooksFile(this->Inventory);
+    deque<Book> allBooks = getAllBooks();
+    writeBooksFile(allBooks);
 }
 
-multiset<Book> BookstoreInventory::searchForBookByISBN(vector<string> isbns) {
-    multiset<Book> books;
+boost::optional<Book> BookstoreInventory::searchForBookByISBN(string isbn) {
+    const char *dbName = "../books.db";
+    Book book;
 
-    for (auto &isbn: isbns) {
-        for (auto &book: Inventory) {
-            if (book.ISBN == isbn) {
-                books.insert(book);
+    sqlite3 *bookDB;
+    string findQuery = "SELECT * FROM books where isbn = ?";
+
+    try {
+        if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
+            sqlite3_stmt *find = NULL;
+            if (sqlite3_prepare_v2(bookDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(find, 1, isbn.c_str(), isbn.length(), NULL);
+                sqlite3_exec(bookDB, sqlite3_expanded_sql(find), this->searchBookCallback, &book, nullptr);
+                sqlite3_reset(find);
+                sqlite3_finalize(find);
+                sqlite3_close(bookDB);
+
+                if (book.title == "none") {
+                    return boost::none;
+                }
+                return book;
             }
         }
+    } catch (...) {
+        cout << "Error finding book in database." << endl;
     }
-
-    return books;
+    return boost::none;
 }
 
 
@@ -291,11 +290,72 @@ void BookstoreInventory::readBookFile(BookstoreInventory &inventoryObject, strin
             Book book(ISBN, title, author, year, publisher, description, genre, msrp, quantity);
 
             inventoryObject.addBook(book);
-
-            inventoryObject.Inventory.push_back(book);
-        }
-        catch (...) {
+        } catch (...) {
 
         }
     }
+}
+
+int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, char **azColName) {
+    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
+    // int argc: holds the number of results
+    // (array) azColName: holds each column returned
+    // (array) argv: holds each value
+    // only goes in here if statement finds book
+    Book *book = static_cast<Book *>(data); // cast data to book object
+    book->ISBN = argv[0];
+    book->title = argv[1];
+    book->author = argv[2];
+    book->year = stoi(argv[3]);
+    book->publisher = argv[4];
+    book->description = argv[5];
+    book->genre = argv[6];
+    book->msrp = stof(argv[7]);
+    book->quantity = stoi(argv[8]);
+    return argc;
+}
+
+deque<Book> BookstoreInventory::getAllBooks() {
+    deque<Book> books;
+    sqlite3 *DB;
+    int exit = 0;
+    exit = sqlite3_open("../books.db", &DB);
+    int rc = 0;
+
+    string sql("SELECT * FROM books;");
+    if (exit) {
+        std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
+        return books;
+    } else {
+        // Opened Database Successfully
+        try {
+            rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
+        } catch (...) {
+            cout << "Error reading book." << endl;
+        }
+
+        if (rc != SQLITE_OK)
+            cerr << "Error SELECT" << endl;
+        else {
+            cout << "Operation OK!" << endl;
+        }
+
+        sqlite3_close(DB);
+    }
+
+    return books;
+}
+
+int BookstoreInventory::allBooksCallback(void *data, int argc, char **argv, char **azColName) {
+    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
+    // int argc: holds the number of results
+    // (array) azColName: holds each column returned
+    // (array) argv: holds each value
+    // only goes in here if statement finds book
+    deque<Book> *books = reinterpret_cast<deque<Book> *>(data); // cast data to book object
+    Book book(argv[0], argv[1], argv[2], stoi(argv[3]), argv[4], argv[5], argv[6], stof(argv[7]), stoi(argv[8]));
+    books->push_back(book);
+    return 0;
 }

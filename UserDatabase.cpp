@@ -41,7 +41,7 @@ boost::optional<User> UserDatabase::searchUser(const string &username) {
     User user;
 
     sqlite3 *usersDB;
-    string findQuery = "SELECT * FROM USERS where username = ?";
+    string findQuery = "SELECT * FROM users where username = ?";
 
     try {
         if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
@@ -291,7 +291,12 @@ void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
     }
     sqlite3_close(usersDB);
 
-    UserShoppingList = inventory.searchForBookByISBN(bookISBNs);
+    for(auto &isbn: bookISBNs){
+        boost::optional<Book> book = inventory.searchForBookByISBN(isbn);
+        if(book){
+            UserShoppingList.insert(book);
+        }
+    }
 }
 
 void UserDatabase::listUserShoppingList() {
@@ -372,7 +377,6 @@ int UserDatabase::searchUserShoppingCartCallback(void *data, int argc, char **ar
     // delimiters present in str[].
     while (token != NULL) {
         bookISBNs->push_back(token);
-        printf("%s\n", token);
         token = strtok(NULL, ",");
     }
 

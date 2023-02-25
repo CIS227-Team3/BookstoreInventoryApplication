@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <boost/optional.hpp>
 #include "User.h"
 #include "Book.h"
 #include "fileOperations.h"
@@ -19,9 +20,9 @@ public:
 
     void listInventory();
 
-    Book searchForBook(string title);
+    boost::optional<Book> searchForBook(string title);
 
-    multiset<Book> searchForBookByISBN(vector<string> isbns);
+    boost::optional<Book> searchForBookByISBN(string isbn);
 
     void exportInventoryToCsv();
 
@@ -35,11 +36,12 @@ public:
 
     void readBookFile(BookstoreInventory &inventoryObject, string filePath);
 
-    deque<Book> Inventory;
+    deque<Book> getAllBooks();
 
 private:
+    static int searchBookCallback(void *data, int argc, char **argv, char **azColName);
 
-    void addInitialInventory();
+    static int allBooksCallback(void *data, int argc, char **argv, char **azColName);
 };
 
 
