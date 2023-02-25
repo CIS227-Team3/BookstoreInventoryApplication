@@ -9,3 +9,7 @@ CMakeLists.txt
 .settings/org.eclipse.cdt.managedbuilder.core.prefs
 .settings/org.eclipse.core.resources.prefs
 Debug/includes/md5.o
+.cproject
+*.o
+.autotools
+Debug/BookstoreInventoryApplication.exe
