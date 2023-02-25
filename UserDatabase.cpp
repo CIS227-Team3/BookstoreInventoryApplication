@@ -291,7 +291,12 @@ void UserDatabase::getUserShoppingList(BookstoreInventory inventory) {
     }
     sqlite3_close(usersDB);
 
-    UserShoppingList = inventory.searchForBookByISBN(bookISBNs);
+    for(auto &isbn: bookISBNs){
+        boost::optional<Book> book = inventory.searchForBookByISBN(isbn);
+        if(book){
+            UserShoppingList.insert(book);
+        }
+    }
 }
 
 void UserDatabase::listUserShoppingList() {

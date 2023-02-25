@@ -245,19 +245,34 @@ void BookstoreInventory::exportInventoryToCsv() {
     writeBooksFile(allBooks);
 }
 
-multiset<Book> BookstoreInventory::searchForBookByISBN(vector<string> isbns) {
-    multiset<Book> books;
-    deque<Book> allBooks = getAllBooks();
+boost::optional<Book> BookstoreInventory::searchForBookByISBN(string isbn) {
+    const char *dbName = "../users.db";
+    Book book;
 
-    for (auto &isbn: isbns) {
-        for (auto &book: allBooks) {
-            if (book.ISBN == isbn) {
-                books.insert(book);
+    sqlite3 *bookDB;
+    string findQuery = "SELECT * FROM books where isbn = ?";
+
+    try {
+        if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
+            sqlite3_stmt *find = NULL;
+            if (sqlite3_prepare_v2(bookDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(find, 1, isbn.c_str(), isbn.length(), NULL);
+                sqlite3_exec(bookDB, sqlite3_expanded_sql(find), this->searchBookCallback, &book, nullptr);
+                sqlite3_reset(find);
+                sqlite3_finalize(find);
+                sqlite3_close(bookDB);
+
+                if(book.title == "none"){
+                    return boost::none;
+                }
+                return book;
             }
         }
     }
-
-    return books;
+    catch (...) {
+        cout << "Error finding book in database." << endl;
+    }
+    return boost::none;
 }
 
 
@@ -318,21 +333,23 @@ deque<Book> BookstoreInventory::getAllBooks() {
         std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
         return books;
     }
-    else
-        std::cout << "Opened Database Successfully!" << std::endl;
-    try{
-        rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
-    } catch (...){
-        cout << "Error reading book." << endl;
+    else{
+        // Opened Database Successfully
+        try{
+            rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
+        } catch (...){
+            cout << "Error reading book." << endl;
+        }
+
+        if (rc != SQLITE_OK)
+            cerr << "Error SELECT" << endl;
+        else {
+            cout << "Operation OK!" << endl;
+        }
+
+        sqlite3_close(DB);
     }
 
-    if (rc != SQLITE_OK)
-        cerr << "Error SELECT" << endl;
-    else {
-        cout << "Operation OK!" << endl;
-    }
-
-    sqlite3_close(DB);
     return books;
 }
 

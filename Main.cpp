@@ -60,8 +60,6 @@ int main() {
 
         menuOption = validateMenuOption();
 
-        inventory.getAllBooks();
-
         while (menuOption != 0) {
             if (currentUser.getAdminStatus() == 0) {
                 switch (menuOption) {

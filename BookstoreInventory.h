@@ -22,7 +22,7 @@ public:
 
     boost::optional<Book> searchForBook(string title);
 
-    multiset<Book> searchForBookByISBN(vector<string> isbns);
+    boost::optional<Book> searchForBookByISBN(string isbn);
 
     void exportInventoryToCsv();
 
