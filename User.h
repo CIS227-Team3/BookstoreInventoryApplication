@@ -49,6 +49,8 @@ public:
 
     void addToUserList(Book book);
 
+    deque<Book> getUserList();
+
 private:
     string username;
     string password;

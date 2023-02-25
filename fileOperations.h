@@ -20,7 +20,7 @@
 
 using namespace std;
 
-void exportInventoryToCsv(BookstoreInventory &inventoryObject);
+void exportUserListToCsv(User &user);
 
 void writeBooksFile(deque<Book> &UserList);
 

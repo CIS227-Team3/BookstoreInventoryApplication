@@ -6,18 +6,6 @@ BookstoreInventory::BookstoreInventory() {
     cout << "Finished loading books. " << endl;
 }
 
-//Lists inventory in terminal
-void BookstoreInventory::listInventory() {
-    cout << "ISBN | Book-Title | Book-Author | Year Published | Publisher | Description | Genre | Price | Quantity"
-         << endl;
-    deque<Book> allBooks = getAllBooks();
-    for (auto &book: allBooks) {
-        cout << book.ISBN << " | " << book.title << " | " << book.author << " | " << book.year << " | "
-             << book.publisher << " | " << book.description << " | " << book.genre << " | " << book.msrp << " | "
-             << book.quantity << endl;
-    }
-}
-
 //Watches for Cases, so we can use lower or upper case characters
 bool caseInsensitiveMatch(string string1, string string2) {
     //convert string1 and string2 into lower case strings
@@ -284,48 +272,4 @@ int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, ch
     book->msrp = stof(argv[7]);
     book->quantity = stoi(argv[8]);
     return argc;
-}
-
-deque<Book> BookstoreInventory::getAllBooks() {
-    deque<Book> books;
-    sqlite3 *DB;
-    int exit = 0;
-    exit = sqlite3_open("../books.db", &DB);
-    int rc = 0;
-
-    string sql("SELECT * FROM books;");
-    if (exit) {
-        std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
-        return books;
-    } else {
-        // Opened Database Successfully
-        try {
-            rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
-        } catch (...) {
-            cout << "Error reading book." << endl;
-        }
-
-        if (rc != SQLITE_OK)
-            cerr << "Error SELECT" << endl;
-        else {
-            cout << "Operation OK!" << endl;
-        }
-
-        sqlite3_close(DB);
-    }
-
-    return books;
-}
-
-int BookstoreInventory::allBooksCallback(void *data, int argc, char **argv, char **azColName) {
-    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
-    // data: is 4th argument passed in sqlite3_exec command
-    // int argc: holds the number of results
-    // (array) azColName: holds each column returned
-    // (array) argv: holds each value
-    // only goes in here if statement finds book
-    deque<Book> *books = reinterpret_cast<deque<Book> *>(data); // cast data to book object
-    Book book(argv[0], argv[1], argv[2], stoi(argv[3]), argv[4], argv[5], argv[6], stof(argv[7]), stoi(argv[8]));
-    books->push_back(book);
-    return 0;
 }
