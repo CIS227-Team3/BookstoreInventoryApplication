@@ -6,9 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <boost/optional.hpp>
-#include "User.h"
 #include "Book.h"
-#include "fileOperations.h"
 
 using namespace std;
 
@@ -24,8 +22,6 @@ public:
 
     boost::optional<Book> searchForBookByISBN(string isbn);
 
-    void exportInventoryToCsv();
-
     void addBook(Book book);
 
     void deleteBook(string title);
@@ -33,8 +29,6 @@ public:
     void updateDescription(string title, string description);
 
     void updateGenre(string title, string genre);
-
-    void readBookFile(BookstoreInventory &inventoryObject, string filePath);
 
     deque<Book> getAllBooks();
 
