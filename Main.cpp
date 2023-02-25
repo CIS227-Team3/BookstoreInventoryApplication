@@ -9,8 +9,8 @@
 #include <string>
 
 #include "UserDatabase.h"
-#include "BookstoreInventory.h"
 #include "menuOptions.h"
+#include "fileOperations.h"
 
 using namespace std;
 
@@ -133,7 +133,7 @@ int main() {
                     break;
                 }
                 case 8: {
-                    inventory.exportInventoryToCsv();
+                    exportInventoryToCsv(inventory);
                     break;
                 }
                 case 9: {
@@ -174,7 +174,7 @@ int main() {
                         cout << "Please enter the name of the book file you would like to import:" << endl;
                         cin >> filePath;
 
-                        inventory.readBookFile(inventory, filePath);
+                        readBookFile(inventory, filePath);
                     } else {
                         cout << "Menu option not recognized." << endl;
                     }
@@ -186,7 +186,7 @@ int main() {
                         cout << "Please enter the name of the users file you would like to import:" << endl;
                         cin >> filePath;
 
-                        users.readUsersFile(users, filePath);
+                        readUsersFile(users, filePath);
                     } else {
                         cout << "Menu option not recognized." << endl;
                     }
