@@ -43,8 +43,8 @@ Book::Book(const string &isbn, const string &title, const string &author, int ye
         ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
         genre(genre), msrp(msrp), quantity(quantity) {}
 
-Book::Book(boost::optional<Book> anOptional){
-    if(anOptional){
+Book::Book(boost::optional<Book> anOptional) {
+    if (anOptional) {
         this->ISBN = anOptional->ISBN;
         this->title = anOptional->title;
         this->author = anOptional->author;

@@ -49,7 +49,7 @@ boost::optional<Book> BookstoreInventory::searchForBook(string title) {
                 sqlite3_finalize(find);
                 sqlite3_close(bookDB);
 
-                if(book.title == "none"){
+                if (book.title == "none") {
                     return boost::none;
                 } else {
                     cout << "Book details: " << endl;
@@ -66,8 +66,7 @@ boost::optional<Book> BookstoreInventory::searchForBook(string title) {
                 }
             }
         }
-    }
-    catch (...) {
+    } catch (...) {
         cout << "Error finding book in database." << endl;
     }
     return boost::none;
@@ -236,8 +235,6 @@ void BookstoreInventory::updateGenre(string title, string genre) {
     }
 
     sqlite3_close(bookDB);
-
-
 }
 
 void BookstoreInventory::exportInventoryToCsv() {
@@ -262,14 +259,13 @@ boost::optional<Book> BookstoreInventory::searchForBookByISBN(string isbn) {
                 sqlite3_finalize(find);
                 sqlite3_close(bookDB);
 
-                if(book.title == "none"){
+                if (book.title == "none") {
                     return boost::none;
                 }
                 return book;
             }
         }
-    }
-    catch (...) {
+    } catch (...) {
         cout << "Error finding book in database." << endl;
     }
     return boost::none;
@@ -294,8 +290,7 @@ void BookstoreInventory::readBookFile(BookstoreInventory &inventoryObject, strin
             Book book(ISBN, title, author, year, publisher, description, genre, msrp, quantity);
 
             inventoryObject.addBook(book);
-        }
-        catch (...) {
+        } catch (...) {
 
         }
     }
@@ -323,7 +318,7 @@ int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, ch
 
 deque<Book> BookstoreInventory::getAllBooks() {
     deque<Book> books;
-    sqlite3* DB;
+    sqlite3 *DB;
     int exit = 0;
     exit = sqlite3_open("../books.db", &DB);
     int rc = 0;
@@ -332,12 +327,11 @@ deque<Book> BookstoreInventory::getAllBooks() {
     if (exit) {
         std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
         return books;
-    }
-    else{
+    } else {
         // Opened Database Successfully
-        try{
+        try {
             rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
-        } catch (...){
+        } catch (...) {
             cout << "Error reading book." << endl;
         }
 
