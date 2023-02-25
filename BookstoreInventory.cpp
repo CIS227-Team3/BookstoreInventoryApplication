@@ -319,6 +319,7 @@ int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, ch
 deque<Book> BookstoreInventory::getAllBooks() {
     deque<Book> books;
     sqlite3 *DB;
+    char *error_report = NULL;
     int exit = 0;
     exit = sqlite3_open("../books.db", &DB);
     int rc = 0;
@@ -330,7 +331,13 @@ deque<Book> BookstoreInventory::getAllBooks() {
     } else {
         // Opened Database Successfully
         try {
-            rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, NULL);
+            rc = sqlite3_exec(DB, sql.c_str(), allBooksCallback, &books, &error_report);
+
+            if (error_report)
+            {
+                printf( "\t> CMD: %s , Error: %s\n" , sql.c_str(), error_report );
+                sqlite3_free(error_report);
+            }
         } catch (...) {
             cout << "Error reading book." << endl;
         }
