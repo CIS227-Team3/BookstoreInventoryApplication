@@ -153,6 +153,21 @@ int main() {
                     break;
                 }
                 case 12: {
+                	// allows the shopper to check out
+                	// prompts the user for their email
+                	// if the email is not in the database, user can enter their name or checkout as a guest
+                	// user has option to exit cart, checkout, or clear cart
+                	// if user exits their cart, they are brought back to the main menu
+                	// if the user chooses to checkout, total spent is tallied, a receipt is generated, and the quantity in the database is updated
+                		// if the quantity in the database is 0, the isbn will be removed from the user's cart
+                		// quantity is updated in the user's database
+                		// total is added to the shopper's table
+                		// if guest checkout is chosen, total spent is not updated
+
+                	// if the user chooses to clear their cart, their cart in the shopping cart table is cleared
+                	break;
+                }
+                case 13: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.addUser();
                     } else {
@@ -160,7 +175,7 @@ int main() {
                     }
                     break;
                 }
-                case 13: {
+                case 14: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.updateUserPassword();
                     } else {
@@ -168,7 +183,7 @@ int main() {
                     }
                     break;
                 }
-                case 14: {
+                case 15: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the book file you would like to import:" << endl;
@@ -180,7 +195,7 @@ int main() {
                     }
                     break;
                 }
-                case 15: {
+                case 16: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the users file you would like to import:" << endl;
