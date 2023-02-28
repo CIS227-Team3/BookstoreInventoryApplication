@@ -37,11 +37,7 @@ string Book::getTimestamp() {
 	boost::posix_time::time_duration currentTime(hour, minute, second);
 	boost::posix_time::ptime currentTimestamp(currentDate, currentTime);
 
-	cout << "Date: " << timeLocal.date();
-	cout << "Time: " << timeLocal.time_of_day();
-
 	dateAdded = to_iso_extended_string(currentTimestamp);
-	cout << "dateAdded: " << dateAdded << endl;
 
 	return dateAdded;
 }
