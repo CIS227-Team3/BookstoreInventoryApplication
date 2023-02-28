@@ -49,6 +49,7 @@ int main() {
     cin.clear();
     cin.ignore(1000, '\n');
 
+    // displays the five most recently added books
     inventory.displayLatestFive();
 
     if (users.loginUser(username, password)) {

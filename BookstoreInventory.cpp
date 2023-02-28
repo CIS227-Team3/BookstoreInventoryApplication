@@ -8,8 +8,9 @@ BookstoreInventory::BookstoreInventory() {
 
 void BookstoreInventory::displayLatestFive() {
 	const char* dbName = "../books.db";
+	// selects five records with the five most recent timestamps
 	string selectQuery = "SELECT title, dateAdded FROM books ORDER BY dateAdded ASC LIMIT 5";
-	vector<string> topFive;
+	vector<string> topFive; // stores five most recently added books in database
 
 	string title;
 

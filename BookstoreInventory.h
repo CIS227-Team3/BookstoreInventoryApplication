@@ -28,7 +28,7 @@ public:
 
     void updateGenre(string title, string genre);
 
-    void displayLatestFive();
+    void displayLatestFive(); // gets five latest additions to database in timestamp order
 
 private:
     static int searchBookCallback(void *data, int argc, char **argv, char **azColName);
