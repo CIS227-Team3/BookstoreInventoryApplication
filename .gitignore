@@ -13,3 +13,4 @@ Debug/includes/md5.o
 *.o
 .autotools
 Debug/BookstoreInventoryApplication.exe
+/Release/

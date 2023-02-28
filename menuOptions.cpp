@@ -30,15 +30,16 @@ void displayUserOptions() {
     cout << "Press 9 to add a book to your cart." << endl;
     cout << "Press 10 to view your cart." << endl;
     cout << "Press 11 to save your cart." << endl;
+    cout << "Press 12 to check out." << endl;
 
 }
 
 void displayAdminOptions() {
     cout << endl << "-----ADMIN ONLY-----" << endl;
-    cout << "Press 12 to add a user." << endl;
-    cout << "Press 13 to change a users password." << endl;
-    cout << "Press 14 to import book file." << endl;
-    cout << "Press 15 to import user file." << endl;
+    cout << "Press 13 to add a user." << endl;
+    cout << "Press 14 to change a users password." << endl;
+    cout << "Press 15 to import book file." << endl;
+    cout << "Press 16 to import user file." << endl;
 }
 
 void printAndClearError() {

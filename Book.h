@@ -15,6 +15,10 @@ using namespace std;
 #include <chrono>
 #include <deque>
 #include <boost/optional.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/date_time/posix_time/posix_time_types.hpp"
+#include "boost/date_time/posix_time/posix_time_io.hpp"
+
 #include "includes/sqlite3.h"
 
 //Book class, creates variables related to the Book object
@@ -39,6 +43,7 @@ public:
     string genre;
     float msrp;
     unsigned int quantity;
+    string dateAdded;
 
     // custom compare for set based on price
     bool operator<(const Book &msgObj) const {
@@ -49,6 +54,7 @@ public:
 
 private:
     float generatePrice();
+    string getTimestamp();
 };
 
 #endif /* BOOK_H_ */

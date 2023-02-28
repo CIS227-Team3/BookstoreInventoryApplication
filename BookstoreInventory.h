@@ -2,7 +2,7 @@
 #define BOOKSTOREINVENTORYAPPLICATION_BOOKSTOREINVENTORY_H
 
 #include <iostream>
-#include <vector>
+#include <queue>
 #include <string>
 #include <algorithm>
 #include <boost/optional.hpp>
@@ -27,6 +27,8 @@ public:
     void updateDescription(string title, string description);
 
     void updateGenre(string title, string genre);
+
+    void displayLatestFive(); // gets five latest additions to database in timestamp order
 
 private:
     static int searchBookCallback(void *data, int argc, char **argv, char **azColName);
