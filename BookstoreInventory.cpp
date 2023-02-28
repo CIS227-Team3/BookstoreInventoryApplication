@@ -6,6 +6,32 @@ BookstoreInventory::BookstoreInventory() {
     cout << "Finished loading books. " << endl;
 }
 
+void BookstoreInventory::displayLatestFive() {
+	const char* dbName = "../books.db";
+	string selectQuery = "SELECT title, dateAdded FROM books ORDER BY dateAdded ASC LIMIT 5";
+	vector<string> topFive;
+
+	string title;
+
+	sqlite3* bookDB;
+
+	if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
+		sqlite3_stmt *select;
+		if (sqlite3_prepare_v2(bookDB, selectQuery.c_str(), selectQuery.length(), &select, nullptr) == SQLITE_OK) {
+
+			while (sqlite3_step(select) != SQLITE_DONE) {
+				title = (const char*)sqlite3_column_text(select, 0);
+				topFive.push_back(title);
+			}
+		}
+	}
+
+	cout << "--- FIVE LATEST ADDITIONS TO INVENTORY ---" << endl;
+	for (unsigned int i = 0; i < 5; ++i) {
+		cout << topFive.at(i) << endl;
+	}
+}
+
 //Watches for Cases, so we can use lower or upper case characters
 bool caseInsensitiveMatch(string string1, string string2) {
     //convert string1 and string2 into lower case strings
@@ -50,6 +76,7 @@ boost::optional<Book> BookstoreInventory::searchForBook(string title) {
                     cout << "Genre: " << book.genre << endl;
                     cout << "Price: $" << book.msrp << endl;
                     cout << "Quantity in Stock: " << book.quantity << endl;
+                    cout << "Date Added: " << book.dateAdded << endl;
                     return book;
                 }
             }
@@ -271,5 +298,6 @@ int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, ch
     book->genre = argv[6];
     book->msrp = stof(argv[7]);
     book->quantity = stoi(argv[8]);
+    book->dateAdded = argv[9];
     return argc;
 }
