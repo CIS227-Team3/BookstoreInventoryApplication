@@ -295,7 +295,7 @@ void UserDatabase::addShopper(string email, string name, float total) {
                 SQLITE_OK) {
                 sqlite3_bind_text(insert, 1, email.c_str(), email.length(), NULL);
                 sqlite3_bind_text(insert, 2, name.c_str(), name.length(), NULL);
-                sqlite3_bind_int(insert, 3, total);
+                sqlite3_bind_double(insert, 3, total);
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
