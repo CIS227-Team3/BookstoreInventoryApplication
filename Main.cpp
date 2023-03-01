@@ -156,6 +156,11 @@ int main() {
                     break;
                 }
                 case 12: {
+                    string foundUsername = users.searchShopper(currentUser.getUsername());
+                    currentUser.checkoutWithUserShoppingList(foundUsername);
+                    break;
+                }
+                case 13: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.addUser();
                     } else {
@@ -163,7 +168,7 @@ int main() {
                     }
                     break;
                 }
-                case 13: {
+                case 14: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.updateUserPassword();
                     } else {
@@ -171,7 +176,7 @@ int main() {
                     }
                     break;
                 }
-                case 14: {
+                case 15: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the book file you would like to import:" << endl;
@@ -183,7 +188,7 @@ int main() {
                     }
                     break;
                 }
-                case 15: {
+                case 16: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the users file you would like to import:" << endl;
@@ -194,10 +199,6 @@ int main() {
                         cout << "Menu option not recognized." << endl;
                     }
                     break;
-                }
-                case 16: {
-                    string foundUsername = users.searchShopper(currentUser.getUsername());
-                    currentUser.checkoutWithUserShoppingList(foundUsername);
                 }
                 default: {
                     cout << "Menu option not recognized." << endl;
