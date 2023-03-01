@@ -9,7 +9,7 @@ BookstoreInventory::BookstoreInventory() {
 void BookstoreInventory::displayLatestFive() {
 	const char* dbName = "../books.db";
 	// selects five records with the five most recent timestamps
-	string selectQuery = "SELECT title, dateAdded FROM books ORDER BY dateAdded ASC LIMIT 5";
+	string selectQuery = "SELECT title FROM books ORDER BY dateAdded DESC LIMIT 5";
 	vector<string> topFive; // stores five most recently added books in database
 
 	string title;
@@ -94,7 +94,7 @@ void BookstoreInventory::addBook(Book book) {
     const char *dbName = tempDBName.c_str();
 
     sqlite3 *bookDB;
-    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (isbn) DO UPDATE SET quantity = quantity + 1";
+    string insertQuery = "INSERT INTO books(isbn, title, author, year, publisher, description, genre, msrp, quantity, dateAdded) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (isbn) DO UPDATE SET quantity = quantity + 1";
 
     try {
         if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
@@ -110,6 +110,7 @@ void BookstoreInventory::addBook(Book book) {
                 string genre = book.genre;
                 float msrp = book.msrp;
                 int quantity = book.quantity;
+                string dateAdded = book.dateAdded;
 
                 // binds values to ? in prepared insert query statement
                 // text (statementName, paramNum, value (converted to c_str), length of value, pointer)
@@ -123,13 +124,13 @@ void BookstoreInventory::addBook(Book book) {
                 sqlite3_bind_text(insert, 7, genre.c_str(), genre.length(), NULL);
                 sqlite3_bind_double(insert, 8, msrp);
                 sqlite3_bind_int(insert, 9, quantity);
+                sqlite3_bind_text(insert, 10, dateAdded.c_str(), dateAdded.length(), NULL);
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
             }
             sqlite3_finalize(insert);
         }
-
     }
 
     catch (...) {
