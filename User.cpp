@@ -193,3 +193,30 @@ deque<Book> User::getUserList() {
     return this->UserList;
 }
 
+void User::checkoutWithUserShoppingList(string username) {
+    float total = 0;
+    string name;
+    if (username == "none") {
+        name = "Guest";
+    } else {
+        name = username;
+    }
+
+    cout << "---Sales Receipt---" << endl;
+    cout << "Shopper: " << name << endl;
+    cout << "Items purchased:" << endl;
+    cout << "Title  |  Price" << endl;
+    for (auto &book: this->UserShoppingList) {
+        cout << book.title << " | "  << book.msrp << endl;
+        total += book.msrp;
+    }
+
+    cout << "SubTotal: " << total << endl;
+    cout << "Tax: " << total * .06 << endl;
+    cout << "Total: " << total + (total * .06) << endl;
+
+    // Clear list and save on checkout
+    this->UserShoppingList.clear();
+    saveUserShoppingList();
+}
+

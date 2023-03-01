@@ -195,6 +195,10 @@ int main() {
                     }
                     break;
                 }
+                case 16: {
+                    string foundUsername = users.searchShopper(currentUser.getUsername());
+                    currentUser.checkoutWithUserShoppingList(foundUsername);
+                }
                 default: {
                     cout << "Menu option not recognized." << endl;
                     break;

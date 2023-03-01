@@ -45,12 +45,14 @@ public:
     unsigned int quantity;
     string dateAdded;
 
-    // custom compare for set based on price
-    bool operator<(const Book &msgObj) const {
-        float right = msgObj.msrp;
-        float left = this->msrp;
-        return (left < right);
-    }
+    // custom compare based on price
+    struct priceCompare {
+        bool operator()(const Book &book1, const Book &book2) const {
+            float right = book1.msrp;
+            float left = book2.msrp;
+            return (left > right);
+        }
+    };
 
 private:
     float generatePrice();

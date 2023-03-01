@@ -239,3 +239,44 @@ int UserDatabase::searchUserCallback(void *data, int argc, char **argv, char **a
     return argc;
 }
 
+int UserDatabase::searchShopperCallback(void *data, int argc, char **argv, char **azColName) {
+    // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
+    // data: is 4th argument passed in sqlite3_exec command
+    // int argc: holds the number of results
+    // (array) azColName: holds each column returned
+    // (array) argv: holds each value
+    // only goes in here if statement finds user
+    User *user = static_cast<User *>(data);
+    user->setUsername(argv[1]);
+    return argc;
+}
+
+string UserDatabase::searchShopper(const string &username){
+    const char *dbName = "../users.db";
+    User foundUser;
+
+    sqlite3 *usersDB;
+    string findQuery = "SELECT * FROM shoppers where name = ?";
+
+    try {
+        if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
+            sqlite3_stmt *find = NULL;
+            if (sqlite3_prepare_v2(usersDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
+                sqlite3_bind_text(find, 1, username.c_str(), username.length(), NULL);
+                sqlite3_exec(usersDB, sqlite3_expanded_sql(find), this->searchShopperCallback, &foundUser, nullptr);
+                sqlite3_reset(find);
+                sqlite3_finalize(find);
+                sqlite3_close(usersDB);
+
+                if(username == "none"){
+                    return "none";
+                }
+                return foundUser.getUsername();
+            }
+        }
+    }
+    catch (...) {
+        cout << "Error finding user in database." << endl;
+    }
+    return "none";
+}
