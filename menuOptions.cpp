@@ -40,6 +40,7 @@ void displayAdminOptions() {
     cout << "Press 14 to change a users password." << endl;
     cout << "Press 15 to import book file." << endl;
     cout << "Press 16 to import user file." << endl;
+    cout << "Press 17 to add a shopper." << endl;
 }
 
 void printAndClearError() {

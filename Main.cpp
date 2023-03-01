@@ -25,7 +25,6 @@ int main() {
 
     short unsigned int menuOption;
     string title;
-
     string ISBN;
     string author;
     int year;
@@ -156,6 +155,11 @@ int main() {
                     break;
                 }
                 case 12: {
+                    string foundUsername = users.searchShopper(currentUser.getUsername());
+                    currentUser.checkoutWithUserShoppingList(foundUsername);
+                    break;
+                }
+                case 13: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.addUser();
                     } else {
@@ -163,7 +167,7 @@ int main() {
                     }
                     break;
                 }
-                case 13: {
+                case 14: {
                     if (currentUser.getAdminStatus() == 1) {
                         users.updateUserPassword();
                     } else {
@@ -171,7 +175,7 @@ int main() {
                     }
                     break;
                 }
-                case 14: {
+                case 15: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the book file you would like to import:" << endl;
@@ -183,13 +187,34 @@ int main() {
                     }
                     break;
                 }
-                case 15: {
+                case 16: {
                     if (currentUser.getAdminStatus() == 1) {
                         string filePath;
                         cout << "Please enter the name of the users file you would like to import:" << endl;
                         cin >> filePath;
 
                         readUsersFile(users, filePath);
+                    } else {
+                        cout << "Menu option not recognized." << endl;
+                    }
+                    break;
+                }
+                case 17: {
+                    if (currentUser.getAdminStatus() == 1) {
+                        string email;
+                        string name;
+                        float amount;
+
+                        cout << "Enter email: " << endl;
+                        getline(cin, email);
+
+                        cout << "Enter name: " << endl;
+                        getline(cin, name);
+
+                        cout << "Enter amount: " << endl;
+                        amount = validatePrice();
+
+                        users.addShopper(email, name, amount);
                     } else {
                         cout << "Menu option not recognized." << endl;
                     }

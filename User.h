@@ -57,6 +57,8 @@ public:
 
     void listUserShoppingList();
 
+    void checkoutWithUserShoppingList(string username);
+
     deque<Book> getUserList();
 
 
@@ -67,7 +69,7 @@ private:
     int isAdmin;
 
     deque<Book> UserList;
-    multiset<Book> UserShoppingList;
+    multiset<Book, Book::priceCompare> UserShoppingList;
 
     static int searchUserShoppingCartCallback(void *data, int argc, char **argv, char **azColName);
 };

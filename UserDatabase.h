@@ -31,12 +31,18 @@ public:
 
     boost::optional<User> searchUser(const string &username); // searches for user based on username
 
+    string searchShopper(const string &username);
+
+    void addShopper(string email, string name, float total);
+
 private:
     User currentUser;
     
     static int searchUserCallback(void *data, int argc, char **argv, char **azColName);
 
     void updateUser(User user);
+
+    static int searchShopperCallback(void *data, int argc, char **argv, char **azColName);
 };
 
 
