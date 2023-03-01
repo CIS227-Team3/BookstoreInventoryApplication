@@ -280,3 +280,31 @@ string UserDatabase::searchShopper(const string &username){
     }
     return "none";
 }
+
+void UserDatabase::addShopper(string email, string name, float total) {
+    string tempDBName = "../users.db";
+    const char *dbName = tempDBName.c_str();
+
+    sqlite3 *usersDB;
+    string insertQuery = "INSERT INTO shoppers VALUES(?, ?, ?)";
+
+    try {
+        if (sqlite3_open(dbName, &usersDB) == SQLITE_OK) {
+            sqlite3_stmt *insert = NULL;
+            if (sqlite3_prepare_v2(usersDB, insertQuery.c_str(), insertQuery.length(), &insert, nullptr) ==
+                SQLITE_OK) {
+                sqlite3_bind_text(insert, 1, email.c_str(), email.length(), NULL);
+                sqlite3_bind_text(insert, 2, name.c_str(), name.length(), NULL);
+                sqlite3_bind_int(insert, 3, total);
+
+                sqlite3_step(insert);
+                sqlite3_reset(insert);
+            }
+            sqlite3_finalize(insert);
+        }
+    }
+    catch (...) {
+        cout << "Error adding user to database." << endl;
+    }
+    sqlite3_close(usersDB);
+}

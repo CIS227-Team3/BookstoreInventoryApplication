@@ -33,6 +33,8 @@ public:
 
     string searchShopper(const string &username);
 
+    void addShopper(string email, string name, float total);
+
 private:
     User currentUser;
     

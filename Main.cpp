@@ -25,7 +25,6 @@ int main() {
 
     short unsigned int menuOption;
     string title;
-
     string ISBN;
     string author;
     int year;
@@ -195,6 +194,27 @@ int main() {
                         cin >> filePath;
 
                         readUsersFile(users, filePath);
+                    } else {
+                        cout << "Menu option not recognized." << endl;
+                    }
+                    break;
+                }
+                case 17: {
+                    if (currentUser.getAdminStatus() == 1) {
+                        string email;
+                        string name;
+                        float amount;
+
+                        cout << "Enter email: " << endl;
+                        getline(cin, email);
+
+                        cout << "Enter name: " << endl;
+                        getline(cin, name);
+
+                        cout << "Enter amount: " << endl;
+                        amount = validatePrice();
+
+                        users.addShopper(email, name, amount);
                     } else {
                         cout << "Menu option not recognized." << endl;
                     }
