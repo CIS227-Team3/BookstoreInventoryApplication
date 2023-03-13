@@ -5,7 +5,7 @@
 #include <queue>
 #include <string>
 #include <algorithm>
-#include <boost/optional.hpp>
+#include "boost/optional.hpp"
 #include "Book.h"
 
 using namespace std;
@@ -16,7 +16,7 @@ class BookstoreInventory {
 public:
     BookstoreInventory();
 
-    boost::optional<Book> searchForBook(string title);
+    deque<Book> searchForBook(string title);
 
     boost::optional<Book> searchForBookByISBN(string isbn);
 
@@ -32,6 +32,7 @@ public:
 
 private:
     static int searchBookCallback(void *data, int argc, char **argv, char **azColName);
+    QSqlDatabase booksDB;
 };
 
 

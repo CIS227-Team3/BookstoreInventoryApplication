@@ -1,4 +1,4 @@
-/*
+ /*
  * Main.cpp
  *
  *  Created on: Jan 25, 2023
@@ -211,7 +211,7 @@ int main() {
                         cout << "Enter name: " << endl;
                         getline(cin, name);
 
-                        cout << "Enter amount: " << endl;
+                        cout << "Enter total spent: " << endl;
                         amount = validatePrice();
 
                         users.addShopper(email, name, amount);

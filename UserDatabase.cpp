@@ -299,6 +299,8 @@ void UserDatabase::addShopper(string email, string name, float total) {
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
+
+                cout << "Shopper successfully added." << endl;
             }
             sqlite3_finalize(insert);
         }
