@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /*
  * Main.cpp
  *
@@ -238,3 +239,16 @@ int main() {
 
     return EXIT_SUCCESS;
 }
+=======
+#include "mainwindow.h"
+
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
+}
+>>>>>>> Stashed changes
