@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         Book.cpp
         BookstoreInventory.h
         BookstoreInventory.cpp
+        fileOperations.h
+        fileOperations.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
