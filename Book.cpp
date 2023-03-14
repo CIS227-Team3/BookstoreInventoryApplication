@@ -26,7 +26,7 @@ float Book::generatePrice() {
 string Book::getTimestamp() {
 	string dateAdded;
 
-	// reference:
+	// reference: https://thispointer.com/get-current-date-time-in-c-example-using-boost-date-time-library/
 	boost::posix_time::ptime timeLocal = boost::posix_time::second_clock::local_time();
 
 	boost::gregorian::date currentDate = timeLocal.date(); // sets the date to the random numbers generated for year, month, and day	boost::posix_time::time_duration time = timeLocal.time_of_day(); // sets the time to the random numbers generated for hour, minute, and second
@@ -62,6 +62,11 @@ Book::Book(const string &isbn, const string &title, const string &author, int ye
            const string &description, const string &genre, const float &msrp, const int &quantity) :
         ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
         genre(genre), msrp(msrp), quantity(quantity), dateAdded(getTimestamp()) {}
+
+Book::Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
+           const string &description, const string &genre, const float &msrp, const int &quantity, const string &dateAdded) :
+        ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
+        genre(genre), msrp(msrp), quantity(quantity), dateAdded(dateAdded) {}
 
 Book::Book(boost::optional<Book> anOptional) {
     if (anOptional) {
