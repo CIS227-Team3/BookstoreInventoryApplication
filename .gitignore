@@ -1,16 +1,94 @@
+<<<<<<< Updated upstream
 /.idea
 /cmake-build-debug
 CMakeLists.txt
 /.metadata/
+=======
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+
+*~
+*.autosave
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+*.res
+*.rc
+/.qmake.cache
+/.qmake.stash
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Python byte code
+*.pyc
+
+# Binaries
+# --------
+*.dll
+*.exe
+
+.autotools
+.cproject
+>>>>>>> Stashed changes
 .project
 .settings/language.settings.xml
 .settings/org.eclipse.cdt.codan.core.prefs
 .settings/org.eclipse.cdt.core.prefs
-.settings/org.eclipse.cdt.managedbuilder.core.prefs
 .settings/org.eclipse.core.resources.prefs
+<<<<<<< Updated upstream
 Debug/includes/md5.o
 .cproject
 *.o
 .autotools
 Debug/BookstoreInventoryApplication.exe
 /Release/
+=======
+.settings/org.eclipse.cdt.managedbuilder.core.prefs
+>>>>>>> Stashed changes
