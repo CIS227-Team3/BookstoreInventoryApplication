@@ -6,6 +6,7 @@ BookstoreInventory::BookstoreInventory() {
     cout << "Finished loading books. " << endl;
 }
 
+/*
 void BookstoreInventory::displayLatestFive() {
 	const char* dbName = "../books.db";
 	// selects five records with the five most recent timestamps
@@ -32,6 +33,7 @@ void BookstoreInventory::displayLatestFive() {
 		cout << topFive.at(i) << endl;
 	}
 }
+*/
 
 //Watches for Cases, so we can use lower or upper case characters
 bool caseInsensitiveMatch(string string1, string string2) {
@@ -45,49 +47,51 @@ bool caseInsensitiveMatch(string string1, string string2) {
 }
 
 //Searches for a specific book within BookstoreInventory
-boost::optional<Book> BookstoreInventory::searchForBook(string title) {
-    const char *dbName = "../books.db";
-    Book book;
+deque<Book> BookstoreInventory::searchForBook(string title) {
+    string dbName = "../books.db";
 
-    sqlite3 *bookDB;
-    string findQuery = "SELECT * FROM books where title like ?";
+    // specifies database type (sqlite)
+    booksDB = QSqlDatabase::addDatabase("QSQLITE");
+    booksDB.setDatabaseName(QString::fromStdString(dbName));
+    string selectQuery = "SELECT * FROM books where title like :TITLE";
+    deque <Book> searchResults;
 
     title.push_back('%'); // appending % searches for any values starting with title (case-insensitive)
 
     try {
-        if (sqlite3_open(dbName, &bookDB) == SQLITE_OK) {
-            sqlite3_stmt *find = NULL;
-            if (sqlite3_prepare_v2(bookDB, findQuery.c_str(), findQuery.length(), &find, nullptr) == SQLITE_OK) {
-                sqlite3_bind_text(find, 1, title.c_str(), title.length(), NULL);
-                sqlite3_exec(bookDB, sqlite3_expanded_sql(find), this->searchBookCallback, &book, nullptr);
-                sqlite3_reset(find);
-                sqlite3_finalize(find);
-                sqlite3_close(bookDB);
+        if (booksDB.open()) {
+            QSqlQuery findQuery;
+            findQuery.prepare(QString::fromStdString(selectQuery));
+            findQuery.bindValue(":TITLE", QString::fromStdString(title));
+            if (findQuery.exec()) {
+                title.pop_back();
+                while (findQuery.next()) {
+                    string isbn = findQuery.value(0).toString().toStdString();
+                    string title = findQuery.value(1).toString().toStdString();
+                    string author = findQuery.value(2).toString().toStdString();
+                    int year = findQuery.value(3).toInt();
+                    string publisher = findQuery.value(4).toString().toStdString();
+                    string description = findQuery.value(5).toString().toStdString();
+                    string genre = findQuery.value(6).toString().toStdString();
+                    float msrp = findQuery.value(7).toFloat();
+                    int quantity = findQuery.value(8).toInt();
+                    string dateAdded = findQuery.value(9).toString().toStdString();
 
-                if (book.title == "none") {
-                    return boost::none;
-                } else {
-                    cout << "Book details: " << endl;
-                    cout << "ISBN: " << book.ISBN << endl;
-                    cout << "Title: " << book.title << endl;
-                    cout << "Author: " << book.author << endl;
-                    cout << "Year Published: " << book.year << endl;
-                    cout << "Publisher: " << book.publisher << endl;
-                    cout << "Description: " << book.description << endl;
-                    cout << "Genre: " << book.genre << endl;
-                    cout << "Price: $" << book.msrp << endl;
-                    cout << "Quantity in Stock: " << book.quantity << endl;
-                    cout << "Date Added: " << book.dateAdded << endl;
-                    return book;
+                    class Book book(isbn, title, author, year, publisher, description, genre, msrp, quantity, dateAdded);
+                    searchResults.push_back(book);
                 }
+
             }
         }
-    } catch (...) {
+    }
+    catch (...) {
         cout << "Error finding book in database." << endl;
     }
-    return boost::none;
-}
 
+    booksDB.close();
+    return searchResults;
+}
+/*
 // Adds a new book to the database
 void BookstoreInventory::addBook(Book book) {
     string tempDBName = "../books.db";
@@ -128,6 +132,8 @@ void BookstoreInventory::addBook(Book book) {
 
                 sqlite3_step(insert);
                 sqlite3_reset(insert);
+
+                cout << "Book with title " << title << " successfully added to database." << endl;
             }
             sqlite3_finalize(insert);
         }
@@ -139,7 +145,6 @@ void BookstoreInventory::addBook(Book book) {
 
     sqlite3_close(bookDB);
 
-    cout << "Book successfully added to database." << endl;
 }
 
 // deletes a book from the database
@@ -165,6 +170,9 @@ void BookstoreInventory::deleteBook(string title) {
 
                 sqlite3_step(del);
                 sqlite3_reset(del);
+
+                title.pop_back();
+                cout << "Book with title " << title << " successfully deleted." << endl;
             }
             sqlite3_finalize(del);
         }
@@ -204,6 +212,9 @@ void BookstoreInventory::updateDescription(string title, string description) {
 
                 sqlite3_step(update);
                 sqlite3_reset(update);
+
+                title.pop_back();
+                cout << "Description of book with title " << title << " successfully updated." << endl;
             }
             sqlite3_finalize(update);
         }
@@ -242,6 +253,9 @@ void BookstoreInventory::updateGenre(string title, string genre) {
 
                 sqlite3_step(update);
                 sqlite3_reset(update);
+
+                title.pop_back();
+                cout << "Genre of book with title " << title << " successfully updated." << endl;
             }
             sqlite3_finalize(update);
         }
@@ -282,7 +296,7 @@ boost::optional<Book> BookstoreInventory::searchForBookByISBN(string isbn) {
     }
     return boost::none;
 }
-
+*/
 int BookstoreInventory::searchBookCallback(void *data, int argc, char **argv, char **azColName) {
     // https://videlais.com/2018/12/13/c-with-sqlite3-part-3-inserting-and-selecting-data/
     // data: is 4th argument passed in sqlite3_exec command
