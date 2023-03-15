@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <boost/optional.hpp>
 #include "Book.h"
+#include "fileOperations.h"
 
 using namespace std;
 

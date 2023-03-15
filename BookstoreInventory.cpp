@@ -66,10 +66,6 @@ boost::optional<Book> BookstoreInventory::searchForBook(string title) {
 
                 title.pop_back();
 
-<<<<<<< Updated upstream
-                    class Book book(isbn, title, author, year, publisher, description, genre, msrp, quantity, dateAdded);
-                    searchResults.push_back(book);
-=======
                 if (book.title == "none") {
                 	cout << "Book with title " << title << " not found." << endl;
                     return boost::none;
@@ -86,7 +82,8 @@ boost::optional<Book> BookstoreInventory::searchForBook(string title) {
                     cout << "Quantity in Stock: " << book.quantity << endl;
                     cout << "Date Added: " << book.dateAdded << endl;
                     return book;
->>>>>>> Stashed changes
+\
+                    writeToLog("Found a book in the database");
                 }
             }
         }
