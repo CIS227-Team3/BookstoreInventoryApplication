@@ -79,6 +79,7 @@ deque<Book> BookstoreInventory::searchForBook(string title) {
 
                     class Book book(isbn, title, author, year, publisher, description, genre, msrp, quantity, dateAdded);
                     searchResults.push_back(book);
+                    writeToLog("Found a book in the database");
                 }
 
             }

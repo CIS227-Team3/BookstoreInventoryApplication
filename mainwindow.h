@@ -7,6 +7,7 @@
 #include <string>
 #include <deque>
 #include "BookstoreInventory.h"
+#include "fileOperations.h"
 
 using namespace std;
 
