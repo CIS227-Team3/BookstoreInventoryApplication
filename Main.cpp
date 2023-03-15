@@ -8,15 +8,6 @@
 #include <iostream>
 #include <string>
 
-<<<<<<< Updated upstream
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    writeToLog("Logging in");
-    w.show();
-    return a.exec();
-=======
 #include "UserDatabase.h"
 #include "menuOptions.h"
 #include "fileOperations.h"
@@ -246,5 +237,4 @@ int main() {
     cout << "Exiting BOOKIN. Goodbye!" << endl;
 
     return EXIT_SUCCESS;
->>>>>>> Stashed changes
 }
