@@ -63,11 +63,6 @@ Book::Book(const string &isbn, const string &title, const string &author, int ye
         ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
         genre(genre), msrp(msrp), quantity(quantity), dateAdded(getTimestamp()) {}
 
-Book::Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
-           const string &description, const string &genre, const float &msrp, const int &quantity, const string &dateAdded) :
-        ISBN(isbn), title(title), author(author), year(year), publisher(publisher), description(description),
-        genre(genre), msrp(msrp), quantity(quantity), dateAdded(dateAdded) {}
-
 Book::Book(boost::optional<Book> anOptional) {
     if (anOptional) {
         this->ISBN = anOptional->ISBN;

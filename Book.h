@@ -14,13 +14,12 @@ using namespace std;
 
 #include <chrono>
 #include <deque>
-#include "boost/optional.hpp"
+#include <boost/optional.hpp>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/posix_time/posix_time_types.hpp"
 #include "boost/date_time/posix_time/posix_time_io.hpp"
 
-// #include "includes/sqlite3.h"
-#include <QtSql/QtSql>
+#include "includes/sqlite3.h"
 
 //Book class, creates variables related to the Book object
 class Book {
@@ -32,9 +31,6 @@ public:
 
     Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
          const string &description, const string &genre, const float &msrp, const int &quantity);
-
-    Book(const string &isbn, const string &title, const string &author, int year, const string &publisher,
-         const string &description, const string &genre, const float &msrp, const int &quantity, const string &dateAdded);
 
     Book(boost::optional<Book> anOptional);
 
